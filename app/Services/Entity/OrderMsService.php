@@ -166,25 +166,6 @@ class OrderMsService implements EntityInterface
         foreach ($orders as $order) {
             $positions = $order->positions;
 
-            try {
-                $this->service->actionGetRowsFromJson($url . $order->id, false);
-            } catch (RequestException  $e) {
-
-                if ($e->getCode() == 404) {
-
-                    foreach ($positions as $position) {
-                        if ($position->product != null) {
-                            $order->positions()->forceDelete();
-                        }
-                    }
-                    
-                    $order->forceDelete();
-                    info($order->id . ' delete');
-                }
-                info($e->getMessage());
-            }
-
-
             foreach ($positions as $position) {
      
                 if ($position->product != null) {
@@ -210,6 +191,40 @@ class OrderMsService implements EntityInterface
             //     ];
 
             // $this->service->actionPutRowsFromJson($url . $order->id, $arOrder);
+
+        }
+    }
+
+    public function checkRows()
+    {
+        $url = 'https://api.moysklad.ru/api/remap/1.2/entity/customerorder/';
+
+
+        $orders = OrderMs::with('positions')->get();
+
+
+        foreach ($orders as $order) {
+            $positions = $order->positions;
+
+
+            try {
+                $this->service->actionGetRowsFromJson($url . $order->id, false);
+            } catch (RequestException  $e) {
+
+                if ($e->getCode() == 404) {
+
+                    foreach ($positions as $position) {
+                        if ($position->product != null) {
+                            $order->positions()->forceDelete();
+                        }
+                    }
+                    
+                    $order->forceDelete();
+                    info($order->id . ' delete');
+                }
+                info($e->getMessage());
+            }
+
 
         }
     }

@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\ImportFromAmo\ImportFromAmo;
+use App\Console\Commands\SyncMS\CheckOrderMS;
 use App\Console\Commands\ImportFromMS\ImportColor;
 use App\Console\Commands\ImportFromMS\ImportContactMs;
 use App\Console\Commands\ImportFromMS\ImportDelivery;
@@ -13,6 +14,7 @@ use App\Console\Commands\ImportFromMS\ImportProductsCategory;
 use App\Console\Commands\ImportFromMS\ImportStatusMs;
 use App\Console\Commands\ImportFromMS\ImportTransport;
 use App\Console\Commands\ImportFromMS\ImportVehicleType;
+
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -29,7 +31,8 @@ class Kernel extends ConsoleKernel
         ImportContactMs::class,
         ImportProductsCategory::class,
         ImportStatusMs::class,
-        ImportDemand::class
+        ImportDemand::class,
+        CheckOrderMS::class
     ];
     /**
      * Define the application's command schedule.
@@ -51,7 +54,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('ms:import-demand')->everyTenMinutes();
         $schedule->command('ms:import-residual')->everyTenMinutes();
         $schedule->command('app:sync-contact-ms-amo')->everyTenMinutes();
-       $schedule->command('ms:reserve-order-ms')->everyTenMinutes(); //->everyTwoHours() резерв заказов, каждые 2 часа
+        $schedule->command('ms:reserve-order-ms')->everyTenMinutes(); //->everyTwoHours() резерв заказов, каждые 2 часа
+        $schedule->command('ms:ms:ckeck-order-ms')->daily();
 
     }
 
