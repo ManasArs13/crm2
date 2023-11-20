@@ -209,6 +209,7 @@ class OrderMsService implements EntityInterface
 
             try {
                 $this->service->actionGetRowsFromJson($url . $order->id, false);
+                usleep(60000);
             } catch (RequestException  $e) {
 
                 if ($e->getCode() == 404) {
