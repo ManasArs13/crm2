@@ -33,6 +33,7 @@ class DemandServices implements EntityInterface
         $attributeTransport = '82e830fe-9e05-11ec-0a80-01d700314656';
         $attributeVehicleType = 'ba39ab18-a5ee-11ec-0a80-00d3000c54d7';
         $attributeDeliveryPrice = "368d767a-25d9-11ec-0a80-0844000fc7ec";
+        $attributeDeliveryFee = "bf195073-ebc2-11ec-0a80-0173001b47dd";
 
         foreach ($rows['rows'] as $row) {
             $products = $row['positions']['rows'];
@@ -49,6 +50,7 @@ class DemandServices implements EntityInterface
                 $transport = null;
                 $deliveryPrice = 0;
                 $vehicleType = null;
+                $deliveryFee= null;
 
                 $orderId = isset($row['customerOrder']) ? $this->getGuidFromUrl($row['customerOrder']['meta']['href']) : null;
                 $entity->id = $row['id'];
@@ -80,6 +82,9 @@ class DemandServices implements EntityInterface
                             case $attributeDeliveryPrice:
                                 $deliveryPrice = $attribute["value"];
                                 break;
+                            case $attributeDeliveryFee:
+                                $deliveryFee = $attribute["value"];
+                                break;
                         }
                     }
                 }
@@ -88,6 +93,7 @@ class DemandServices implements EntityInterface
                 $entity->delivery_id=$delivery;
                 $entity->vehicle_type_id=$vehicleType;
                 $entity->delivery_price=$deliveryPrice;
+                $entity->delivery_fee=$deliveryFee;
                 $entity->save();
 
                 foreach ($products as $product) {

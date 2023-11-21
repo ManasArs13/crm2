@@ -39,7 +39,7 @@ class OrderMsService implements EntityInterface
         $attributeDeliveryPrice = $this->options::query()->where("code", '=', "ms_order_delivery_price_guid")->first()?->value;
         $attributeIsMade = $this->options::query()->where("code", '=', "ms_order_made_guid")->first()?->value;
         $attributeLinkToAmo = $this->options::query()->where("code", '=', "ms_orders_amo_url_guid")->first()?->value;
-
+        
         foreach ($rows['rows'] as $row) {
             $entity = OrderMs::query()->firstOrNew(['id' => $row["id"]]);
             if (Arr::exists($row, 'deleted')) {
