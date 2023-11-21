@@ -36,7 +36,7 @@ class DemandServices implements EntityInterface
         $attributeDeliveryFee = "bf195073-ebc2-11ec-0a80-0173001b47dd";
 
         foreach ($rows['rows'] as $row) {
-            $products = $row['positions']['rows'];
+            // $products = $row['positions']['rows'];
             $urlService = 'https://api.moysklad.ru/app/#demand/edit?id=';
 
             $entity = Shipments::query()->firstOrNew(['id' => $row["id"]]);
@@ -96,23 +96,23 @@ class DemandServices implements EntityInterface
                 $entity->delivery_fee=$deliveryFee;
                 $entity->save();
 
-                foreach ($products as $product) {
-                    $productData = null;
-                    if (isset($product['assortment']['meta']['href'])) {
-                        $productData = $this->service->actionGetRowsFromJson($product['assortment']['meta']['href'], false);
-                    }
-                    $product_id = Product::query()->where('id', $productData['id'])->first()->id;
-                    if ($product_id) {
-                        ShipmentsProducts::query()->updateOrCreate(
-                            ['shipment_id' => $row['id']],
-                            [
-                                'shipment_id' => $row['id'],
-                                'quantity' => $product['quantity'],
-                                'product_id' => $productData['id'],
-                            ]
-                        );
-                    }
-                }
+                // foreach ($products as $product) {
+                //     $productData = null;
+                //     if (isset($product['assortment']['meta']['href'])) {
+                //         $productData = $this->service->actionGetRowsFromJson($product['assortment']['meta']['href'], false);
+                //     }
+                //     $product_id = Product::query()->where('id', $productData['id'])->first()->id;
+                //     if ($product_id) {
+                //         ShipmentsProducts::query()->updateOrCreate(
+                //             ['shipment_id' => $row['id']],
+                //             [
+                //                 'shipment_id' => $row['id'],
+                //                 'quantity' => $product['quantity'],
+                //                 'product_id' => $productData['id'],
+                //             ]
+                //         );
+                //     }
+                // }
             }
         }
     }
