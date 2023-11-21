@@ -29,10 +29,10 @@ class DemandServices implements EntityInterface
      */
     public function import(array $rows): void
     {
-        $attributeDelivery = $this->options::query()->where('code', '=', "ms_order_delivery_guid")->first()?->value;
-        $attributeTransport = $this->options::query()->where("code", '=', "ms_order_transport_guid")->first()?->value;
-        $attributeVehicleType = $this->options::query()->where("code", '=', "ms_order_vehicle_type_guid")->first()?->value;
-        $attributeDeliveryPrice = $this->options::query()->where("code", '=', "ms_order_delivery_price_guid")->first()?->value;
+        $attributeDelivery = '368d7401-25d9-11ec-0a80-0844000fc7ea';
+        $attributeTransport = '82e830fe-9e05-11ec-0a80-01d700314656';
+        $attributeVehicleType = 'ba39ab18-a5ee-11ec-0a80-00d3000c54d7';
+        $attributeDeliveryPrice = "368d767a-25d9-11ec-0a80-0844000fc7ec";
 
         foreach ($rows['rows'] as $row) {
             $products = $row['positions']['rows'];

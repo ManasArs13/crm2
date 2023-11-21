@@ -2,13 +2,10 @@
 
 namespace App\Console\Commands\SyncMS;
 
-use App\Models\Option;
 use App\Services\Api\MoySkladService;
 use App\Services\Entity\OrderMsService;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
-use App\Models\OrderMs;
-use Illuminate\Contracts\Database\Eloquent\Builder;
+
 
 class CheckOrderMS extends Command
 {
@@ -24,7 +21,7 @@ class CheckOrderMS extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'check orders from ms';
 
     /**
      * Execute the console command.

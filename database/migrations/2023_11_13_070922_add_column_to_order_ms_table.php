@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('order_ms', function (Blueprint $table) {
          //   $table->string('delivery_city', 255);
-            $table->foreignUuid('transport_id')->nullable()->references('id')->on('transports');
+         //   $table->foreignUuid('transport_id')->nullable()->references('id')->on('transports');
             $table->foreignUuid('vehicle_type_id')->nullable()->references('id')->on('vehicle_types');
             $table->integer('delivery_price');
             $table->integer('delivery_price_norm');
