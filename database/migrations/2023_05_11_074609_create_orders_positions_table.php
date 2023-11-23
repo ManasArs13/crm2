@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer("quantity")->unsigned()->default(0);
             $table->integer("sum")->unsigned()->default(0);
             $table->unsignedDecimal("weight", 8, 1)->unsigned()->nullable();
+            $table->integer("price")->unsigned()->nullable();
         });
     }
 

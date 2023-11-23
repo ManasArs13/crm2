@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string("phone1",56)->nullable();
             $table->string("email")->nullable();
             $table->string("phone_norm", 56)->nullable();
-            $table->string("contact_ms")->nullable();
+            $table->string("contact_ms_id")->nullable();
+            $table->index('contact_ms_id');
             $table->string("contact_ms_link")->nullable();
             $table->boolean("is_exist")->default(0);
             $table->boolean("is_dublash")->default(0);

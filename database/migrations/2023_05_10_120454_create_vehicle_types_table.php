@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer("min_price")->default(0);
             $table->decimal("coefficient", 5, 1)->default(0.0);
             $table->integer("min_tonnage")->default(0);
+            $table->integer("sort")->default(100)->nullable();
             $table->timestamps();
         });
     }

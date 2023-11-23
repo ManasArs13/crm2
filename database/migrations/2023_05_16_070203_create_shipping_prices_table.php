@@ -17,6 +17,7 @@ return new class extends Migration
             $table->decimal("tonnage", 8, 1)->unsigned();
             $table->integer("price")->unsigned();
             $table->foreignUuid("vehicle_type_id")->index()->constrained("vehicle_types");
+            $table->timestamps();
         });
     }
 

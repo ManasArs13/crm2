@@ -17,11 +17,12 @@ return new class extends Migration
             $table->string("phone", 56)->nullable();
             $table->string("phone_norm", 56)->nullable();
             $table->string("email", 100)->nullable();
-            $table->string("contact_amo")->nullable();
+            $table->string("contact_amo_id")->nullable();
             $table->string("contact_amo_link")->nullable();
             $table->decimal("balance",10,1)->default(0.0)->nullable();
             $table->boolean("is_exist")->default(0);
             $table->boolean("is_dublash")->default(0);
+            $table->index('contact_amo_id');
             $table->timestamps();
         });
     }

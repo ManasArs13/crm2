@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->string('shipment_address')->nullable();
             $table->foreignUuid('order_id')->nullable()->references('id')->on('order_ms')->onDelete('cascade');
-            $table->string('counterparty');
-            $table->string('path_to_service')->nullable();
+            $table->string('counterparty_link')->nullable();
+            $table->string('service_link')->nullable();
             $table->integer('paid_sum')->default(0.00);
             $table->integer('suma');
             $table->enum('status',[
@@ -29,7 +29,13 @@ return new class extends Migration
             ])->nullable();
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
-        });
+            $table->foreignUuid("delivery_id")->nullable()->index()->constrained("deliveries");
+            $table->integer('delivery_price')->nullable();
+            $table->integer('delivery_price_norm')->nullable();
+            $table->integer('delivery_fee')->nullable();
+            $table->foreignUuid('transport_id')->nullable()->references('id')->on('transports');
+            $table->foreignUuid('vehicle_type_id')->nullable()->references('id')->on('vehicle_types');
+         });
     }
 
     /**
