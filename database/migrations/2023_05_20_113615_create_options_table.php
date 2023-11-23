@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string("name");
             $table->string("code");
-            $table->string("value")->change();
+            $table->string("value");
             $table->enum("module",["ms", "amo", "calc", "main"])->default('main');
             $table->timestamps();
         });

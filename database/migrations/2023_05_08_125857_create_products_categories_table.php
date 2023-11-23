@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('products_categories', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string("name", 190);
-            $table->boolean('is_active')->default(0)->change();
+            $table->boolean('is_active')->default(0);
             $table->enum('type',[
                 ProductsCategory::NOT_SELECTED,
                 ProductsCategory::MATERIAL,

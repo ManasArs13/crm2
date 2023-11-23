@@ -15,7 +15,6 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string("name", 190);
             $table->string("color", 7);
-        //    $table->foreignUuid("status_ms")->nullable()->index()->constrained("status_ms");
             $table->timestamps();
         });
     }

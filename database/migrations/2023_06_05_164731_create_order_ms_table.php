@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('order_ms', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string("name",190)->nullable()->change();
+            $table->string("name",190)->nullable();
             $table->foreignUuid("status_ms_id")->nullable()->index()->constrained("status_ms");
             $table->foreignUuid("contact_ms_id")->nullable()->index()->constrained("contact_ms");
             $table->dateTime("date_plan")->nullable();
@@ -37,7 +37,7 @@ return new class extends Migration
             $table->decimal("debt", 10,1)->default(0.0);
             $table->string("order_amo_link")->nullable();
             $table->string("order_amo_id")->nullable();
-            $table->string("comment")->nullable()->default(NULL)->change();
+            $table->string("comment")->nullable()->default(NULL);
             $table->integer('delivery_price_norm')->nullable();
             $table->timestamps();
         });
