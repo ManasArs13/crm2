@@ -22,6 +22,7 @@ return new class extends Migration
             $table->decimal("balance",10,1)->default(0.0)->nullable();
             $table->boolean("is_exist")->default(0);
             $table->boolean("is_dublash")->default(0);
+            $table->integer('is_archived')->nullable();
             $table->index('contact_amo_id');
             $table->timestamps();
         });

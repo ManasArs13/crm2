@@ -5,6 +5,7 @@ namespace App\Services\Entity;
 use App\Contracts\EntityInterface;
 use App\Models\Option;
 use App\Models\OrderMs;
+use App\Models\ShippingPrice;
 use App\Services\Api\MoySkladService;
 use Carbon\Carbon;
 use DateTime;
@@ -227,6 +228,29 @@ class OrderMsService implements EntityInterface
             }
 
 
+        }
+    }
+
+    public function calcOfDeliveryPriceNorm()
+    {
+        $orders = OrderMs::with(['positions', 'delivery', 'vehicle_type', 'transport'])->get();
+
+        foreach ($orders as $order) {
+            $distance = $order->delivery->distance;
+           // $weight_kg = $order->delivery->weight_kg;
+            $vehicleType = $order->vehicle_type;
+
+            
+
+            switch ($distance) {
+                case $distance < 25:
+                    $shipingPrice = ShippingPrice::where('vehicle_type', $vehicleType)
+                                                ->where('distance', 25)
+                                                ->get();
+                
+            }
+            
+                
         }
     }
 }
