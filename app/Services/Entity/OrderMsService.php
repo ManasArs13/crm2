@@ -234,58 +234,58 @@ class OrderMsService implements EntityInterface
         $orders = OrderMs::with(['positions', 'delivery', 'vehicle_type', 'transport'])->get();
 
         foreach ($orders as $order) {
-            $distance = $order->delivery->distance;
+            $dileviry = $order->delivery;
             $weight_kg = $order->weight;
             $vehicleType = $order->vehicle_type;
 
-            if ($vehicleType && $weight_kg) {
+            if ($vehicleType && $weight_kg && $dileviry) {
 
                 $distanceNew = 0;
 
-                switch ($distance) {
-                    case $distance <= 25:
+                switch ($dileviry->distance) {
+                    case $dileviry->distance <= 25:
                         $distanceNew = 25;
                         break;
-                    case $distance > 25 && $distance <= 30:
+                    case $dileviry->distance > 25 && $dileviry->distance <= 30:
                         $distanceNew = 30;
                         break;
-                    case $distance > 30 && $distance <= 40:
+                    case $dileviry->distance > 30 && $dileviry->distance <= 40:
                         $distanceNew = 40;
                         break;
-                    case $distance > 40 && $distance <= 50:
+                    case $dileviry->distance > 40 && $dileviry->distance <= 50:
                         $distanceNew = 50;
                         break;
-                    case $distance > 50 && $distance <= 60:
+                    case $dileviry->distance > 50 && $dileviry->distance <= 60:
                         $distanceNew = 60;
                         break;
-                    case $distance > 60 && $distance <= 70:
+                    case $dileviry->distance > 60 && $dileviry->distance <= 70:
                         $distanceNew = 70;
                         break;
-                    case $distance > 70 && $distance <= 80:
+                    case $dileviry->distance > 70 && $dileviry->distance <= 80:
                         $distanceNew = 80;
                         break;
-                    case $distance > 80 && $distance <= 90:
+                    case $dileviry->distance > 80 && $dileviry->distance <= 90:
                         $distanceNew = 90;
                         break;
-                    case $distance > 90 && $distance <= 100:
+                    case $dileviry->distance > 90 && $dileviry->distance <= 100:
                         $distanceNew = 100;
                         break;
-                    case $distance > 100 && $distance <= 120:
+                    case $dileviry->distance > 100 && $dileviry->distance <= 120:
                         $distanceNew = 120;
                         break;
-                    case $distance > 120 && $distance <= 140:
+                    case $dileviry->distance > 120 && $dileviry->distance <= 140:
                         $distanceNew = 140;
                         break;
-                    case $distance > 140 && $distance <= 160:
+                    case $dileviry->distance > 140 && $dileviry->distance <= 160:
                         $distanceNew = 160;
                         break;
-                    case $distance > 160 && $distance <= 180:
+                    case $dileviry->distance > 160 && $dileviry->distance <= 180:
                         $distanceNew = 180;
                         break;
-                    case $distance > 180 && $distance <= 200:
+                    case $dileviry->distance > 180 && $dileviry->distance <= 200:
                         $distanceNew = 200;
                         break;
-                    case $distance > 200:
+                    case $dileviry->distance > 200:
                         $distanceNew = 220;
                         break;
                 }
