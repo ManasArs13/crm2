@@ -298,23 +298,27 @@ class OrderMsService implements EntityInterface
                     ->where('tonnage', $weightNew)
                     ->first();
 
-                $dileviry_price_norm = 0;
-dump($shipingPrice);
                 if ($shipingPrice == null) {
                     $shipingPrice = ShippingPrice::where('vehicle_type_id', $vehicleType->id)
                         ->where('distance', $distanceNew)
-                      //  ->where('tonnage', 1.0)
+                        ->where('tonnage', 1.0)
                         ->first();
 
-                        dump($shipingPrice);
-                    $dileviry_price_norm = $shipingPrice->price * $weightNew;
-                } else {
-                    $dileviry_price_norm = $shipingPrice->price;
-                }
+                    if ($shipingPrice) {
+                        $orderUpdate = OrderMs::where('id', $order->id)->First();
+                        $orderUpdate->delivery_price_norm = $shipingPrice->price;
+                        $orderUpdate->update();
+                    }
 
-                // $orderUpdate = OrderMs::where('id', $order->id)->First();
-                // $orderUpdate->delivery_price_norm = $dileviry_price_norm;
-                // $orderUpdate->update();
+                } else {
+
+                    if ($shipingPrice) {
+                        $orderUpdate = OrderMs::where('id', $order->id)->First();
+                        $orderUpdate->delivery_price_norm = $shipingPrice->price * $weightNew;
+                        $orderUpdate->update();
+                    }
+
+                }
             }
         }
     }
