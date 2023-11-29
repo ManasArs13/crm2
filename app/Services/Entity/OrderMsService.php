@@ -231,14 +231,15 @@ class OrderMsService implements EntityInterface
 
     public function calcOfDeliveryPriceNorm()
     {
-        $orders = OrderMs::with(['positions', 'delivery', 'vehicle_type', 'transport'])->get();
+
+        $orders = OrderMs::with(['delivery', 'vehicle_type', 'transport'])->get();
 
         foreach ($orders as $order) {
             $dileviry = $order->delivery;
             $weight_kg = $order->weight;
             $vehicleType = $order->vehicle_type;
 
-            if ($vehicleType && $weight_kg && $dileviry) {
+            if ($vehicleType && $weight_kg !== '0.0' && $weight_kg && $dileviry) {
 
                 $distanceNew = 0;
 
@@ -290,16 +291,28 @@ class OrderMsService implements EntityInterface
                         break;
                 }
 
+                $weightNew = ceil($order->weight);
+
                 $shipingPrice = ShippingPrice::where('vehicle_type_id', $vehicleType->id)
                     ->where('distance', $distanceNew)
-                    //                 ->where('tonnage', 1.0)
+                    ->where('tonnage', $weightNew)
                     ->first();
 
-                if ($shipingPrice) {
-                    $orderUpdate = OrderMs::where('id', $order->id)->First();
-                    $orderUpdate->delivery_price_norm = $shipingPrice->price * $weight_kg;
-                    $orderUpdate->update();
+                $dileviry_price_norm = 0;
+
+                if ($shipingPrice == null) {
+                    $shipingPrice = ShippingPrice::where('vehicle_type_id', $vehicleType->id)
+                        ->where('distance', $distanceNew)
+                        ->where('tonnage', 1.0)
+                        ->first();
+                    $dileviry_price_norm = $shipingPrice->price * $weight_kg;
+                } else {
+                    $dileviry_price_norm = $shipingPrice->price;
                 }
+
+                $orderUpdate = OrderMs::where('id', $order->id)->First();
+                $orderUpdate->delivery_price_norm = $dileviry_price_norm;
+                $orderUpdate->update();
             }
         }
     }
