@@ -40,7 +40,7 @@ class OrderMsService implements EntityInterface
         $attributeDeliveryPrice = $this->options::query()->where("code", '=', "ms_order_delivery_price_guid")->first()?->value;
         $attributeIsMade = $this->options::query()->where("code", '=', "ms_order_made_guid")->first()?->value;
         $attributeLinkToAmo = $this->options::query()->where("code", '=', "ms_orders_amo_url_guid")->first()?->value;
-        
+
         foreach ($rows['rows'] as $row) {
             $entity = OrderMs::query()->firstOrNew(['id' => $row["id"]]);
             if (Arr::exists($row, 'deleted')) {
@@ -168,9 +168,9 @@ class OrderMsService implements EntityInterface
             $positions = $order->positions;
 
             foreach ($positions as $position) {
-     
+
                 if ($position->product != null) {
-                    
+
                     if ($position->product->type == 'продукция' && $position->product->building_material == 'блок') {
                         $this->service->actionPutRowsFromJson($url . $order->id . '/positions/' . $position->id, ['reserve' => abs($position->quantity - $position->shipped)]);
                     }
@@ -220,14 +220,12 @@ class OrderMsService implements EntityInterface
                             $order->positions()->forceDelete();
                         }
                     }
-                    
+
                     $order->forceDelete();
                     info($order->id . ' delete');
                 }
                 info($e->getMessage());
             }
-
-
         }
     }
 
@@ -237,20 +235,72 @@ class OrderMsService implements EntityInterface
 
         foreach ($orders as $order) {
             $distance = $order->delivery->distance;
-           // $weight_kg = $order->delivery->weight_kg;
+            $weight_kg = $order->weight;
             $vehicleType = $order->vehicle_type;
 
-            
+            if ($vehicleType && $weight_kg) {
 
-            switch ($distance) {
-                case $distance < 25:
-                    $shipingPrice = ShippingPrice::where('vehicle_type', $vehicleType)
-                                                ->where('distance', 25)
-                                                ->get();
-                
+                $distanceNew = 0;
+
+                switch ($distance) {
+                    case $distance <= 25:
+                        $distanceNew = 25;
+                        break;
+                    case $distance > 25 && $distance <= 30:
+                        $distanceNew = 30;
+                        break;
+                    case $distance > 30 && $distance <= 40:
+                        $distanceNew = 40;
+                        break;
+                    case $distance > 40 && $distance <= 50:
+                        $distanceNew = 50;
+                        break;
+                    case $distance > 50 && $distance <= 60:
+                        $distanceNew = 60;
+                        break;
+                    case $distance > 60 && $distance <= 70:
+                        $distanceNew = 70;
+                        break;
+                    case $distance > 70 && $distance <= 80:
+                        $distanceNew = 80;
+                        break;
+                    case $distance > 80 && $distance <= 90:
+                        $distanceNew = 90;
+                        break;
+                    case $distance > 90 && $distance <= 100:
+                        $distanceNew = 100;
+                        break;
+                    case $distance > 100 && $distance <= 120:
+                        $distanceNew = 120;
+                        break;
+                    case $distance > 120 && $distance <= 140:
+                        $distanceNew = 140;
+                        break;
+                    case $distance > 140 && $distance <= 160:
+                        $distanceNew = 160;
+                        break;
+                    case $distance > 160 && $distance <= 180:
+                        $distanceNew = 180;
+                        break;
+                    case $distance > 180 && $distance <= 200:
+                        $distanceNew = 200;
+                        break;
+                    case $distance > 200:
+                        $distanceNew = 220;
+                        break;
+                }
+
+                $shipingPrice = ShippingPrice::where('vehicle_type_id', $vehicleType->id)
+                    ->where('distance', $distanceNew)
+                    //                 ->where('tonnage', 1.0)
+                    ->first();
+
+                if ($shipingPrice) {
+                    $orderUpdate = OrderMs::where('id', $order->id)->First();
+                    $orderUpdate->delivery_price_norm = $shipingPrice->price * $weight_kg;
+                    $orderUpdate->update();
+                }
             }
-            
-                
         }
     }
 }

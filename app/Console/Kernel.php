@@ -55,7 +55,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('ms:import-residual')->everyTenMinutes();
         $schedule->command('app:sync-contact-ms-amo')->everyTenMinutes();
         $schedule->command('ms:reserve-order-ms')->everyTenMinutes(); //->everyTwoHours() резерв заказов, каждые 2 часа
-   //     $schedule->command('ms:ckeck-order-ms')->daily();
+        $schedule->command('ms:ckeck-order-ms')->daily();
+        $schedule->command('ms:calculation-of-delivery-price-norm')->everyTenMinutes(); 
 
     }
 
