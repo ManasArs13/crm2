@@ -312,9 +312,9 @@ dump($shipingPrice);
                     $dileviry_price_norm = $shipingPrice->price;
                 }
 
-                $orderUpdate = OrderMs::where('id', $order->id)->First();
-                $orderUpdate->delivery_price_norm = $dileviry_price_norm;
-                $orderUpdate->update();
+                // $orderUpdate = OrderMs::where('id', $order->id)->First();
+                // $orderUpdate->delivery_price_norm = $dileviry_price_norm;
+                // $orderUpdate->update();
             }
         }
     }
