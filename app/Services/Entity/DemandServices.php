@@ -51,6 +51,7 @@ class DemandServices implements EntityInterface
                 $deliveryPrice = 0;
                 $vehicleType = null;
                 $deliveryFee= null;
+                $shipmentWeight = 0.0;
 
                 $orderId = isset($row['customerOrder']) ? $this->getGuidFromUrl($row['customerOrder']['meta']['href']) : null;
                 $entity->id = $row['id'];
@@ -94,7 +95,7 @@ class DemandServices implements EntityInterface
                 $entity->vehicle_type_id=$vehicleType;
                 $entity->delivery_price=$deliveryPrice;
                 $entity->delivery_fee=$deliveryFee;
-                $entity->save();
+                
 
                 foreach ($products as $product) {
                     $productData = null;
@@ -112,7 +113,12 @@ class DemandServices implements EntityInterface
                             ]
                         );
                     }
+
+                    $shipmentWeight += $product["quantity"] * Product::query()->where('id', $productData['id'])->first()->weight_kg;
                 }
+
+                $entity->weight = $shipmentWeight;
+                $entity->save();
             }
         }
     }
