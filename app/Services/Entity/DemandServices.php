@@ -3,6 +3,7 @@
 namespace App\Services\Entity;
 
 use App\Contracts\EntityInterface;
+use App\Models\Delivery;
 use App\Models\OrderMs;
 use App\Models\Option;
 use App\Models\Product;
@@ -139,7 +140,7 @@ class DemandServices implements EntityInterface
         $shipments = Shipments::get();
 
         foreach ($shipments as $shipment) {
-            $dileviry = $shipment->delivery_id;
+            $dileviry = Delivery::where('id', $shipment->delivery_id)->First();
             $weight_kg = $shipment->weight;
             $vehicleType = $shipment->vehicle_type_id;
 
