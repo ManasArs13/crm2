@@ -11,6 +11,7 @@ use App\Models\ProductsCategory;
 use App\Models\Shipments;
 use App\Models\ShipmentsProducts;
 use App\Models\ShippingPrice;
+use App\Models\VehicleType;
 use App\Services\Api\MoySkladService;
 use Illuminate\Support\Arr;
 
@@ -142,7 +143,7 @@ class DemandServices implements EntityInterface
         foreach ($shipments as $shipment) {
             $dileviry = Delivery::where('id', $shipment->delivery_id)->First();
             $weight_kg = $shipment->weight;
-            $vehicleType = $shipment->vehicle_type_id;
+            $vehicleType = VehicleType::where('id', $shipment->vehicle_type_id)->First();
 
             if ($vehicleType && $weight_kg !== '0.0' && $weight_kg && $dileviry) {
 
