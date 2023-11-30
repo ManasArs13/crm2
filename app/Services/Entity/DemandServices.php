@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\ProductsCategory;
 use App\Models\Shipments;
 use App\Models\ShipmentsProducts;
+use App\Models\ShippingPrice;
 use App\Services\Api\MoySkladService;
 use Illuminate\Support\Arr;
 
@@ -131,5 +132,101 @@ class DemandServices implements EntityInterface
     {
         $arUrl = explode("/", $url);
         return $arUrl[count($arUrl) - 1];
+    }
+
+    public function calcOfDeliveryPriceNorm()
+    {
+        $shipments = Shipments::get();
+
+        foreach ($shipments as $shipment) {
+            $dileviry = $shipment->delivery_id;
+            $weight_kg = $shipment->weight;
+            $vehicleType = $shipment->vehicle_type_id;
+
+            if ($vehicleType && $weight_kg !== '0.0' && $weight_kg && $dileviry) {
+
+                $distanceNew = 0;
+
+                switch ($dileviry->distance) {
+                    case $dileviry->distance <= 25:
+                        $distanceNew = 25;
+                        break;
+                    case $dileviry->distance > 25 && $dileviry->distance <= 30:
+                        $distanceNew = 30;
+                        break;
+                    case $dileviry->distance > 30 && $dileviry->distance <= 40:
+                        $distanceNew = 40;
+                        break;
+                    case $dileviry->distance > 40 && $dileviry->distance <= 50:
+                        $distanceNew = 50;
+                        break;
+                    case $dileviry->distance > 50 && $dileviry->distance <= 60:
+                        $distanceNew = 60;
+                        break;
+                    case $dileviry->distance > 60 && $dileviry->distance <= 70:
+                        $distanceNew = 70;
+                        break;
+                    case $dileviry->distance > 70 && $dileviry->distance <= 80:
+                        $distanceNew = 80;
+                        break;
+                    case $dileviry->distance > 80 && $dileviry->distance <= 90:
+                        $distanceNew = 90;
+                        break;
+                    case $dileviry->distance > 90 && $dileviry->distance <= 100:
+                        $distanceNew = 100;
+                        break;
+                    case $dileviry->distance > 100 && $dileviry->distance <= 120:
+                        $distanceNew = 120;
+                        break;
+                    case $dileviry->distance > 120 && $dileviry->distance <= 140:
+                        $distanceNew = 140;
+                        break;
+                    case $dileviry->distance > 140 && $dileviry->distance <= 160:
+                        $distanceNew = 160;
+                        break;
+                    case $dileviry->distance > 160 && $dileviry->distance <= 180:
+                        $distanceNew = 180;
+                        break;
+                    case $dileviry->distance > 180 && $dileviry->distance <= 200:
+                        $distanceNew = 200;
+                        break;
+                    case $dileviry->distance > 200:
+                        $distanceNew = 220;
+                        break;
+                }
+
+                $weightNew = ceil($shipment->weight);
+
+                $shipingPrice = ShippingPrice::where('vehicle_type_id', $vehicleType->id)
+                    ->where('distance', $distanceNew)
+                    ->where('tonnage', $weightNew)
+                    ->first();
+
+                if ($shipingPrice == null) {
+                    $shipingPrice = ShippingPrice::where('vehicle_type_id', $vehicleType->id)
+                        ->where('distance', $distanceNew)
+                        ->where('tonnage', 1.0)
+                        ->first();
+
+                    if ($shipingPrice) {
+                        $shipmentUpdate = Shipments::where('id', $shipment->id)->First();
+                        $shipmentUpdate->delivery_price_norm = $shipingPrice->price;
+                        $shipmentUpdate->update();
+                    }
+
+                } else {
+
+                    if ($shipingPrice) {
+                        $shipmentUpdate = Shipments::where('id', $shipment->id)->First();
+                        $shipmentUpdate->delivery_price_norm = $shipingPrice->price * $weightNew;
+                        $shipmentUpdate->update();
+                    }
+
+                }
+            }
+
+
+        }
+       
     }
 }

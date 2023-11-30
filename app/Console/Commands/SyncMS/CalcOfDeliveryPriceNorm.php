@@ -27,8 +27,9 @@ class CalcOfDeliveryPriceNorm extends Command
     /**
      * Execute the console command.
      */
-    public function handle(OrderMsService $service)
+    public function handle(OrderMsService $orderService, DemandServices $demandService)
     {
-        $service->calcOfDeliveryPriceNorm();
+        $orderService->calcOfDeliveryPriceNorm();
+        $demandService->calcOfDeliveryPriceNorm();
     }
 }
