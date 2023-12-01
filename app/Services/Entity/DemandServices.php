@@ -198,8 +198,8 @@ dump($weight_kg);
                         $distanceNew = 220;
                         break;
                 }
-
-                $weightNew = ceil($shipment->weight * 0,001);
+                
+                $weightNew = ceil($shipment->weight * 0.001);
 
                 $shipingPrice = ShippingPrice::where('vehicle_type_id', $vehicleType->id)
                     ->where('distance', $distanceNew)
