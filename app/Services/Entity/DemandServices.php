@@ -15,6 +15,10 @@ use App\Models\VehicleType;
 use App\Services\Api\MoySkladService;
 use Illuminate\Support\Arr;
 
+use App\Helpers\RoundingUpTo;
+
+use function App\Helpers\RoundingUpTo\rounding_up_to;
+
 class DemandServices implements EntityInterface
 {
     private Option $options;
@@ -67,7 +71,7 @@ class DemandServices implements EntityInterface
                 $entity->paid_sum = $row['payedSum'] / 100;
                 $entity->status = isset($row['state']) ? $row['state']['name'] : null;
                 $entity->created_at = $row['moment'];
-                $entity->suma = $row['sum'] / 100;
+                $entity->suma = rounding_up_to($row['sum'] / 100, 500);
                 $entity->updated_at = $row['updated'];
 
 
