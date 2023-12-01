@@ -6,10 +6,14 @@ class Math
 {
     public static function rounding_up_to($num, $x = 5)
     {
-        if($num%$x < $x/2) {
-            return $num - ($num%$x);
+        if ($num <= $x/2) {
+            return $num;
         } else {
-            return $num + ($x-($num%$x));
+            if ($num % $x < $x / 2) {
+                return $num - ($num % $x);
+            } else {
+                return $num + ($x - ($num % $x));
+            }
         }
     }
 }
