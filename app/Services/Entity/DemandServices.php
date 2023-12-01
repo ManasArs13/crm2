@@ -144,9 +144,7 @@ class DemandServices implements EntityInterface
             $delivery = Delivery::where('id', $shipment->delivery_id)->First();
             $weight_kg = $shipment->weight;
             $vehicleType = VehicleType::where('id', $shipment->vehicle_type_id)->First();
-dump($delivery);
-dump($vehicleType);
-dump($weight_kg);
+
             if ($vehicleType && $weight_kg !== '0.0' && $weight_kg && $delivery) {
 
                 $distanceNew = 0;
@@ -205,13 +203,13 @@ dump($weight_kg);
                     ->where('distance', $distanceNew)
                     ->where('tonnage', $weightNew)
                     ->first();
-dump($shipingPrice);
+
                 if ($shipingPrice == null) {
                     $shipingPrice = ShippingPrice::where('vehicle_type_id', $vehicleType->id)
                         ->where('distance', $distanceNew)
                         ->where('tonnage', 1.0)
                         ->first();
-                        dump($shipingPrice);
+ 
                     if ($shipingPrice) {
                         $shipmentUpdate = Shipments::where('id', $shipment->id)->First();
                         $shipmentUpdate->delivery_price_norm = $shipingPrice->price;
