@@ -98,7 +98,8 @@ class DemandServices implements EntityInterface
                 $entity->vehicle_type_id=$vehicleType;
                 $entity->delivery_price=$deliveryPrice;
                 $entity->delivery_fee=$deliveryFee;
-                
+                $entity->weight = $shipmentWeight;
+                $entity->save();
 
                 foreach ($products as $product) {
                     $productData = null;
@@ -121,7 +122,7 @@ class DemandServices implements EntityInterface
                 }
 
                 $entity->weight = $shipmentWeight;
-                $entity->save();
+                $entity->update();
             }
         }
     }
