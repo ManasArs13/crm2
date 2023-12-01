@@ -199,19 +199,19 @@ dump($weight_kg);
                         break;
                 }
 
-                $weightNew = ceil($shipment->weight);
+                $weightNew = ceil($shipment->weight * 0,001);
 
                 $shipingPrice = ShippingPrice::where('vehicle_type_id', $vehicleType->id)
                     ->where('distance', $distanceNew)
                     ->where('tonnage', $weightNew)
                     ->first();
-
+dd($shipingPrice);
                 if ($shipingPrice == null) {
                     $shipingPrice = ShippingPrice::where('vehicle_type_id', $vehicleType->id)
                         ->where('distance', $distanceNew)
                         ->where('tonnage', 1.0)
                         ->first();
-
+                        dd($shipingPrice);
                     if ($shipingPrice) {
                         $shipmentUpdate = Shipments::where('id', $shipment->id)->First();
                         $shipmentUpdate->delivery_price_norm = $shipingPrice->price;
@@ -228,7 +228,7 @@ dump($weight_kg);
 
                 }
 
-                dump($shipmentUpdate->delivery_price_norm);
+            
             }
 
 
