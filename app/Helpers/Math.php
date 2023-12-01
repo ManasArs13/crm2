@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Helpers\RoundingUpTo;
+namespace App\Helpers;
 
-if (!function_exists('rounding_up_to')) {
-    function rounding_up_to($num, $x = 5)
+class Math
+{
+    public static function rounding_up_to($num, $x = 5)
     {
         if($num%$x < $x/2) {
             return $num - ($num%$x);
