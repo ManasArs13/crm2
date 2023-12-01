@@ -205,13 +205,13 @@ dump($weight_kg);
                     ->where('distance', $distanceNew)
                     ->where('tonnage', $weightNew)
                     ->first();
-dd($shipingPrice);
+dump($shipingPrice);
                 if ($shipingPrice == null) {
                     $shipingPrice = ShippingPrice::where('vehicle_type_id', $vehicleType->id)
                         ->where('distance', $distanceNew)
                         ->where('tonnage', 1.0)
                         ->first();
-                        dd($shipingPrice);
+                        dump($shipingPrice);
                     if ($shipingPrice) {
                         $shipmentUpdate = Shipments::where('id', $shipment->id)->First();
                         $shipmentUpdate->delivery_price_norm = $shipingPrice->price;
