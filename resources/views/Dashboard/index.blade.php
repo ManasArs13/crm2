@@ -47,8 +47,7 @@
                           <td>
                               @if($material->residual_norm  !== 0
                                   && $material->residual_norm  !== null
-                                  && $material->type !== 'невыбрено'
-                                  && $material->to_sale !== 0)
+                                  && $material->type !== 'невыбрено')
                                   <div 
                                   @if (round(($material->residual /$material->residual_norm ) * 100) <= 30)
                                   class="td-percent-red"
