@@ -43,7 +43,7 @@
                         @if($concrete->residual_norm  !== 0
                                     && $concrete->residual_norm  !== null
                                     && $concrete->building_material !== 'невыбрено'
-                                    && $concrete->to_sale !== 0)
+                                    && $concrete->min_balance_mc !== 0)
                         <tr style="border-bottom: 1px solid #dee2e6;">
                             <td class="m-1 d-flex justify-content-between">
                                 {{$concrete->name}}

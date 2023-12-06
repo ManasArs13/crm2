@@ -32,7 +32,7 @@ class OrderPositionMsService
                     $entity->id = $row['id'];
                 }
 
-                if ($isDemand && ($product->to_sale - $row["quantity"] + $row["shipped"] < 0)) {
+                if ($isDemand && ($product->min_balance_mc - $row["quantity"] + $row["shipped"] < 0)) {
                     $isDemand = false;
                 }
 

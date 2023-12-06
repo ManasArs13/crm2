@@ -38,7 +38,7 @@ class ProductService implements EntityInterface
             $entity->category_id = \Arr::exists($row, 'productFolder') && isset($row["productFolder"]["id"]) ? $row["productFolder"]["id"] : null;
             $entity->weight_kg = $row["weight"];
             $entity->count_pallets=0;
-            $entity->to_sale=$quantity;
+            $entity->min_balance_mc=$quantity;
             if (isset($row["attributes"])) {
                 foreach ($row["attributes"] as $attr) {
                     if ($attr["id"] == $countPalletsGuid) {

@@ -50,7 +50,7 @@
                                     @if($blocksMaterial->residual_norm  !== 0
                                     && $blocksMaterial->residual_norm  !== null
                                     && $blocksMaterial->building_material !== 'невыбрено'
-                                    && $blocksMaterial->to_sale !== 0)
+                                    && $blocksMaterial->min_balance_mc !== 0)
                         <tr style="border-bottom: 1px solid #dee2e6;">
                             <td class="m-1 d-flex justify-content-between">
                                 {{$blocksMaterial->name}}
@@ -123,7 +123,7 @@
                         @if($blocksProduct->residual_norm  !== 0
                                     && $blocksProduct->residual_norm  !== null
                                     && $blocksProduct->building_material !== 'невыбрено'
-                                    && $blocksProduct->to_sale !== 0)
+                                    && $blocksProduct->min_balance_mc !== 0)
                         <tr style="border-bottom: 1px solid #dee2e6;">
                             <td class="m-1 d-flex justify-content-between">
                                 {{$blocksProduct->name}}

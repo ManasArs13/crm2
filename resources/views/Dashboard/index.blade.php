@@ -86,8 +86,7 @@
                           <td>
                               @if($product->residual_norm  !== 0
                                   && $product->residual_norm  !== null
-                                  && $product->type !== 'невыбрено'
-                                  && $product->to_sale !== 0)
+                                  && $product->type !== 'невыбрено')
                                   <div class="td-percent">
                                       {{round(($product->residual /$product->residual_norm ) * 100)}}%
                                   </div>

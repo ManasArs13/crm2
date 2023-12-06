@@ -216,11 +216,11 @@ $arUrl = explode("/", $request->headers->get('referer'));
         $entity = 'orders';
         foreach ($categories as $category)
         {
-            $sum_to_sale =  Product::query()->where('category_id',$category->id)->get()->sum('to_sale');
+            $sum_min_balance_mc =  Product::query()->where('category_id',$category->id)->get()->sum('min_balance_mc');
             $residual_norm = Product::query()->where('category_id',$category->id)->get()->sum('residual_norm');
             if ( $residual_norm !== 0)
             {
-                $remainder = round($sum_to_sale/ $residual_norm);
+                $remainder = round($sum_min_balance_mc/ $residual_norm);
                 $category->remainder =$remainder;
             }
         }
