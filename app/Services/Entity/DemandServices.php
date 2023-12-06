@@ -106,8 +106,8 @@ class DemandServices implements EntityInterface
                     if (isset($product['assortment']['meta']['href'])) {
                         $productData = $this->service->actionGetRowsFromJson($product['assortment']['meta']['href'], false);
                     }
-                    $product_id = Product::query()->where('id', $productData['id'])->first()->id;
-                    if ($product_id) {
+                    $product_db = Product::query()->where('id', $productData['id'])->first();
+                    if ($product_db) {
                         ShipmentsProducts::query()->updateOrCreate(
                             ['shipment_id' => $row['id']],
                             [
