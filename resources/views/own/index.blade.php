@@ -122,7 +122,7 @@
                                         @elseif($column == 'remainder')
                                             @if($entityItem->residual_norm  !== 0
                                                 && $entityItem->residual_norm  !== null
-                                                && $entityItem->type !== 'невыбрено')
+                                                && $entityItem->type !== 'не выбрано')
                                                 {{round(($entityItem->residual /$entityItem->residual_norm ) * 100)}}  %
                                             @else
                                                 {{null}}

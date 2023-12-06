@@ -45,7 +45,7 @@
                                     @elseif( $column == 'type' )
                                     <div class="col-sm-10">
                                             <select  class="custom-select" name="type" id="inputGroupSelect01">
-                                                <option value="невыбрено" @if($entityItem->$column == 'невыбрено')selected @endif>не выбрено</option>
+                                                <option value="не выбрано" @if($entityItem->$column == 'не выбрано')selected @endif>не выбрено</option>
                                                 <option value="продукция" @if($entityItem->$column == 'продукция') selected @endif>продукция</option>
                                                 <option value="материал" @if($entityItem->$column == 'материал')selected @endif>материал</option>
                                             </select>
@@ -53,7 +53,7 @@
                                     @elseif($column == 'building_material')
                                         <div class="col-sm-10">
                                             <select  class="custom-select" name="building_material" id="inputGroupSelect01">
-                                                <option value="невыбрено" @if($entityItem->$column == 'невыбрено')selected @endif>не выбрено</option>
+                                                <option value="не выбрано" @if($entityItem->$column == 'не выбрано')selected @endif>не выбрено</option>
                                                 <option value="бетон" @if($entityItem->$column == 'бетон') selected @endif>бетон</option>
                                                 <option value="блок" @if($entityItem->$column == 'блок')selected @endif>блок</option>
                                             </select>

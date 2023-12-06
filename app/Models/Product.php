@@ -10,7 +10,7 @@ class Product extends Model
     use HasUuids;
     public const PRODUCTS = "продукция";
     public const MATERIAL = "материал";
-    public const NOT_SELECTED = "невыбрено";
+    public const NOT_SELECTED = "не выбрано";
     public const CONCRETE = "бетон";
     public const BLOCK = "блок";
 
