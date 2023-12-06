@@ -49,8 +49,7 @@
                     @foreach($blocksMaterials as $blocksMaterial)
                                     @if($blocksMaterial->residual_norm  !== 0
                                     && $blocksMaterial->residual_norm  !== null
-                                    && $blocksMaterial->building_material !== 'невыбрено'
-                                    && $blocksMaterial->min_balance_mc !== 0)
+                                    && $blocksMaterial->building_material !== 'невыбрено')
                         <tr style="border-bottom: 1px solid #dee2e6;">
                             <td class="m-1 d-flex justify-content-between">
                                 {{$blocksMaterial->name}}
