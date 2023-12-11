@@ -90,15 +90,14 @@
                         <th>
                             @if($product->residual_norm !== 0
                             && $product->residual_norm !== null)
-                            
+
                             <div @if (round(($product->residual /$product->residual_norm ) * 100) <= 30)
-                             class="alert alert-danger" 
+                             class="td-percent-red" 
                              @elseif(round(($product->residual /$product->residual_norm ) * 100) > 30 && round(($product->residual /$product->residual_norm ) * 100) <= 70) 
-                             class="alert alert-warning"
-                             @else 
-                             class="alert alert-success" 
+                             class="td-percent-yellow"
+                             @else class="td-percent" 
                              @endif>
-                                {{round(($product->residual /$product->residual_norm ) * 100)}}%
+                                        {{round(($product->residual /$product->residual_norm ) * 100)}}%
                             </div>
 
                             @else
@@ -166,3 +165,4 @@
         align-items: center;
     }
 </style>
+@include('Dashboard.components.style')
