@@ -49,7 +49,7 @@
                 </div>
                 <div class="d-flex">
                     <div class="card-tools mx-2">
-                        @if(Request::url() == route('residual'))
+                        @if(url()->current() == route('residual'))
                         <a href="{{ route('residual') }}" class="btn btn-info">{{__("column.all")}}</a>
                         @else
                         <a href="{{ route('residual') }}" class="btn btn-primary">{{__("column.all")}}</a>
@@ -91,6 +91,16 @@
                             @if($product->residual_norm !== 0
                             && $product->residual_norm !== null)
                             {{round(($product->residual /$product->residual_norm ) * 100)}} %
+
+                            <div @if (round(($product->residual /$product->residual_norm ) * 100) <= 30)
+                             class="td-percent-red" 
+                             @elseif(round(($product->residual /$product->residual_norm ) * 100) > 30 && round(($product->residual /$product->residual_norm ) * 100) <= 70) 
+                             class="td-percent-yellow"
+                             @else class="td-percent" 
+                             @endif>
+                                        {{round(($product->residual /$product->residual_norm ) * 100)}}%
+                            </div>
+
                             @else
                             {{ __("column.no") }}
                             @endif
