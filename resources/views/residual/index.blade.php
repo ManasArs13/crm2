@@ -79,10 +79,17 @@
                         <th>
                             {{__("column.residual")}}
                         </th>
+                        <th>
+                            {{__("column.need")}}
+                        </th>
+                        <th>
+                            {{__("column.making_dais")}}
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($products as $product)
+                    @if($product->residual_norm)
                     <tr>
                         <th>
                             {{ $product->name}}
@@ -91,12 +98,7 @@
                             @if($product->residual_norm !== 0
                             && $product->residual_norm !== null)
 
-                            <div @if (round(($product->residual /$product->residual_norm ) * 100) <= 30)
-                             class="td-percent-red" 
-                             @elseif(round(($product->residual /$product->residual_norm ) * 100) > 30 && round(($product->residual /$product->residual_norm ) * 100) <= 70) 
-                             class="td-percent-yellow"
-                             @else class="td-percent" 
-                             @endif>
+                            <div @if (round(($product->residual /$product->residual_norm ) * 100) <= 30) class="td-percent-red" @elseif(round(($product->residual /$product->residual_norm ) * 100) > 30 && round(($product->residual /$product->residual_norm ) * 100) <= 70) class="td-percent-yellow" @else class="td-percent" @endif>
                                         {{round(($product->residual /$product->residual_norm ) * 100)}}%
                             </div>
 
@@ -118,8 +120,16 @@
                             {{ __("column.no") }}
                             @endif
                         </th>
+                        <th>
+                            {{ __("column.no") }}
+                        </th>
+                        <th>
+                            {{ __("column.no") }}
+
+                        </th>
 
                     </tr>
+                    @endif
                     @endforeach
                 </tbody>
             </table>
