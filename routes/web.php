@@ -15,6 +15,7 @@ use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\ProductsCategoryController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ResidualController;
 use App\Http\Controllers\ShipmentsController;
 use App\Http\Controllers\ShippingPricesController;
 use App\Http\Controllers\StatusAmoController;
@@ -83,6 +84,12 @@ Route::middleware('is_admin')->group(function (){
             'order_amos'=> OrderAmosController::class,
             'shipments'=>ShipmentsController::class,
         ]);
+
+        Route::get('/residuals', [ResidualController::class, 'all'])->name('residual');
+        Route::get('/residuals/blocks_materials', [ResidualController::class, 'blocksMaterials'])->name('residual.blocksMaterials');
+        Route::get('/residuals/blocks_categories', [ResidualController::class, 'blocksCategories'])->name('residual.blocksCategories');
+        Route::get('/residuals/blocks_products', [ResidualController::class, 'blocksProducts'])->name('residual.blocksProducts');
+        Route::get('/residuals/concretes_materials', [ResidualController::class, 'concretesMaterials'])->name('residual.concretesMaterials');
 
         Route::post('/orders/delivery',[ OrdersController::class, 'delivery'])->name('orders.delivery');
         Route::get('/orders/create/{order}/ms',[ OrdersController::class, 'createOrderMs'])->name('orders.createOrderMs');

@@ -86,4 +86,10 @@
    'residual'=>'Остаток',
    'min_balance_mc'=>'Остатков по складам',
    'sort'=>'Сорт',
+   'blocks_materials' => 'Материалы блоки',
+   'blocks_categories' => 'Категории блоки',
+   'blocks_products' => 'Товары блоки',
+   'concretes_materials' => 'Материалы бетон',
+   'all' => 'все',
+   'no' => 'не указан' 
       ];

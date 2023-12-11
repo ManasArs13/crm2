@@ -107,6 +107,7 @@ class DemandServices implements EntityInterface
                         $productData = $this->service->actionGetRowsFromJson($product['assortment']['meta']['href'], false);
                     }
                     $product_db = Product::query()->where('id', $productData['id'])->first();
+                    
                     if ($product_db) {
                         ShipmentsProducts::query()->updateOrCreate(
                             ['shipment_id' => $row['id']],
@@ -116,9 +117,10 @@ class DemandServices implements EntityInterface
                                 'product_id' => $productData['id'],
                             ]
                         );
-                    }
 
-                    $shipmentWeight += $product["quantity"] * Product::query()->where('id', $productData['id'])->first()->weight_kg;
+                        $shipmentWeight += $product["quantity"] * Product::query()->where('id', $productData['id'])->first()->weight_kg;
+
+                    }
                 }
 
                 $entity->weight = $shipmentWeight;

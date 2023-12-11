@@ -324,6 +324,12 @@ return [
             'icon'        => 'far fa-fw fa-file',
             'label label' => 'success invisible',
         ],
+        [
+            'text'        => 'Остатки (мс)',
+            'url'         => 'admin/residuals',
+            'icon'        => 'far fa-fw fa-file',
+            'label label' => 'success invisible',
+        ],
 
         //22222
         [

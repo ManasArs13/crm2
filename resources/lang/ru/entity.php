@@ -21,5 +21,6 @@ return [
     "status_ms"=>"Статусы МС",
     "status_amos"=>"Статусы Амо",
     "transports"=>"Транспорт",
-    'shipments'=>'Отгрузоки',
+    'shipments'=>'Отгрузки',
+    'residuals' => 'Остатки'
 ];

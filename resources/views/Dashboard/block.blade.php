@@ -121,8 +121,7 @@
                     @foreach($blocksProducts as $blocksProduct)
                         @if($blocksProduct->residual_norm  !== 0
                                     && $blocksProduct->residual_norm  !== null
-                                    && $blocksProduct->building_material !== 'не выбрано'
-                                    && $blocksProduct->min_balance_mc !== 0)
+                                    && $blocksProduct->building_material !== 'не выбрано')
                         <tr style="border-bottom: 1px solid #dee2e6;">
                             <td class="m-1 d-flex justify-content-between">
                                 {{$blocksProduct->name}}

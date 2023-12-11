@@ -217,7 +217,7 @@ class DashboardService
             if ( $residual_norm !== 0)
             {
                 $remainder = $sum_residual/$residual_norm * 100;
-                $category->remainder =round($remainder,1);
+                $category->remainder = round($remainder,1);
             }
         }
         $resColumns = [];

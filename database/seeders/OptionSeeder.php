@@ -422,7 +422,7 @@ class OptionSeeder extends Seeder
                 'module' => 'ms'
             ],
             [
-                'name' => 'отгрузок',
+                'name' => 'отгрузки',
                 'code' => 'ms_url_demand',
                 'value' => 'https://online.moysklad.ru/api/remap/1.2/entity/demand/',
                 'module' => 'ms'
