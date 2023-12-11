@@ -63,7 +63,7 @@
 
         </div>
         <!-- /.card-header -->
-        <div class="card-body table-responsive p-0">
+        <div class="card-body table-responsive p-0 mb-5">
             <table class="table table-head-fixed text-nowrap">
                 <thead>
                     <tr>
