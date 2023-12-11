@@ -90,15 +90,15 @@
                         <th>
                             @if($product->residual_norm !== 0
                             && $product->residual_norm !== null)
-                            {{round(($product->residual /$product->residual_norm ) * 100)}} %
-
+                            
                             <div @if (round(($product->residual /$product->residual_norm ) * 100) <= 30)
-                             class="td-percent-red" 
+                             class="bg-success" 
                              @elseif(round(($product->residual /$product->residual_norm ) * 100) > 30 && round(($product->residual /$product->residual_norm ) * 100) <= 70) 
-                             class="td-percent-yellow"
-                             @else class="td-percent" 
+                             class="bg-warning"
+                             @else 
+                             class="bg-success" 
                              @endif>
-                                        {{round(($product->residual /$product->residual_norm ) * 100)}}%
+                                {{round(($product->residual /$product->residual_norm ) * 100)}}%
                             </div>
 
                             @else
