@@ -91,15 +91,15 @@
                             @if($product->residual_norm !== 0
                             && $product->residual_norm !== null)
                             
-                            <span @if (round(($product->residual /$product->residual_norm ) * 100) <= 30)
-                             class="badge text-bg-success" 
+                            <div @if (round(($product->residual /$product->residual_norm ) * 100) <= 30)
+                             class="alert alert-danger" 
                              @elseif(round(($product->residual /$product->residual_norm ) * 100) > 30 && round(($product->residual /$product->residual_norm ) * 100) <= 70) 
-                             class="badge text-bg-warning"
+                             class="alert alert-warning"
                              @else 
-                             class="badge text-bg-success" 
+                             class="alert alert-success" 
                              @endif>
                                 {{round(($product->residual /$product->residual_norm ) * 100)}}%
-                            </span>
+                            </div>
 
                             @else
                             {{ __("column.no") }}
