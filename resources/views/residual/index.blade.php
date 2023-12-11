@@ -19,38 +19,34 @@
 
                 <div class="d-flex flex-grow-1">
                     <div class="card-tools mx-2">
-                        @if(Request::url() == route('residual.blocksMaterials'))
+                        @if(url()->current() == route('residual.blocksMaterials'))
                         <a href="{{ route('residual.blocksMaterials') }}" class="btn btn-info">{{__("column.blocks_materials")}}</a>
                         @else
                         <a href="{{ route('residual.blocksMaterials') }}" class="btn btn-primary">{{__("column.blocks_materials")}}</a>
                         @endif
                     </div>
                     <div class="card-tools mx-2">
-                        @if(Request::url() == route('residual.blocksCategories'))
+                        @if(url()->current() == route('residual.blocksCategories'))
                         <a href="{{ route('residual.blocksCategories') }}" class="btn btn-info">{{__("column.blocks_categories")}}</a>
                         @else
                         <a href="{{ route('residual.blocksCategories') }}" class="btn btn-primary">{{__("column.blocks_categories")}}</a>
                         @endif
                     </div>
                     <div class="card-tools mx-2">
-                        <div class="card-tools mx-2">
-                            @if(Request::url() == route('residual.blocksProducts'))
-                            <a href="{{ route('residual.blocksProducts') }}" class="btn btn-info">{{__("column.blocks_products")}}</a>
-                            @else
-                            <a href="{{ route('residual.blocksProducts') }}" class="btn btn-primary">{{__("column.blocks_products")}}</a>
-                            @endif
-                        </div>
-
+                        @if(url()->current() == route('residual.blocksProducts'))
+                        <a href="{{ route('residual.blocksProducts') }}" class="btn btn-info">{{__("column.blocks_products")}}</a>
+                        @else
+                        <a href="{{ route('residual.blocksProducts') }}" class="btn btn-primary">{{__("column.blocks_products")}}</a>
+                        @endif
                     </div>
                     <div class="card-tools mx-2">
-                        @if(Request::url() == route('residual.concretesMaterials'))
+                        @if(url()->current() == route('residual.concretesMaterials'))
                         <a href="{{ route('residual.concretesMaterials') }}" class="btn btn-info">{{__("column.concretes_materials")}}</a>
                         @else
                         <a href="{{ route('residual.concretesMaterials') }}" class="btn btn-primary">{{__("column.concretes_materials")}}</a>
                         @endif
                     </div>
                 </div>
-
                 <div class="d-flex">
                     <div class="card-tools mx-2">
                         @if(Request::url() == route('residual'))
@@ -62,66 +58,70 @@
                 </div>
 
             </div>
-            <!-- /.card-header -->
-            <div class="card-body table-responsive p-0" style="height:820px; overflow-y: scroll;">
-                <table class="table table-head-fixed text-nowrap">
-                    <thead>
-                        <tr>
-                            <th>
-                                {{__("column.name")}}
-                            </th>
-                            <th>
-                                {{__("column.status_ms_id")}}
-                            </th>
-                            <th>
-                                {{__("column.residual_norm")}}
-                            </th>
-                            <th>
-                                {{__("column.residual")}}
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($products as $product)
-                        <tr>
-                            <th>
-                                {{ $product->name}}
-                            </th>
-                            <th>
-                                @if($product->residual_norm !== 0
-                                && $product->residual_norm !== null)
-                                {{round(($product->residual /$product->residual_norm ) * 100)}} %
-                                @else
-                                {{ __("column.no") }}
-                                @endif
-                            </th>
-                            <th>
-                                @if($product->residual_norm)
-                                {{ $product->residual_norm }}
-                                @else
-                                {{ __("column.no") }}
-                                @endif
-                            </th>
-                            <th>
-                                @if($product->min_balance_mc)
-                                {{ $product->min_balance_mc }}
-                                @else
-                                {{ __("column.no") }}
-                                @endif
-                            </th>
 
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                <div class="cont">
 
-                </div>
-            </div>
-            <!-- /.card-body -->
+
         </div>
-        <!-- /.card -->
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0">
+            <table class="table table-head-fixed text-nowrap">
+                <thead>
+                    <tr>
+                        <th>
+                            {{__("column.name")}}
+                        </th>
+                        <th>
+                            {{__("column.status_ms_id")}}
+                        </th>
+                        <th>
+                            {{__("column.residual_norm")}}
+                        </th>
+                        <th>
+                            {{__("column.residual")}}
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($products as $product)
+                    <tr>
+                        <th>
+                            {{ $product->name}}
+                        </th>
+                        <th>
+                            @if($product->residual_norm !== 0
+                            && $product->residual_norm !== null)
+                            {{round(($product->residual /$product->residual_norm ) * 100)}} %
+                            @else
+                            {{ __("column.no") }}
+                            @endif
+                        </th>
+                        <th>
+                            @if($product->residual_norm)
+                            {{ $product->residual_norm }}
+                            @else
+                            {{ __("column.no") }}
+                            @endif
+                        </th>
+                        <th>
+                            @if($product->min_balance_mc)
+                            {{ $product->min_balance_mc }}
+                            @else
+                            {{ __("column.no") }}
+                            @endif
+                        </th>
+
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <div class="cont">
+
+            </div>
+        </div>
+        <!-- /.card-body -->
     </div>
+    <!-- /.card -->
+</div>
 </div>
 @stop
 
