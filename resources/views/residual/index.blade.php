@@ -63,7 +63,7 @@
 
         </div>
         <!-- /.card-header -->
-        <div class="card-body table-responsive p-0 mb-5">
+        <div class="card-body table-responsive p-0 mb-5" style="height:820px; overflow-y: scroll;">
             <table class="table table-head-fixed text-nowrap">
                 <thead>
                     <tr>
