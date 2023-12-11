@@ -11,9 +11,9 @@
     @endif
 </h1>
 @stop
+
 @section('content')
-<div class="row">
-    <div class="col-12">
+    <div class="">
         <div class="card">
             <div class="card-header d-flex align-items-center justify-content-between">
 
@@ -62,8 +62,7 @@
 
 
         </div>
-        <!-- /.card-header -->
-        <div class="card-body table-responsive p-0 mb-5" style="height:820px; overflow-y: scroll;">
+        <div class="card-body p-0 mb-5" style="overflow-y: scroll;">
             <table class="table table-head-fixed text-nowrap">
                 <thead>
                     <tr>
@@ -137,42 +136,9 @@
 
             </div>
         </div>
-        <!-- /.card-body -->
     </div>
-    <!-- /.card -->
-</div>
-</div>
 @stop
 
 @section('js')
 @stop
-<style>
-    .cont nav div div {
-        padding: 0 20px;
-    }
-
-    .cont nav div div p {
-        font-weight: 500;
-        color: black !important;
-        font-size: 18px !important;
-    }
-
-    .pagination li {
-        margin-right: 10px;
-    }
-
-    #submit {
-        height: 38px;
-        margin-left: 10px;
-    }
-
-    #status {
-        width: auto;
-        height: 40px;
-        border-radius: 5px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-</style>
 @include('Dashboard.components.style')
