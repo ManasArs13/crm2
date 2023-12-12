@@ -19,7 +19,7 @@
         justify-content: center;
         align-items: center;
     }
-    #datepicker{
+    /* #datepicker{
         padding: 10px 10px 10px 40px;
         border: 1px solid #ccc;
         border-radius: 3px;
@@ -29,7 +29,7 @@
         height: 45px;
         font-size: 21px;
         outline: #ccc !important;
-    }
+    } */
     #datepicker:hover{
         background-color: #c4c2c2;
     }

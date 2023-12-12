@@ -128,9 +128,6 @@
                 @endforeach
             </tbody>
         </table>
-        <div class="cont">
-
-        </div>
     </div>
 </div>
 @stop

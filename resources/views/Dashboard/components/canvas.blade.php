@@ -1,4 +1,4 @@
-<div  class="card" style="height: 300px;">
+<div class="card">
     <div class="chart-container" style="height:30vh;">
         <canvas  id="orderChart" ></canvas>
     </div>
