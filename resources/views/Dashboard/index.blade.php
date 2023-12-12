@@ -72,7 +72,7 @@
                             @if($material->residual_norm !== 0
                             && $material->residual_norm !== null
                             && $material->type !== 'не выбрано')
-                            <div @if (round(($material->residual /$material->residual_norm ) * 100) <= 30) class="btn btn-danger" @elseif(round(($material->residual /$material->residual_norm ) * 100) > 30 && round(($material->residual /$material->residual_norm ) * 100) <= 70) class="btn btn-warning" @else class="btn btn-success" @endif>
+                            <div @if (round(($material->residual /$material->residual_norm ) * 100) <= 30) class="td-percent-red" @elseif(round(($material->residual /$material->residual_norm ) * 100) > 30 && round(($material->residual /$material->residual_norm ) * 100) <= 70) class="td-percent-yellow" @else class="td-percent" @endif>
                                         {{round(($material->residual /$material->residual_norm ) * 100)}}%
                             </div>
                             @else
@@ -104,7 +104,7 @@
                         @if($product->residual_norm !== 0
                             && $product->residual_norm !== null
                             && $product->type !== 'не выбрано')
-                            <div @if (round(($product->residual /$product->residual_norm ) * 100) <= 30) class="btn btn-danger" @elseif(round(($product->residual /$product->residual_norm ) * 100) > 30 && round(($product->residual /$product->residual_norm ) * 100) <= 70) class="btn btn-warning" @else class="btn btn-success" @endif>
+                            <div @if (round(($product->residual /$product->residual_norm ) * 100) <= 30) class="td-percent-red" @elseif(round(($product->residual /$product->residual_norm ) * 100) > 30 && round(($product->residual /$product->residual_norm ) * 100) <= 70) class="td-percent-yellow" @else class="td-percent" @endif>
                                         {{round(($product->residual /$product->residual_norm ) * 100)}}%
                             </div>
                             @else

@@ -52,7 +52,6 @@
         min-width: 40px;
         max-width: 60px;
         height: 25px;
-        border: solid 2px rgb(34 197 94);
         background-color: rgb(74 222 128);
         display: flex;
         justify-content: center;
@@ -64,7 +63,6 @@
         min-width: 40px;
         max-width: 60px;
         height: 25px;
-        border: solid 2px rgb(239 68 68);
         background-color: rgb(248 113 113);
         display: flex;
         justify-content: center;
@@ -76,7 +74,6 @@
         min-width: 40px;
         max-width: 60px;
         height: 25px;
-        border: solid 2px rgb(202 138 4);
         background-color: rgb(234 179 8);
         display: flex;
         justify-content: center;
