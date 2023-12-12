@@ -6,7 +6,7 @@
         z-index: 1000;
     }
     #card2{
-        min-width: 1220px;
+        /* min-width: 1220px; */
     }
     #card3{
         min-width: 340px;

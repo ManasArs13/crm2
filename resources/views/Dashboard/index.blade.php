@@ -1,8 +1,8 @@
 @section('title', 'Дашборд')
 @extends('adminlte::page')
 @section('content')
-<div class="wrapper d-flex justify-content-between">
-    <div id="card2" class="card bg-gray-light">
+<div class="py-3 d-flex justify-content-between">
+    <div id="card2" class="card bg-gray-light mr-3">
         <div class="button-block">
             <div class="buttons">
                 <div class="card-tools w-75 justify-content-end d-flex">

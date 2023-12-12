@@ -1,4 +1,4 @@
-<div  class="card bg-gray-light" style="overflow-y: scroll">
+<div  class="card" style="overflow-y: scroll">
 
     <table  class="table table-head-fixed text-nowrap">
         <thead>
