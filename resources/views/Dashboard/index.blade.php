@@ -1,4 +1,4 @@
-@section('title', 'Дашборд')
+@section('title', 'ГЛАВНАЯ')
 @extends('adminlte::page')
 @section('content')
 <div class="row py-2">

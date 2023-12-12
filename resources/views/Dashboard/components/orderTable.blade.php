@@ -25,37 +25,37 @@
                                 @if($column == 'status_ms')
                                     @switch($entityItem->$column->name)
                                         @case('[DN] Подтвержден')
-                                            <div id="status" style="border:solid #3ce0af;background-color: #b5f8e3">
+                                            <div id="status" style="background-color: #b5f8e3">
                                                 <span>{{$entityItem->$column->name}}</span>
                                             </div>
                                             @break
                                         @case('На брони')
-                                            <div id="status" style="border:solid #5b35a0;background-color: #ae96e3">
+                                            <div id="status" style="background-color: #ae96e3">
                                                 <span>{{$entityItem->$column->name}}</span>
                                             </div>
                                             @break
                                         @case('[C] Отменен')
-                                            <div id="status" style="border:solid red;background-color: #f3a3a3">
+                                            <div id="status" style="background-color: #f3a3a3">
                                                 <span>{{$entityItem->$column->name}}</span>
                                             </div>
                                             @break
                                         @case('Думают')
-                                            <div id="status" style="border:solid blue;background-color: #6f6ffd">
+                                            <div id="status" style="background-color: #6f6ffd">
                                                 <span>{{$entityItem->$column->name}}</span>
                                             </div>
                                             @break
                                         @case('[DD] Отгружен с долгом')
-                                            <div id="status" style="border:solid orange;background-color: #e5bf7e">
+                                            <div id="status" style="background-color: #e5bf7e">
                                                 <span>{{$entityItem->$column->name}}</span>
                                             </div>
                                             @break
                                         @case('[DF] Отгружен и закрыт')
-                                            <div id="status" style="border:solid green;background-color: #55c455">
+                                            <div id="status" style="background-color: #55c455">
                                                 <span>{{$entityItem->$column->name}}</span>
                                             </div>
                                             @break
                                         @case('[N] Новый')
-                                            <div id="status" style="border:solid yellow;background-color: #f5f590">
+                                            <div id="status" style="background-color: #f5f590">
                                                 <span>{{$entityItem->$column->name}}</span>
                                             </div>
                                             @break

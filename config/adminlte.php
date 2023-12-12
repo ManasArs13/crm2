@@ -297,15 +297,21 @@ return [
         ],
 
         [
-            'text'        => 'Дашборд (БЛОКИ)',
-            'url'         => 'admin/dashboard-2',
-            'icon'        => 'far fa-fw fa-file',
+            'text'        => ' Главная',
+            'url'         => 'admin/dashboard',
+            'icon'        => 'fas fa-fw fa-home',
             'label_color' => 'success',
         ],
         [
-            'text'        => 'Дашборд (БЕТОН)',
+            'text'        => 'Панель - БЛОК',
+            'url'         => 'admin/dashboard-2',
+            'icon'        => 'fas fa-fw fa-chart-line',
+            'label_color' => 'success',
+        ],
+        [
+            'text'        => 'Панель - БЕТОН',
             'url'         => 'admin/dashboard-3',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-fw fa-chart-line',
             'label_color' => 'success',
         ],
 
@@ -313,7 +319,7 @@ return [
         [
             'text'        => 'Заказы (мс)',
             'url'         => 'admin/order_ms',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-fw fa-shopping-bag',
             'label label' => 'success invisible',
         ],
 
@@ -321,41 +327,40 @@ return [
         [
             'text'        => 'Отгрузки (мс)',
             'url'         => 'admin/shipments',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-fw fa-dolly-flatbed',
             'label label' => 'success invisible',
         ],
         [
             'text'        => 'Остатки (мс)',
             'url'         => 'admin/residuals',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-fw fa-columns',
             'label label' => 'success invisible',
         ],
 
-        //22222
         [
             'text' => 'Товары',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-fw fa-th',
             'url'  => 'admin/products?type=products',
         ],
 
 
         [
             'text' => 'Материалы',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-fw fa-mortar-pestle',
             'url'  => 'admin/products?type=materials',
         ],
 
         [
             'text'        => 'Транспорт',
             'url'         => 'admin/transports',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-fw fa-truck',
             'label_color' => 'success',
         ],
 
 
         [
             'text'        => 'Калькулятор',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-fw fa-calculator',
             'url'         => 'admin/orders/create',
             'label_color' => 'success',
         ],
@@ -365,7 +370,7 @@ return [
             'text'        => 'Прочее',
             'icon'        => 'fa fa-bars',
             'label_color' => 'success',
-            'submenu'=>[
+            'submenu' => [
                 [
                     'text'        => 'Синхронизация (Заказ)',
                     'url'         => 'sync/order',
@@ -408,28 +413,6 @@ return [
                     'url'         => 'admin/shipping_prices',
                     'icon'        => 'far fa-fw fa-file',
                 ],
-
-                //3333
-                [
-                    'text'        => 'Категории товаров',
-                    'icon'        => 'fa fa-bars',
-                    'label_color' => 'success',
-                    'submenu' => [
-                        [
-                            'text' => 'Категории товаров (мс)',
-                            'icon'        => 'far fa-fw fa-file',
-                            'url'  => 'admin/products_categories',
-                        ],
-                        [
-                            'text' => 'материал',
-                            'url'  => 'admin/products_categories?type=materials',
-                        ],
-                        [
-                            'text' => 'продукция',
-                            'url'  => 'admin/products_categories?type=products',
-                        ],
-                    ],
-                ],
                 [
                     'text'        => 'Цвета (мс)',
                     'url'         => 'admin/colors',
@@ -448,53 +431,71 @@ return [
                     'icon'        => 'far fa-fw fa-file',
                     'label_color' => 'success',
                 ],
-                //55555
-                [
-                    'text'        => 'Контакты',
-                    'icon'        => 'fa fa-bars',
-                    'label_color' => 'success',
-                    'submenu' => [
-                        [
-                            'text'        => 'Контакты (мс)',
-                            'url'         => 'admin/contact_ms',
-                            'icon'        => 'far fa-fw fa-file',
-                        ],
-                        [
-                            'text'        => 'Контакты (амо)',
-                            'url'         => 'admin/contact_amos',
-                            'icon'        => 'far fa-fw fa-file',
-                        ],
-                    ]
-                ],
-                //66666
-                [
-                    'text'        => 'Статусы',
-                    'icon'        => 'fa fa-bars',
-                    'label_color' => 'success',
-                    'submenu' => [
-                        [
-                            'text'        => 'Статусы (амо)',
-                            'url'         => 'admin/status_amos',
-                            'icon'        => 'far fa-fw fa-file',
-                        ],
-                        [
-                            'text'        => 'Статусы (мс)',
-                            'url'         => 'admin/status_ms',
-                            'icon'        => 'far fa-fw fa-file',
-                        ],
-                    ]
-                ],
-                //7777
-
                 [
                     'text'        => 'Заказы (амо)',
                     'url'         => 'admin/order_amos',
                     'icon'        => 'far fa-fw fa-file',
                 ],
-                //8888
             ]
         ],
-        //9999
+
+        [
+            'text'        => 'Категории товаров',
+            'icon'        => 'fa fa-bars',
+            'label_color' => 'success',
+            'submenu' => [
+                [
+                    'text' => 'Категории товаров (мс)',
+                    'icon'        => 'far fa-fw fa-file',
+                    'url'  => 'admin/products_categories',
+                ],
+                [
+                    'text' => 'материал',
+                    'url'  => 'admin/products_categories?type=materials',
+                ],
+                [
+                    'text' => 'продукция',
+                    'url'  => 'admin/products_categories?type=products',
+                ],
+            ],
+        ],
+
+        [
+            'text'        => 'Контакты',
+            'icon'        => 'fa fa-bars',
+            'label_color' => 'success',
+            'submenu' => [
+                [
+                    'text'        => 'Контакты (мс)',
+                    'url'         => 'admin/contact_ms',
+                    'icon'        => 'far fa-fw fa-file',
+                ],
+                [
+                    'text'        => 'Контакты (амо)',
+                    'url'         => 'admin/contact_amos',
+                    'icon'        => 'far fa-fw fa-file',
+                ],
+            ]
+        ],
+
+        [
+            'text'        => 'Статусы',
+            'icon'        => 'fa fa-bars',
+            'label_color' => 'success',
+            'submenu' => [
+                [
+                    'text'        => 'Статусы (амо)',
+                    'url'         => 'admin/status_amos',
+                    'icon'        => 'far fa-fw fa-file',
+                ],
+                [
+                    'text'        => 'Статусы (мс)',
+                    'url'         => 'admin/status_ms',
+                    'icon'        => 'far fa-fw fa-file',
+                ],
+            ]
+        ],
+
         [
             'text'        => 'НАСТРОЙКИ',
             'icon'        => 'fas fa-cog',
