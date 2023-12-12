@@ -72,7 +72,7 @@
                             @if($blocksMaterial->residual_norm !== 0
                             && $blocksMaterial->residual_norm !== null
                             && $blocksMaterial->type !== 'не выбрано')
-                            <div @if (round(($material->residual /$blocksMaterial->residual_norm ) * 100) <= 30) class="td-percent-red" @elseif(round(($blocksMaterial->residual /$blocksMaterial->residual_norm ) * 100) > 30 && round(($blocksMaterial->residual /$blocksMaterial->residual_norm ) * 100) <= 70) class="td-percent-yellow" @else class="td-percent" @endif>
+                            <div @if (round(($blocksMaterial->residual /$blocksMaterial->residual_norm ) * 100) <= 30) class="td-percent-red" @elseif(round(($blocksMaterial->residual /$blocksMaterial->residual_norm ) * 100) > 30 && round(($blocksMaterial->residual /$blocksMaterial->residual_norm ) * 100) <= 70) class="td-percent-yellow" @else class="td-percent" @endif>
                                         {{round(($blocksMaterial->residual /$blocksMaterial->residual_norm ) * 100)}}%
                             </div>
                             @else
