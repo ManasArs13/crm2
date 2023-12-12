@@ -7,7 +7,7 @@
             <div class="card-header d-flex align-items-center justify-content-between">
                 <div class="d-flex flex-grow-1">
                     <div class="card-tools mx-1">
-                        @if(request()->filter == 'now')
+                        @if(request()->filter == 'now' || request()->filter == null)
                         <a href="{{route('admin.dashboard',['filter'=>'now'])}}" class="btn btn-info">Сегодня</a>
                         @else
                         <a href="{{route('admin.dashboard',['filter'=>'now'])}}" class="btn btn-primary">Сегодня</a>
@@ -72,7 +72,7 @@
                             @if($material->residual_norm !== 0
                             && $material->residual_norm !== null
                             && $material->type !== 'не выбрано')
-                            <div @if (round(($material->residual /$material->residual_norm ) * 100) <= 30) class="td-percent-red" @elseif(round(($material->residual /$material->residual_norm ) * 100) > 30 && round(($material->residual /$material->residual_norm ) * 100) <= 70) class="td-percent-yellow" @else class="td-percent" @endif>
+                            <div @if (round(($material->residual /$material->residual_norm ) * 100) <= 30) class="btn btn-danger" @elseif(round(($material->residual /$material->residual_norm ) * 100) > 30 && round(($material->residual /$material->residual_norm ) * 100) <= 70) class="btn btn-warning" @else class="btn btn-success" @endif>
                                         {{round(($material->residual /$material->residual_norm ) * 100)}}%
                             </div>
                             @else
@@ -95,22 +95,24 @@
                 </thead>
                 <tbody>
                     @foreach($products as $product)
+                    @if($product->residual_norm)
                     <tr style="border-bottom: 1px solid #dee2e6;">
                         <td class="m-1 d-flex justify-content-between">
                             {{$product->name}}
                         </td>
                         <td>
-                            @if($product->residual_norm !== 0
+                        @if($product->residual_norm !== 0
                             && $product->residual_norm !== null
                             && $product->type !== 'не выбрано')
-                            <div class="td-percent">
-                                {{round(($product->residual /$product->residual_norm ) * 100)}}%
+                            <div @if (round(($product->residual /$product->residual_norm ) * 100) <= 30) class="btn btn-danger" @elseif(round(($product->residual /$product->residual_norm ) * 100) > 30 && round(($product->residual /$product->residual_norm ) * 100) <= 70) class="btn btn-warning" @else class="btn btn-success" @endif>
+                                        {{round(($product->residual /$product->residual_norm ) * 100)}}%
                             </div>
                             @else
                             {{null}}
                             @endif
                         </td>
                     </tr>
+                    @endif
                     @endforeach
                 </tbody>
             </table>
