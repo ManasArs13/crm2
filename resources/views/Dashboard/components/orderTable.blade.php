@@ -1,10 +1,10 @@
-<div  class="card" style="overflow-x: auto">
+<div style="overflow-x: auto">
 
-    <table  class="table table-head-fixed text-nowrap">
+    <table  class="table text-nowrap bg-white">
         <thead>
         <tr>
             @foreach($resColumns as $key=>$column)
-                <th>
+                <th scope="col">
                     @if($key !== 'weight')
                         {{$column}}
                     @endif

@@ -47,10 +47,10 @@
                 @include('Dashboard.components.canvas')
             </div>
         </div>
-        <div class="card">
+        <!-- <div class="card"> -->
             @include('Dashboard.components.load')
             @include('Dashboard.components.orderTable',['filter'=>'index'])
-        </div>
+        <!-- </div> -->
     </div>
     <div class="col-3">
         <div class="card" style="overflow-x:auto ">
