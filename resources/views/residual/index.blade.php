@@ -115,14 +115,20 @@
                         {{ __("column.no") }}
                         @endif
                     </th>
-                    <th>
-                        {{ __("column.no") }}
+                     <th>
+                    @if($product->min_balance_mc && $product->residual_norm)
+                    {{ $product->min_balance_mc - $product->residual_norm }}
+                    @elseif
+                    {{ __("column.no") }}
+                    @endif
                     </th>
                     <th>
+                    @if($product->min_balance_mc && $product->residual_norm && $product->release)
+                    {{ ($product->min_balance_mc - $product->residual_norm ) / $product->release }}
+                    @elseif
                         {{ __("column.no") }}
-
+                    @endif
                     </th>
-
                 </tr>
                 @endif
                 @endforeach
