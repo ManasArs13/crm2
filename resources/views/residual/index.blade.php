@@ -128,7 +128,7 @@
                     </th>
                     <th>
                     @if($product->residual && $product->residual_norm && $product->release)
-                        @if($product->residual - $product->residual_norm => 0)
+                        @if($product->residual - $product->residual_norm >= 0)
                         {{ 0 }}
                         @else
                         {{ abs(round((($product->residual - $product->residual_norm ) / $product->release), 0)) }}
