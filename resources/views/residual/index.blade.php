@@ -124,7 +124,7 @@
                     </th>
                     <th>
                     @if($product->min_balance_mc && $product->residual_norm && $product->release)
-                    {{ ($product->min_balance_mc - $product->residual_norm ) / $product->release }}
+                    {{ round((($product->min_balance_mc - $product->residual_norm ) / $product->release), 2) }}
                     @else
                         {{ __("column.no") }}
                     @endif
