@@ -118,9 +118,9 @@
                      <th>
                     @if($product->residual && $product->residual_norm)
                         @if($product->residual - $product->residual_norm < 0)
-                        {{ 0 }}
+                        {{ abs($product->residual - $product->residual_norm) }}
                         @else
-                        {{ $product->residual - $product->residual_norm }}
+                        {{ 0 }}
                         @endif
                     @else
                         {{ __("column.no") }}
@@ -128,7 +128,7 @@
                     </th>
                     <th>
                     @if($product->residual && $product->residual_norm && $product->release)
-                        {{ round((($product->residual - $product->residual_norm ) / $product->release), 0) }}
+                        {{ abs(round((($product->residual - $product->residual_norm ) / $product->release), 0)) }}
                     @else
                         {{ __("column.no") }}
                     @endif
