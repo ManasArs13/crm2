@@ -109,22 +109,26 @@
                         @endif
                     </th>
                     <th>
-                        @if($product->min_balance_mc)
-                        {{ $product->min_balance_mc }}
+                        @if($product->residual)
+                        {{ $product->residual }}
                         @else
                         {{ __("column.no") }}
                         @endif
                     </th>
                      <th>
-                    @if($product->min_balance_mc && $product->residual_norm)
-                    {{ $product->min_balance_mc - $product->residual_norm }}
+                    @if($product->residual && $product->residual_norm)
+                        @if($product->residual - $product->residual_norm < 0)
+                        {{ 0 }}
+                        @else
+                        {{ $product->residual - $product->residual_norm }}
+                        @endif
                     @else
-                    {{ __("column.no") }}
+                        {{ __("column.no") }}
                     @endif
                     </th>
                     <th>
-                    @if($product->min_balance_mc && $product->residual_norm && $product->release)
-                    {{ round((($product->min_balance_mc - $product->residual_norm ) / $product->release), 2) }}
+                    @if($product->residual && $product->residual_norm && $product->release)
+                        {{ round((($product->residual - $product->residual_norm ) / $product->release), 0) }}
                     @else
                         {{ __("column.no") }}
                     @endif
