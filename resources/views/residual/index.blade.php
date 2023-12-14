@@ -127,14 +127,18 @@
                     @endif
                     </th>
                     <th>
-                    @if($product->residual && $product->residual_norm && $product->release)
-                        @if($product->residual - $product->residual_norm >= 0)
-                        {{ 0 }}
-                        @else
-                        {{ abs(round((($product->residual - $product->residual_norm ) / $product->release), 0)) }}
-                        @endif
+                    @if($product->making_day)
+                        {{ $product->making_day }}
                     @else
-                        {{ __("column.no") }}
+                        @if($product->residual && $product->residual_norm && $product->release)
+                            @if($product->residual - $product->residual_norm >= 0)
+                            {{ 0 }}
+                            @else
+                            {{ abs(round((($product->residual - $product->residual_norm ) / $product->release), 0)) }}
+                            @endif
+                        @else
+                            {{ __("column.no") }}
+                        @endif
                     @endif
                     </th>
                 </tr>
