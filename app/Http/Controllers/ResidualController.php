@@ -41,25 +41,38 @@ class ResidualController extends Controller
         $products = ProductsCategory::query()
             ->where('building_material', ProductsCategory::BLOCK)->get();
 
-        
+
 
         foreach ($products as $product) {
-            $residual =  Product::query()->where('type', Product::PRODUCTS)->where('category_id', $product->id)->get()->sum('residual');
-            $residual_norm = Product::query()->where('type', Product::PRODUCTS)->where('category_id', $product->id)->get()->sum('residual_norm');
-            $release =  Product::query()->where('type', Product::PRODUCTS)->where('category_id', $product->id)->get()->sum('release');
+            $product->$residual =  Product::query()->where('type', Product::PRODUCTS)->where('category_id', $product->id)->get()->sum('residual');
+            $product->$residual_norm = Product::query()->where('type', Product::PRODUCTS)->where('category_id', $product->id)->get()->sum('residual_norm');
+            $product->making_day = 0;
 
-            if ($residual_norm !== 0) {
-                $product->residual = $residual;
-                $product->residual_norm = $residual_norm;
-                $product->release = $release;
-                $product->making_day = 0;
+            $goods = Product::query()->where('type', Product::PRODUCTS)->where('category_id', $product->id)->get();
 
-                if ($product->residual && $product->residual_norm && $product->release) {
-                    if ($product->residual - $product->residual_norm < 0) {
-                        $product->making_day += abs(($product->residual - $product->residual_norm) / $product->release);
+
+            foreach ($goods as $good) {
+                if ($good->residual && $good->residual_norm && $good->release) {
+                    if ($good->residual - $good->residual_norm < 0) {
+                        $product->making_day += abs(($good->residual - $good->residual_norm) / $good->release);
                     }
                 }
             }
+
+            $product->maging_day += round($product->making_day);
+
+            // if ($residual_norm !== 0) {
+            //     $product->residual = $residual;
+            //     $product->residual_norm = $residual_norm;
+            // $product->release = $release;
+            // $product->making_day = 0;
+
+            // if ($product->residual && $product->residual_norm && $product->release) {
+            //     if ($product->residual - $product->residual_norm < 0) {
+            //         $product->making_day += abs(($product->residual - $product->residual_norm) / $product->release);
+            //     }
+            // }
+
         }
 
         $entity = 'residuals';
