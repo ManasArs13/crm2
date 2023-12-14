@@ -44,8 +44,8 @@ class ResidualController extends Controller
 
 
         foreach ($products as $product) {
-            $product->$residual =  Product::query()->where('type', Product::PRODUCTS)->where('category_id', $product->id)->get()->sum('residual');
-            $product->$residual_norm = Product::query()->where('type', Product::PRODUCTS)->where('category_id', $product->id)->get()->sum('residual_norm');
+            $product->residual =  Product::query()->where('type', Product::PRODUCTS)->where('category_id', $product->id)->get()->sum('residual');
+            $product->residual_norm = Product::query()->where('type', Product::PRODUCTS)->where('category_id', $product->id)->get()->sum('residual_norm');
             $product->making_day = 0;
 
             $goods = Product::query()->where('type', Product::PRODUCTS)->where('category_id', $product->id)->get();
