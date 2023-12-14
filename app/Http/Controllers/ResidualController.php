@@ -41,7 +41,7 @@ class ResidualController extends Controller
         $products = ProductsCategory::query()
             ->where('building_material', ProductsCategory::BLOCK)->get();
 
-        $product->making_day = 0;
+        
 
         foreach ($products as $product) {
             $residual =  Product::query()->where('type', Product::PRODUCTS)->where('category_id', $product->id)->get()->sum('residual');
@@ -52,6 +52,7 @@ class ResidualController extends Controller
                 $product->residual = $residual;
                 $product->residual_norm = $residual_norm;
                 $product->release = $release;
+                $product->making_day = 0;
 
                 if ($product->residual && $product->residual_norm && $product->release) {
                     if ($product->residual - $product->residual_norm < 0) {
