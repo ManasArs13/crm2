@@ -56,7 +56,7 @@ class ResidualController extends Controller
 
                 if ($product->residual && $product->residual_norm && $product->release) {
                     if ($product->residual - $product->residual_norm < 0) {
-                        $product->making_day += ($product->residual - $product->residual_norm) / $product->release;
+                        $product->making_day += abs(($product->residual - $product->residual_norm) / $product->release);
                     }
                 }
             }
