@@ -140,7 +140,7 @@
                             {{ abs(round((($product->residual - $product->residual_norm ) / $product->release), 0)) }}
                             @endif
                         @else
-                            {{ __("column.no") }}
+                            {{ 0 }}
                         @endif
                     @endif
                     </th>
