@@ -59,7 +59,7 @@ class ResidualController extends Controller
                 }
             }
 
-            $product->maging_day += round($product->making_day);
+            $product->maging_day += round($product->making_day, 0);
 
             // if ($residual_norm !== 0) {
             //     $product->residual = $residual;
