@@ -58,7 +58,7 @@
 
     </div>
 
-    <div class="card-body px-0 py-2 wrapper" style="overflow-y: scroll;">
+    <div class="card-body px-0 py-2 wrapper">
         <table class="table table-head-fixed text-nowrap">
             <thead>
                 <tr>
@@ -77,9 +77,11 @@
                     <th>
                         {{__("column.need")}}
                     </th>
+                    @if(url()->current() !== route('residual.concretesMaterials') && url()->current() !== route('residual.blocksMaterials'))
                     <th>
                         {{__("column.making_dais")}}
                     </th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -126,6 +128,7 @@
                         {{ __("column.no") }}
                     @endif
                     </th>
+                    @if(url()->current() !== route('residual.concretesMaterials') && url()->current() !== route('residual.blocksMaterials'))
                     <th>
                     @if($product->making_day)
                         {{ $product->making_day }}
@@ -141,6 +144,7 @@
                         @endif
                     @endif
                     </th>
+                    @endif
                 </tr>
                 @endif
                 @endforeach
