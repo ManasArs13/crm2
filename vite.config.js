@@ -10,6 +10,10 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
+                'resources/css/calculator.css',
+                'resources/js/calc.js',
+                'resources/js/jquery-ui.min.js',
+                'resources/js/jquery.ui.touch-punch.js'
             ],
             refresh: true,
         }),

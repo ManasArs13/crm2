@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CalculatorController;
 use App\Http\Controllers\ColorsController;
 use App\Http\Controllers\ColumnsController;
 use App\Http\Controllers\ContactAmosController;
@@ -90,6 +91,8 @@ Route::middleware('is_admin')->group(function (){
         Route::get('/residuals/blocks_categories', [ResidualController::class, 'blocksCategories'])->name('residual.blocksCategories');
         Route::get('/residuals/blocks_products', [ResidualController::class, 'blocksProducts'])->name('residual.blocksProducts');
         Route::get('/residuals/concretes_materials', [ResidualController::class, 'concretesMaterials'])->name('residual.concretesMaterials');
+
+        Route::get('/calculator', [CalculatorController::class, 'index'])->name('calculator');
 
         Route::post('/orders/delivery',[ OrdersController::class, 'delivery'])->name('orders.delivery');
         Route::get('/orders/create/{order}/ms',[ OrdersController::class, 'createOrderMs'])->name('orders.createOrderMs');

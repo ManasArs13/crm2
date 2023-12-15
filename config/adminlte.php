@@ -361,7 +361,7 @@ return [
         [
             'text'        => 'Калькулятор',
             'icon'        => 'fas fa-fw fa-calculator',
-            'url'         => 'admin/orders/create',
+            'url'         => 'admin/calculator',
             'label_color' => 'success',
         ],
 

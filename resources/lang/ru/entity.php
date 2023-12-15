@@ -22,5 +22,6 @@ return [
     "status_amos"=>"Статусы Амо",
     "transports"=>"Транспорт",
     'shipments'=>'Отгрузки',
-    'residuals' => 'Остатки'
+    'residuals' => 'Остатки',
+    'calculator' => 'Калькулятор'
 ];
