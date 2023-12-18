@@ -35,6 +35,7 @@ return new class extends Migration
                 Product::BLOCK
             ]);
             $table->integer('residual')->nullable();
+            $table->integer('release')->nullable();
             $table->string('sort')->nullable();
             $table->timestamps();
         });
