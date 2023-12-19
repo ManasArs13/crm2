@@ -7,7 +7,7 @@ use App\Services\Api\MoySkladService;
 use App\Services\Entity\TechChartService;
 use Illuminate\Console\Command;
 
-class ImportTransport extends Command
+class ImportTechChart extends Command
 {
     /**
      * Имя и сигнатура консольной команды.
@@ -19,7 +19,7 @@ class ImportTransport extends Command
      * Описание консольной команды.
      * @var string
      */
-    protected $description = 'Import transport from ms';
+    protected $description = 'Import technical charts from ms';
 
     /**
      * Создать новый экземпляр команды.
