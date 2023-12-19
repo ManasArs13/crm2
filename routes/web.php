@@ -23,6 +23,8 @@ use App\Http\Controllers\StatusAmoController;
 use App\Http\Controllers\StatusMsController;
 use App\Http\Controllers\SyncContactMsAmoController;
 use App\Http\Controllers\SyncOrderMsAmoController;
+use App\Http\Controllers\TechChartController;
+use App\Http\Controllers\TechOperationController;
 use App\Http\Controllers\TransportController;
 use App\Http\Controllers\VehicleTypesController;
 use App\Http\Controllers\WallsController;
@@ -91,6 +93,9 @@ Route::middleware('is_admin')->group(function (){
         Route::get('/residuals/blocks_categories', [ResidualController::class, 'blocksCategories'])->name('residual.blocksCategories');
         Route::get('/residuals/blocks_products', [ResidualController::class, 'blocksProducts'])->name('residual.blocksProducts');
         Route::get('/residuals/concretes_materials', [ResidualController::class, 'concretesMaterials'])->name('residual.concretesMaterials');
+
+        Route::get('/techcarts', [TechChartController::class, 'index'])->name('techcarts');
+        Route::get('/techoperations', [TechOperationController::class, 'index'])->name('techoperations');
 
         Route::get('/calculator', [CalculatorController::class, 'index'])->name('calculator');
 

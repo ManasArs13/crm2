@@ -62,6 +62,7 @@
                          </th>
                      </tr>
                  </thead>
+                 <tbody>
                  @foreach($concretes as $concrete)
                  @if($concrete->residual_norm !== 0
                  && $concrete->residual_norm !== null

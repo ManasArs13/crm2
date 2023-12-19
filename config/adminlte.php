@@ -302,17 +302,45 @@ return [
             'icon'        => 'fas fa-fw fa-home',
             'label_color' => 'success',
         ],
+
         [
-            'text'        => 'Панель - БЛОК',
-            'url'         => 'admin/dashboard-2',
+            'text'        => 'Панель',
             'icon'        => 'fas fa-fw fa-chart-line',
             'label_color' => 'success',
+            'submenu' => [
+                [
+                    'text'        => 'БЛОК',
+                    'url'         => 'admin/dashboard-2',
+                //    'icon'        => 'fas fa-fw fa-chart-line',
+                    'label_color' => 'success',
+                ],
+                [
+                    'text'        => 'БЕТОН',
+                    'url'         => 'admin/dashboard-3',
+                  //  'icon'        => 'fas fa-fw fa-chart-line',
+                    'label_color' => 'success',
+                ],
+            ],
         ],
+
         [
-            'text'        => 'Панель - БЕТОН',
-            'url'         => 'admin/dashboard-3',
+            'text'        => 'Производство',
             'icon'        => 'fas fa-fw fa-chart-line',
             'label_color' => 'success',
+            'submenu' => [
+                [
+                    'text'        => 'Техоперации',
+                    'url'         => 'admin/dashboard-2',
+                //    'icon'        => 'fas fa-fw fa-chart-line',
+                    'label_color' => 'success',
+                ],
+                [
+                    'text'        => 'Техкарты',
+                    'url'         => 'admin/techcarts',
+                  //  'icon'        => 'fas fa-fw fa-chart-line',
+                    'label_color' => 'success',
+                ],
+            ],
         ],
 
 

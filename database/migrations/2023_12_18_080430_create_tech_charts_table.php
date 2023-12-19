@@ -16,10 +16,10 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name')->nullable();
             $table->string('description')->nullable();
-            $table->integer('cost')->nullable();
-            $table->foreignUuid("product_id")->constrained("products");
+            $table->unsignedDecimal('cost', 8, 2)->nullable();
+            $table->foreignUuid("product_id")->constrained("products")->nullable();
             $table->integer("quantity")->unsigned()->default(0);
-            $table->enum('status',[
+            $table->enum('group',[
                 "Техкарта Бетон", "Техкарта Пресс"
             ])->nullable();
             $table->boolean('archived')->default(false);

@@ -23,5 +23,6 @@ return [
     "transports"=>"Транспорт",
     'shipments'=>'Отгрузки',
     'residuals' => 'Остатки',
-    'calculator' => 'Калькулятор'
+    'calculator' => 'Калькулятор',
+    'techcharts' => 'Техкарты'
 ];
