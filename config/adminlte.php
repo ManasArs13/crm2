@@ -330,7 +330,7 @@ return [
             'submenu' => [
                 [
                     'text'        => 'Техоперации',
-                    'url'         => 'admin/dashboard-2',
+                    'url'         => 'admin/techoperations',
                 //    'icon'        => 'fas fa-fw fa-chart-line',
                     'label_color' => 'success',
                 ],

@@ -47,7 +47,8 @@
                     </th>
                     <th>
                         {{ $techchart->quantity}}
-                    </th>                    <th>
+                    </th>
+                    <th>
                         {{ $techchart->cost}}
                     </th> 
                     <th>

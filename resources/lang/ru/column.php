@@ -90,10 +90,14 @@
    'blocks_categories' => 'Категории (БЛОК)',
    'blocks_products' => 'Товары (БЛОК)',
    'concretes_materials' => 'Материалы (БЕТОН)',
-   'all' => 'все',
-   'no' => 'не указан',
-   'release' => 'выпуск',
-   'need' => 'нужно',
-   'making_dais' => 'делать дней',
+   'all' => 'Все',
+   'no' => 'Не указан',
+   'release' => 'Выпуск',
+   'need' => 'Нужно',
+   'making_dais' => 'Делать дней',
+   'tech_chart' => 'Техкарта',
+   'hours' => 'Часы',
+   'cycles' => 'Циклов',
+   'defective' => 'Брак'
    
       ];

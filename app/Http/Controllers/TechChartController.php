@@ -11,7 +11,7 @@ class TechChartController extends Controller
         $needMenuForItem = true;
         $entity = 'techcharts';
 
-        $techcharts = TechChart::with('product')->get();
+        $techcharts = TechChart::with('product', 'materials')->get();
 
         return view('production.charts', compact("needMenuForItem", "entity", 'techcharts'));
     }

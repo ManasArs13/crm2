@@ -14,7 +14,7 @@ class TechChart extends Model
 
     public function materials()
     {
-        return $this->hasMany(TechChartMaterial::class);
+        return $this->belongsToMany(Product::class, 'tech_chart_materials', 'tech_chart_id', 'product_id')->withPivot('quantity');
     }
 
     public function product()

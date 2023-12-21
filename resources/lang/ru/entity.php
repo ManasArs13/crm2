@@ -24,5 +24,6 @@ return [
     'shipments'=>'Отгрузки',
     'residuals' => 'Остатки',
     'calculator' => 'Калькулятор',
-    'techcharts' => 'Техкарты'
+    'techcharts' => 'Техкарты',
+    'processings' => 'Техоперации'
 ];

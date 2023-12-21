@@ -7,19 +7,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class TechChartMaterial extends Pivot
+class ProcessingMaterials extends Pivot
 {
     use HasFactory, HasUuids;
 
+    protected $table = 'processing_materials';
+
     protected $fillable = ['id'];
 
-    public function tech_chart(): BelongsTo
+    public function processing(): BelongsTo
     {
-        return $this->belongsTo(TechChart::class, 'tech_cart_id');
+        return $this->belongsTo(Processing::class, 'processing_id');
     }
 
-    public function products(): BelongsTo
+    public function products()
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(Product::class);
     }
 }
