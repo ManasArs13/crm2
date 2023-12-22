@@ -21,7 +21,7 @@ class ProcessingService implements EntityInterface
     public function import(array $rows)
     {
         foreach ($rows["rows"] as $row) {
-
+            usleep(60000);
             $entity = Processing::firstOrNew(['id' => $row['id']]);
 
             if ($entity->id === null) {
@@ -29,6 +29,7 @@ class ProcessingService implements EntityInterface
             }
 
             if (isset($row["products"])) {
+                usleep(60000);
                 $products = $this->service->actionGetRowsFromJson($row['products']['meta']['href']);
 
                 foreach ($products as $product) {
@@ -50,7 +51,7 @@ class ProcessingService implements EntityInterface
             }
 
             if (isset($row["materials"])) {
-
+                usleep(60000);
                 $materials = $this->service->actionGetRowsFromJson($row['materials']['meta']['href']);
 
                 foreach ($materials as $material) {
