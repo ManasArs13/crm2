@@ -95,7 +95,7 @@ Route::middleware('is_admin')->group(function () {
         Route::get('/residuals/concretes_materials', [ResidualController::class, 'concretesMaterials'])->name('residual.concretesMaterials');
 
 
-        Route::resource('techcarts', TechChartController::class)->only([
+        Route::resource('techcharts', TechChartController::class)->only([
             'index', 'show'
         ]);
 

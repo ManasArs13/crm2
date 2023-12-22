@@ -336,7 +336,7 @@ return [
                 ],
                 [
                     'text'        => 'Техкарты',
-                    'url'         => 'admin/techcarts',
+                    'url'         => 'admin/techcharts',
                   //  'icon'        => 'fas fa-fw fa-chart-line',
                     'label_color' => 'success',
                 ],

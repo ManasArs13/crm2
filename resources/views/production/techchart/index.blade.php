@@ -37,7 +37,9 @@
                 @foreach($techcharts as $techchart)
                 <tr>
                     <th>
+                    <a href="{{ route('techcharts.show', ['techchart' => $techchart->id]) }}">
                         {{ $techchart->id}}
+                    </a>
                     </th>
                     <th>
                         {{ $techchart->name}}

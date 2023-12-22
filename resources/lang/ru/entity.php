@@ -26,5 +26,6 @@ return [
     'calculator' => 'Калькулятор',
     'techcharts' => 'Техкарты',
     'processings' => 'Техоперации',
-    'processing' => 'Техоперация №'
+    'processing' => 'Техоперация №',
+    'techchart' => 'Техкарта '
 ];
