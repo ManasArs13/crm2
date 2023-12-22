@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('description')->nullable();
             $table->unsignedDecimal('cost', 8, 2)->nullable();
-            $table->integer("quantity")->unsigned()->default(0);
             $table->enum('group',[
                 "Техкарта Бетон", "Техкарта Пресс"
             ])->nullable();

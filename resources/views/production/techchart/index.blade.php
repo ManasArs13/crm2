@@ -26,9 +26,6 @@
                         {{__("column.name")}}
                     </th>
                     <th>
-                        {{__("column.quantity")}}
-                    </th>
-                    <th>
                         {{__("column.price")}}
                     </th>
                     <th>
@@ -43,10 +40,7 @@
                         {{ $techchart->id}}
                     </th>
                     <th>
-                        {{ $techchart->product->name}}
-                    </th>
-                    <th>
-                        {{ $techchart->quantity}}
+                        {{ $techchart->name}}
                     </th>
                     <th>
                         {{ $techchart->cost}}

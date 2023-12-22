@@ -81,7 +81,8 @@ class TechChartService implements EntityInterface
             if (isset($row["pathName"])) {
                 $entity->group = $row["pathName"];
             }
-
+            
+            $entity->name = $row["name"];
             $entity->updated_at = $row["updated"];
 
             $entity->save();
