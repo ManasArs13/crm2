@@ -14,12 +14,12 @@ class Processing extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class, 'processing_products', 'processing_id', 'product_id');
+        return $this->belongsToMany(Product::class, 'processing_products', 'processing_id', 'product_id')->withPivot('id', 'quantity');
     }
 
     public function materials()
     {
-        return $this->belongsToMany(Product::class, 'processing_materials', 'processing_id', 'product_id');
+        return $this->belongsToMany(Product::class, 'processing_materials', 'processing_id', 'product_id')->withPivot('id', 'quantity');
     }
 
     public function tech_chart()

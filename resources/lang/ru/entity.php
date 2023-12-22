@@ -25,5 +25,6 @@ return [
     'residuals' => 'Остатки',
     'calculator' => 'Калькулятор',
     'techcharts' => 'Техкарты',
-    'processings' => 'Техоперации'
+    'processings' => 'Техоперации',
+    'processing' => 'Техоперация №'
 ];

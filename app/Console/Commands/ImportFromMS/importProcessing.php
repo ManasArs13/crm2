@@ -36,6 +36,7 @@ class ImportProcessing extends Command
     public function handle(MoySkladService $service, ProcessingService $processingService)
     {
         $url = 'https://api.moysklad.ru/api/remap/1.2/entity/processing';
+       // $date = Option::query()->where('code', 'ms_date_begin_change')->first()?->value;
         $service->createUrl($url, $processingService);
     }
 }

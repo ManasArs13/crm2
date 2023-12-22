@@ -98,6 +98,8 @@
    'tech_chart' => 'Техкарта',
    'hours' => 'Часы',
    'cycles' => 'Циклов',
-   'defective' => 'Брак'
+   'defective' => 'Брак',
+   'productions' => 'Продукция',
+   'materials'  => 'Материалы'
    
       ];

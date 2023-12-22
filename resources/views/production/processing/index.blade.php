@@ -52,7 +52,9 @@
                 @foreach($processings as $processing)
                 <tr>
                     <th>
+                        <a href="{{ route('processings.show', ['processing' => $processing->id]) }}">
                         {{ $processing->id}}
+                        </a>
                     </th>
                     <th>
                         {{ $processing->name}}
@@ -84,7 +86,6 @@
                     </th>
                 </tr>
                 @endforeach
-
             </tbody>
         </table>
         <div class="cont m-3">

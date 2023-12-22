@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Production;
 
 use App\Models\TechChart;
+use App\Http\Controllers\Controller;
 
 class TechChartController extends Controller
 {
@@ -13,6 +14,6 @@ class TechChartController extends Controller
 
         $techcharts = TechChart::with('product', 'materials')->get();
 
-        return view('production.charts', compact("needMenuForItem", "entity", 'techcharts'));
+        return view('production.techchart.index', compact("needMenuForItem", "entity", 'techcharts'));
     }
 }

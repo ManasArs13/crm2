@@ -14,11 +14,11 @@ class TechChart extends Model
 
     public function materials()
     {
-        return $this->belongsToMany(Product::class, 'tech_chart_materials', 'tech_chart_id', 'product_id')->withPivot('quantity');
+        return $this->belongsToMany(Product::class, 'tech_chart_materials', 'tech_chart_id', 'product_id')->withPivot('id', 'quantity');
     }
 
-    public function product()
+    public function products()
     {
-        return $this->hasOne(Product::class, 'id', 'product_id');
+        return $this->belongsToMany(Product::class, 'tech_chart_products', 'tech_chart_id', 'product_id')->withPivot('id', 'quantity');
     }
 }
