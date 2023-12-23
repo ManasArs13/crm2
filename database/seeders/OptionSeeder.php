@@ -182,6 +182,12 @@ class OptionSeeder extends Seeder
                 'module' => 'ms'
             ],
             [
+                'name' => "Техоперации",
+                'code' => 'ms_processings_url',
+                'value' => 'https://api.moysklad.ru/api/remap/1.2/entity/processing',
+                'module' => 'ms'
+            ],
+            [
                 'name' => 'Товар: Адрес, с которого будем брать товары для заказа',
                 'code' => 'ms_product_for_order_url',
                 'value' => 'https://api.moysklad.ru/api/remap/1.2/entity/product/',

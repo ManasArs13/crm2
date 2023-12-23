@@ -37,15 +37,15 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <th>
+                        <td>
                             {{ $tech_chart->id}}
-                        </th>
-                        <th>
+                        </td>
+                        <td>
                             {{ $tech_chart->name}}
-                        </th>
-                        <th>
+                        </td>
+                        <td>
                             {{ $tech_chart->cost}}
-                        </th>
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="6">
