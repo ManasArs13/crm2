@@ -80,21 +80,23 @@ class ProductService implements EntityInterface
             $product = Product::where('id', '=', $residual['assortmentId'])->first();
 
             if ($product) {
-                if ($product->residual !== null &&  $product->residual_norm !== null) {
-                    $residual_material = 'да';
-                    if ($product->residual - $product->residual_norm < 0) {
-                        $product_need = abs($product->residual - $product->residual_norm);
+                $tech_chart_product = TechChartProduct::where('product_id', '=', $residual['assortmentId'])->first();
+                
+                if ($tech_chart_product) {
+                    $tech_chart_materials = TechChartMaterial::where('tech_chart_id', '=', $tech_chart_product->tech_chart_id)->get();
+                    
+                    if ($tech_chart_materials) {
 
-                        $tech_chart_product = TechChartProduct::where('product_id', '=', $residual['assortmentId'])->first();
-                        if ($tech_chart_product) {
-                            $tech_chart_materials = TechChartMaterial::where('tech_chart_id', '=', $tech_chart_product->tech_chart_id)->get();
-                            if ($tech_chart_materials) {
+                        if ($product->residual !== null &&  $product->residual_norm !== null) {
+                            $residual_material = 'да';
+
+                            if ($product->residual - $product->residual_norm < 0) {
+                                $product_need = abs($product->residual - $product->residual_norm);
 
                                 foreach ($tech_chart_materials as $tech_chart_material) {
                                     $material = Product::where('id', '=', $tech_chart_material->product_id)->first();
-
                                     $need_material = $product_need * $tech_chart_material->quantity;
-
+                                    
                                     if ($material->residual < $need_material) {
                                         $residual_material = 'нет';
                                     }
