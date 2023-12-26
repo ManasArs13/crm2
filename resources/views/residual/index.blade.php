@@ -72,6 +72,9 @@
                         {{__("column.residual_norm")}}
                     </th>
                     <th>
+                        {{ __("column.materials")}}
+                    </th>
+                    <th>
                         {{__("column.residual")}}
                     </th>
                     <th>
@@ -111,6 +114,9 @@
                         @else
                         {{ __("column.no") }}
                         @endif
+                    </th>
+                    <th>
+                        {{ $product->materials }}
                     </th>
                     <th>
                         @if($product->residual)
