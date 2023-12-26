@@ -117,11 +117,13 @@
                         {{ __("column.no") }}
                         @endif
                     </th>
+
                     @if(url()->current() == route('residual.blocksProducts') || url()->current() == route('residual'))
                     <th>
                         {{ $product->materials}}
                     </th>
                     @endif
+                    
                     <th>
                         @if($product->residual)
                         {{ $product->residual }}
@@ -131,8 +133,17 @@
                     </th>
                     <th>
                         @if($product->residual && $product->residual_norm)
-                        @if($product->residual - $product->residual_norm < 0) {{ abs($product->residual - $product->residual_norm) }} @else {{ 0 }} @endif @else {{ __("column.no") }} @endif </th>
-                            @if(url()->current() !== route('residual.concretesMaterials') && url()->current() !== route('residual.blocksMaterials'))
+                            @if($product->residual - $product->residual_norm < 0) 
+                                {{ abs($product->residual - $product->residual_norm) }} 
+                            @else 
+                                {{ 0 }} 
+                            @endif
+                        @else 
+                            {{ __("column.no") }}
+                        @endif 
+                    </th>
+
+                @if(url()->current() !== route('residual.concretesMaterials') && url()->current() !== route('residual.blocksMaterials'))
                     <th>
                         @if($product->making_day)
                         {{ $product->making_day }}
@@ -148,7 +159,8 @@
                         @endif
                         @endif
                     </th>
-                    @endif
+                @endif
+
                 </tr>
                 @endif
                 @endforeach

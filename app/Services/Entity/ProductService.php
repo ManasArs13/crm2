@@ -77,19 +77,25 @@ class ProductService implements EntityInterface
         foreach ($residuals as $residual) {
 
             $residual_material = 'не указано';
-            $tech_chart_product = TechChartProduct::where('product_id', '=', $residual['assortmentId'])->first();
+            $product = Product::where('id', '=', $residual['assortmentId'])->first();
 
-            if ($tech_chart_product) {
-                $tech_chart_materials = TechChartMaterial::where('tech_chart_id', '=', $tech_chart_product->tech_chart_id)->get();
+            if ($product) {
+                if ($product->residual - $product->residual_norm < 0) {
+                    $product_need = abs($product->residual - $product->residual_norm);
 
-                if ($tech_chart_materials) {
-                    $residual_material = 'да';
+                    $tech_chart_product = TechChartProduct::where('product_id', '=', $residual['assortmentId'])->first();
+                    if ($tech_chart_product) {
+                        $tech_chart_materials = TechChartMaterial::where('tech_chart_id', '=', $tech_chart_product->tech_chart_id)->get();
+                        if ($tech_chart_materials) {
+                            $residual_material = 'да';
+                            foreach ($tech_chart_materials as $tech_chart_material) {
+                                $material = Product::where('id', '=', $tech_chart_material->product_id)->first();
 
-                    foreach ($tech_chart_materials as $material) {
-                        $product = Product::where('id', '=', $material->product_id)->first();
-                        if ($product) {
-                            if ($product->residual < $material->quantity) {
-                                $residual_material = 'нет';
+                                $need_material = $product_need * $tech_chart_material->quantity;
+                                
+                                if ($material->residual < $need_material) {
+                                    $residual_material = 'нет';
+                                }
                             }
                         }
                     }
