@@ -76,23 +76,22 @@ class ProductService implements EntityInterface
 
         foreach ($residuals as $residual) {
 
-            $residual_material = 'не указано'; 
+            $residual_material = 'не указано';
             $tech_chart_product = TechChartProduct::where('product_id', '=', $residual['assortmentId'])->first();
 
             if ($tech_chart_product) {
-                $tech_chart = TechChart::with('materials')->find($tech_chart_product->tech_chart_id);
+                $tech_chart_materials = TechChartMaterial::where('tech_chart_id', '=', $tech_chart_product->tech_chart_id)->get();
 
-                if ($tech_chart) {
-                    $tech_chart_materials = $tech_chart->materials;
-
+                if ($tech_chart_materials) {
                     $residual_material = 'да';
 
                     foreach ($tech_chart_materials as $material) {
                         $product = Product::where('id', '=', $material->product_id)->first();
-                        dump($product);
-                        // if ($product->residual < $material->quantity) {
-                        //     $residual_material = 'нет';
-                        // }
+                        if ($product) {
+                            if ($product->residual < $material->quantity) {
+                                $residual_material = 'нет';
+                            }
+                        }
                     }
                 }
             }
