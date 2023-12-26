@@ -118,7 +118,8 @@
                         @endif
                     </th>
                     @if(url()->current() == route('residual.blocksProducts') || url()->current() == route('residual'))
-                    {{$product->materials == false}}
+                    <th>
+                        {{ $product->materials == false}}
                     </th>
                     @endif
                     <th>
