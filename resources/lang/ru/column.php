@@ -103,6 +103,8 @@
    'materials'  => 'Материалы',
    'quantity_norm'  => 'Количество (норм)',
    'delivery_fee' => 'Цена доставки',
-   'delivery_price_norm' => 'Стоимость доставки Норм'
+   'delivery_price_norm' => 'Стоимость доставки Норм',
+   'processing' => 'Операция',
+   'techchart_id' => 'Карта'
    
       ];

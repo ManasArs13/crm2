@@ -98,11 +98,14 @@ Route::middleware('is_admin')->group(function () {
         Route::resource('techcharts', TechChartController::class)->only([
             'index', 'show'
         ]);
+        Route::get('/techchart/products', [TechChartController::class, 'products'])->name('techcharts.products');
+        Route::get('/techchart/materials', [TechChartController::class, 'materials'])->name('techcharts.materials');
 
         Route::resource('processings', ProcessingController::class)->only([
             'index', 'show'
         ]);
-
+        Route::get('/processing/products', [ProcessingController::class, 'products'])->name('processings.products');
+        Route::get('/processing/materials', [ProcessingController::class, 'materials'])->name('processings.materials');
 
         Route::get('/calculator', [CalculatorController::class, 'index'])->name('calculator');
 

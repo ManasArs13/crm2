@@ -51,73 +51,53 @@
                         {{__("column.id")}}
                     </th>
                     <th>
-                        {{__("column.name")}}
+                        {{__("column.processing")}}
                     </th>
                     <th>
-                        {{__("column.date_plan")}}
-                    </th>
-                    <th>
-                        {{__("column.tech_chart")}}
+                        {{__("column.product_id")}}
                     </th>
                     <th>
                         {{__("column.quantity")}}
                     </th>
                     <th>
-                        {{__("column.hours")}}
+                        {{__("column.created_at")}}
                     </th>
                     <th>
-                        {{__("column.cycles")}}
-                    </th>
-                    <th>
-                        {{__("column.defective")}}
-                    </th>
-                    <th>
-                        {{__("column.description")}}
+                        {{__("column.updated_at")}}
                     </th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($processings as $processing)
+                @foreach($processing_materials as $product)
                 <tr>
                     <th>
-                        <a href="{{ route('processings.show', ['processing' => $processing->id]) }}">
-                            {{ $processing->id}}
+                        {{ $product->id}}
+                    </th>
+                    <th>
+                        <a href="{{ route('processings.show', ['processing' => $product->processing_id]) }}">
+                            {{ $product->processing_id}}
                         </a>
                     </th>
                     <th>
-                        {{ $processing->name}}
+                        <a href="{{ route('products.show', ['product' => $product->product_id]) }}">
+                            {{ $product->product_id}}
+                        </a>
                     </th>
                     <th>
-                        {{ $processing->moment}}
+                        {{ $product->quantity}}
                     </th>
                     <th>
-                        @if($processing->tech_chart)
-                        {{ $processing->tech_chart->name}}
-                        @else
-                        {{ __('column.no')}}
-                        @endif
+                        {{ $product->created_at}}
                     </th>
                     <th>
-                        {{ $processing->quantity}}
-                    </th>
-                    <th>
-                        {{ $processing->hours}}
-                    </th>
-                    <th>
-                        {{ $processing->cycles}}
-                    </th>
-                    <th>
-                        {{ $processing->defective}}
-                    </th>
-                    <th>
-                        {{ $processing->description}}
+                        {{ $product->updated_at}}
                     </th>
                 </tr>
                 @endforeach
             </tbody>
         </table>
         <div class="cont m-3">
-            {{ $processings->links('pagination::bootstrap-5') }}
+            {{ $processing_materials->links('pagination::bootstrap-5') }}
         </div>
     </div>
 </div>

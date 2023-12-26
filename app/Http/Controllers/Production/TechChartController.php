@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Production;
 
 use App\Models\TechChart;
 use App\Http\Controllers\Controller;
+use App\Models\TechChartMaterial;
+use App\Models\TechChartProduct;
 use Illuminate\Http\Request;
 
 class TechChartController extends Controller
@@ -25,5 +27,25 @@ class TechChartController extends Controller
 
         $tech_chart = TechChart::with('materials', 'products')->find($techchart);
         return view('production.techchart.show', compact("needMenuForItem", "entity", 'tech_chart'));
+    }
+
+    public function products(Request $request)
+    {
+        $needMenuForItem = true;
+        $entity = 'techcharts';
+
+        $tech_chart_products = TechChartProduct::orderBy('created_at', 'desc')->paginate(100);
+
+        return view('production.techchart.products', compact("needMenuForItem", "entity", 'tech_chart_products'));
+    }
+
+    public function materials(Request $request)
+    {
+        $needMenuForItem = true;
+        $entity = 'techcharts';
+
+        $tech_chart_materials = TechChartMaterial::orderBy('created_at', 'desc')->paginate(100);
+
+        return view('production.techchart.materials', compact("needMenuForItem", "entity", 'tech_chart_materials'));
     }
 }

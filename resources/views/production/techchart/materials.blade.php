@@ -41,7 +41,7 @@
         </div>
     </div>
 
-    <div class="card-body px-0 pb-2 pt-0 wrapper mb-2" style="overflow-x: scroll;">
+    <div class="card-body px-0 pt-0 pb-2 wrapper mb-2" style="overflow-x: scroll;">
         <table class="table table-head-fixed text-nowrap">
             <thead>
                 <tr>
@@ -49,38 +49,54 @@
                         {{__("column.id")}}
                     </th>
                     <th>
-                        {{__("column.name")}}
+                        {{__("column.techchart_id")}}
                     </th>
                     <th>
-                        {{__("column.price")}}
+                        {{__("column.product_id")}}
                     </th>
                     <th>
-                        {{__("column.description")}}
+                        {{__("column.quantity")}}
+                    </th>
+                    <th>
+                        {{__("column.created_at")}}
+                    </th>
+                    <th>
+                        {{__("column.updated_at")}}
                     </th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($techcharts as $techchart)
+                @foreach($tech_chart_materials as $product)
                 <tr>
                     <th>
-                        <a href="{{ route('techcharts.show', ['techchart' => $techchart->id]) }}">
-                            {{ $techchart->id}}
+                        {{ $product->id}}
+                    </th>
+                    <th>
+                        <a href="{{ route('techcharts.show', ['techchart' => $product->tech_chart_id]) }}">
+                            {{ $product->tech_chart_id}}
                         </a>
                     </th>
                     <th>
-                        {{ $techchart->name}}
+                        <a href="{{ route('products.show', ['product' => $product->product_id]) }}">
+                            {{ $product->product_id}}
+                        </a>
                     </th>
                     <th>
-                        {{ $techchart->cost}}
+                        {{ $product->quantity}}
                     </th>
                     <th>
-                        {{ $techchart->description}}
+                        {{ $product->created_at}}
+                    </th>
+                    <th>
+                        {{ $product->updated_at}}
                     </th>
                 </tr>
                 @endforeach
             </tbody>
-
         </table>
+        <div class="cont m-3">
+            {{ $tech_chart_materials->links('pagination::bootstrap-5') }}
+        </div>
     </div>
 </div>
 @stop
