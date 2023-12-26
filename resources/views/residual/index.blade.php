@@ -89,7 +89,9 @@
                 @if($product->residual_norm)
                 <tr>
                     <th>
-                        {{ $product->name}}
+                        <a href="{{ route('products.show', ['product' => $product->id]) }}">
+                            {{ $product->name}}
+                        </a>
                     </th>
                     <th>
                         @if($product->residual_norm !== 0
@@ -117,32 +119,24 @@
                         {{ __("column.no") }}
                         @endif
                     </th>
-                     <th>
-                    @if($product->residual && $product->residual_norm)
-                        @if($product->residual - $product->residual_norm < 0)
-                        {{ abs($product->residual - $product->residual_norm) }}
+                    <th>
+                        @if($product->residual && $product->residual_norm)
+                        @if($product->residual - $product->residual_norm < 0) {{ abs($product->residual - $product->residual_norm) }} @else {{ 0 }} @endif @else {{ __("column.no") }} @endif </th>
+                            @if(url()->current() !== route('residual.concretesMaterials') && url()->current() !== route('residual.blocksMaterials'))
+                    <th>
+                        @if($product->making_day)
+                        {{ $product->making_day }}
+                        @else
+                        @if($product->residual && $product->residual_norm && $product->release)
+                        @if($product->residual - $product->residual_norm >= 0)
+                        {{ 0 }}
+                        @else
+                        {{ abs(round((($product->residual - $product->residual_norm ) / $product->release), 0)) }}
+                        @endif
                         @else
                         {{ 0 }}
                         @endif
-                    @else
-                        {{ __("column.no") }}
-                    @endif
-                    </th>
-                    @if(url()->current() !== route('residual.concretesMaterials') && url()->current() !== route('residual.blocksMaterials'))
-                    <th>
-                    @if($product->making_day)
-                        {{ $product->making_day }}
-                    @else
-                        @if($product->residual && $product->residual_norm && $product->release)
-                            @if($product->residual - $product->residual_norm >= 0)
-                            {{ 0 }}
-                            @else
-                            {{ abs(round((($product->residual - $product->residual_norm ) / $product->release), 0)) }}
-                            @endif
-                        @else
-                            {{ 0 }}
                         @endif
-                    @endif
                     </th>
                     @endif
                 </tr>
