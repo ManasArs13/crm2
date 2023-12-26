@@ -21,15 +21,19 @@ class ProcessingService implements EntityInterface
     public function import(array $rows)
     {
         foreach ($rows["rows"] as $row) {
-            usleep(60000);
+
             $entity = Processing::firstOrNew(['id' => $row['id']]);
 
             if ($entity->id === null) {
                 $entity->id = $row['id'];
             }
 
+            if (isset($row["processingPlan"])) {
+                 $techchart = $this->service->actionGetRowsFromJson($row['processingPlan']['meta']['href'], false);
+                $entity->tech_chart_id = $techchart['id'];
+            }
+
             if (isset($row["products"])) {
-                usleep(60000);
                 $products = $this->service->actionGetRowsFromJson($row['products']['meta']['href']);
 
                 foreach ($products as $product) {
@@ -40,7 +44,7 @@ class ProcessingService implements EntityInterface
                     }
 
                     $entity_product->processing_id = $row['id'];
-                    
+
 
                     $product_bd = $this->service->actionGetRowsFromJson($product['assortment']['meta']['href'], false);
 
@@ -51,11 +55,11 @@ class ProcessingService implements EntityInterface
             }
 
             if (isset($row["materials"])) {
-                usleep(60000);
                 $materials = $this->service->actionGetRowsFromJson($row['materials']['meta']['href']);
 
                 foreach ($materials as $material) {
                     $entity_material = ProcessingMaterials::firstOrNew(['id' => $material['id']]);
+
 
                     if ($entity_material->id === null) {
                         $entity_material->id = $material['id'];
@@ -67,15 +71,19 @@ class ProcessingService implements EntityInterface
                     $product_bd = $this->service->actionGetRowsFromJson($material['assortment']['meta']['href'], false);
                     $entity_material->product_id = $product_bd['id'];
 
+                    if (isset($row["processingPlan"])) {
+                        $techart_material = TechChartMaterial::where('tech_chart_id', '=', $techchart['id'])
+                            ->where('product_id', '=', $product_bd['id'])
+                            ->first();
+
+                        if ($techart_material) {
+                            $entity_material->quantity_norm = $row["quantity"] * $techart_material->quantity;
+                        }
+                    }
+
                     $entity_material->save();
                 }
             }
-
-            if (isset($row["processingPlan"])) {
-                $techchart = $this->service->actionGetRowsFromJson($row['processingPlan']['meta']['href'], false);
-                $entity->tech_chart_id = $techchart['id'];
-            }
-
 
             $entity->name = $row["name"];
             $entity->moment = $row["moment"];

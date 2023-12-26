@@ -100,6 +100,7 @@
    'cycles' => 'Циклов',
    'defective' => 'Брак',
    'productions' => 'Продукция',
-   'materials'  => 'Материалы'
+   'materials'  => 'Материалы',
+   'quantity_norm'  => 'Количество (норм)'
    
       ];

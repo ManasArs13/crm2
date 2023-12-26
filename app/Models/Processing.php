@@ -19,7 +19,7 @@ class Processing extends Model
 
     public function materials()
     {
-        return $this->belongsToMany(Product::class, 'processing_materials', 'processing_id', 'product_id')->withPivot('id', 'quantity');
+        return $this->belongsToMany(Product::class, 'processing_materials', 'processing_id', 'product_id')->withPivot('id', 'quantity', 'quantity_norm');
     }
 
     public function tech_chart()

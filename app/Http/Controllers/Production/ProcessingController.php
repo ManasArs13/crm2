@@ -23,7 +23,8 @@ class ProcessingController extends Controller
         $needMenuForItem = true;
         $entity = 'processing';
 
-        $processing = Processing::with('materials', 'products', 'tech_chart')->find($processing);
+        $processing = Processing::with('materials', 'products')->find($processing);
+
         return view('production.processing.show', compact("needMenuForItem", "entity", 'processing'));
     }
 }

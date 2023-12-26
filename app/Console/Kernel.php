@@ -57,8 +57,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('ms:reserve-order-ms')->everyTenMinutes(); //->everyTwoHours() резерв заказов, каждые 2 часа
         $schedule->command('ms:ckeck-order-ms')->daily();
         $schedule->command('ms:calculation-of-delivery-price-norm')->everyTenMinutes();
-        $schedule->command('ms:import-tech-chart')->mondays();
-        $schedule->command('ms:import-processing')->daily();
+        $schedule->command('ms:import-tech-chart')->daily();
+        $schedule->command('ms:import-processing')->hourly();
     }
 
     /**

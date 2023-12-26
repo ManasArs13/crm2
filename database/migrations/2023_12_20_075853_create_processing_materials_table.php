@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignUuid('processing_id')->on('processings')->onDelete('cascade')->cascadeOnUpdate();
             $table->foreignUuid('product_id')->on('products')->onDelete('cascade')->cascadeOnUpdate();
             $table->unsignedDecimal('quantity', 8, 1);
+            $table->unsignedDecimal('quantity_norm', 8, 1)->nullable();
             $table->timestamps();
         });
     }

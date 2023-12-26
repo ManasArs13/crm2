@@ -51,7 +51,9 @@
                         </td>
                         <td>
                             @if($processing->tech_chart)
+                            <a href="{{ route('techcharts.show', ['techchart' => $processing->tech_chart->id]) }}">
                             {{ $processing->tech_chart->name}}
+                            </a>
                             @else
                             {{ __('column.no')}}
                             @endif
@@ -155,6 +157,9 @@
                         <th>
                             {{__("column.quantity")}}
                         </th>
+                        <th>
+                            {{__("column.quantity_norm")}}
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -173,6 +178,13 @@
                         </td>
                         <td>
                             {{ $product->pivot->quantity}}
+                        </td>
+                        <td>
+                           @if( $product->pivot->quantity_norm )
+                           {{ $product->pivot->quantity_norm }}
+                           @else
+                           {{ __('column.no')}}
+                           @endif
                         </td>
                     </tr>
                     @endforeach
