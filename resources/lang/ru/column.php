@@ -101,6 +101,8 @@
    'defective' => 'Брак',
    'productions' => 'Продукция',
    'materials'  => 'Материалы',
-   'quantity_norm'  => 'Количество (норм)'
+   'quantity_norm'  => 'Количество (норм)',
+   'delivery_fee' => 'Цена доставки',
+   'delivery_price_norm' => 'Стоимость доставки Норм'
    
       ];
