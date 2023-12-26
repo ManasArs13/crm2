@@ -71,9 +71,11 @@
                     <th>
                         {{__("column.residual_norm")}}
                     </th>
+                    @if(url()->current() == route('residual.blocksProducts') || url()->current() == route('residual'))
                     <th>
                         {{ __("column.materials")}}
                     </th>
+                    @endif
                     <th>
                         {{__("column.residual")}}
                     </th>
@@ -115,9 +117,15 @@
                         {{ __("column.no") }}
                         @endif
                     </th>
+                    @if(url()->current() == route('residual.blocksProducts') || url()->current() == route('residual'))
                     <th>
-                        {{ $product->materials }}
+                        @if{{ $product->materials == false }}
+                        нет
+                        @else
+                        да
+                        @endif
                     </th>
+                    @endif
                     <th>
                         @if($product->residual)
                         {{ $product->residual }}

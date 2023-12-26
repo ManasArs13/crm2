@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignUuid("category_id")->nullable()->index()->constrained("products_categories");
             $table->foreignUuid("color_id")->nullable()->index()->constrained("colors");
             $table->boolean("is_active")->default(0);
+            $table->boolean("materials")->default(0);
             $table->integer("min_balance_mc")->default(0);
             $table->enum('type', [
                 Product::NOT_SELECTED,
