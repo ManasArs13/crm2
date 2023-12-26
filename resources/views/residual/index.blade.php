@@ -127,7 +127,7 @@
                             {{ $product->materials }}
                         </div>
                         @elseif ($product->materials == 'да')
-                        <div class="td-percent-green">
+                        <div class="td-percent">
                             {{ $product->materials }}
                         </div>
                         @else
