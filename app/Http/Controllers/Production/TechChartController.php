@@ -34,7 +34,7 @@ class TechChartController extends Controller
         $needMenuForItem = true;
         $entity = 'techcharts';
 
-        $tech_chart_products = TechChartProduct::orderBy('created_at', 'desc')->paginate(100);
+        $tech_chart_products = TechChartProduct::with('tech_chart', 'products')->orderBy('created_at', 'desc')->paginate(100);
 
         return view('production.techchart.products', compact("needMenuForItem", "entity", 'tech_chart_products'));
     }
@@ -44,7 +44,7 @@ class TechChartController extends Controller
         $needMenuForItem = true;
         $entity = 'techcharts';
 
-        $tech_chart_materials = TechChartMaterial::orderBy('created_at', 'desc')->paginate(100);
+        $tech_chart_materials = TechChartMaterial::with('tech_chart', 'products')->orderBy('created_at', 'desc')->paginate(100);
 
         return view('production.techchart.materials', compact("needMenuForItem", "entity", 'tech_chart_materials'));
     }

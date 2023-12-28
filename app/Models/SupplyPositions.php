@@ -15,7 +15,7 @@ class SupplyPositions extends Model
 
     protected $table = 'supply_positions';
 
-    public function tech_chart(): BelongsTo
+    public function supply(): BelongsTo
     {
         return $this->belongsTo(Supply::class, 'supply_id');
     }

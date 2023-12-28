@@ -105,6 +105,9 @@
    'delivery_fee' => 'Цена доставки',
    'delivery_price_norm' => 'Стоимость доставки Норм',
    'processing' => 'Операция',
-   'techchart_id' => 'Карта'
+   'techchart_id' => 'Карта',
+   'incoming_number' => 'Входящий номер',
+   'incoming_date' => 'Входящий номер от',
+   'supply' => 'Приёмка'
    
       ];

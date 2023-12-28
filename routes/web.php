@@ -14,6 +14,7 @@ use App\Http\Controllers\OrderAmosController;
 use App\Http\Controllers\OrderMsController;
 use App\Http\Controllers\OrdersController;
 use App\Http\Controllers\Production\ProcessingController;
+use App\Http\Controllers\Purchases\SupplyController;
 use App\Http\Controllers\Production\TechChartController;
 use App\Http\Controllers\ProductsCategoryController;
 use App\Http\Controllers\ProductsController;
@@ -88,25 +89,34 @@ Route::middleware('is_admin')->group(function () {
             'shipments' => ShipmentsController::class,
         ]);
 
+        // Остатки
         Route::get('/residuals', [ResidualController::class, 'all'])->name('residual');
         Route::get('/residuals/blocks_materials', [ResidualController::class, 'blocksMaterials'])->name('residual.blocksMaterials');
         Route::get('/residuals/blocks_categories', [ResidualController::class, 'blocksCategories'])->name('residual.blocksCategories');
         Route::get('/residuals/blocks_products', [ResidualController::class, 'blocksProducts'])->name('residual.blocksProducts');
         Route::get('/residuals/concretes_materials', [ResidualController::class, 'concretesMaterials'])->name('residual.concretesMaterials');
 
-
+        // Техкарты
         Route::resource('techcharts', TechChartController::class)->only([
             'index', 'show'
         ]);
         Route::get('/techchart/products', [TechChartController::class, 'products'])->name('techcharts.products');
         Route::get('/techchart/materials', [TechChartController::class, 'materials'])->name('techcharts.materials');
 
+        // Техоперации
         Route::resource('processings', ProcessingController::class)->only([
             'index', 'show'
         ]);
         Route::get('/processing/products', [ProcessingController::class, 'products'])->name('processings.products');
         Route::get('/processing/materials', [ProcessingController::class, 'materials'])->name('processings.materials');
 
+        // Приёмки
+        Route::resource('supplies', SupplyController::class)->only([
+            'index', 'show'
+        ]);
+        Route::get('/supply/products', [SupplyController::class, 'products'])->name('supplies.products');
+
+        // Калькулятор
         Route::get('/calculator', [CalculatorController::class, 'index'])->name('calculator');
 
         Route::post('/orders/delivery', [OrdersController::class, 'delivery'])->name('orders.delivery');

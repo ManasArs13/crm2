@@ -152,9 +152,6 @@
                             {{ __("column.product_id")}}
                         </th>
                         <th>
-                            {{__("column.name")}}
-                        </th>
-                        <th>
                             {{__("column.quantity")}}
                         </th>
                         <th>
@@ -170,11 +167,8 @@
                         </td>
                         <td>
                             <a href="{{ route('products.show', ['product' => $product->id]) }}">
-                                {{ $product->id}}
+                                {{ $product->name}}
                             </a>
-                        </td>
-                        <td>
-                            {{ $product->name}}
                         </td>
                         <td>
                             {{ $product->pivot->quantity}}

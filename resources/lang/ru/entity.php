@@ -27,5 +27,7 @@ return [
     'techcharts' => 'Техкарты',
     'processings' => 'Техоперации',
     'processing' => 'Техоперация №',
-    'techchart' => 'Техкарта '
+    'techchart' => 'Техкарта ',
+    'supplies' => 'Приёмки',
+    'supply' => 'Приёмка №'
 ];

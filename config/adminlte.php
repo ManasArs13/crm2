@@ -343,7 +343,6 @@ return [
             ],
         ],
 
-
         [
             'text'        => 'Заказы (мс)',
             'url'         => 'admin/order_ms',
@@ -351,13 +350,13 @@ return [
             'label label' => 'success invisible',
         ],
 
-
         [
             'text'        => 'Отгрузки (мс)',
             'url'         => 'admin/shipments',
             'icon'        => 'fas fa-fw fa-dolly-flatbed',
             'label label' => 'success invisible',
         ],
+
         [
             'text'        => 'Остатки (мс)',
             'url'         => 'admin/residuals',
@@ -371,6 +370,12 @@ return [
             'url'  => 'admin/products?type=products',
         ],
 
+        [
+            'text'        => 'Приёмки',
+            'icon'        => 'fas fa-fw fa-download',
+            'url'         => 'admin/supplies',
+            'label_color' => 'success',
+        ],
 
         [
             'text' => 'Материалы',
@@ -385,14 +390,12 @@ return [
             'label_color' => 'success',
         ],
 
-
         [
             'text'        => 'Калькулятор',
             'icon'        => 'fas fa-fw fa-calculator',
             'url'         => 'admin/calculator',
             'label_color' => 'success',
         ],
-
 
         [
             'text'        => 'Прочее',

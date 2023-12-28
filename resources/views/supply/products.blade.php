@@ -19,24 +19,17 @@
 
         <div class="d-flex flex-grow-1">
             <div class="card-tools mx-1">
-                @if(url()->current() == route('processings.index'))
-                <a href="{{ route('processings.index') }}" class="btn btn-info">Общая таблица</a>
+                @if(url()->current() == route('supplies.index'))
+                <a href="{{ route('supplies.index') }}" class="btn btn-info">Общая таблица</a>
                 @else
-                <a href="{{ route('processings.index') }}" class="btn btn-primary">Общая таблица</a>
+                <a href="{{ route('supplies.index') }}" class="btn btn-primary">Общая таблица</a>
                 @endif
             </div>
             <div class="card-tools mx-1">
-                @if(url()->current() == route('processings.products'))
-                <a href="{{ route('processings.products') }}" class="btn btn-info">Связь (продукты)</a>
+                @if(url()->current() == route('supplies.products'))
+                <a href="{{ route('supplies.products') }}" class="btn btn-info">Связь (продукты)</a>
                 @else
-                <a href="{{ route('processings.products') }}" class="btn btn-primary">Связь (продукты)</a>
-                @endif
-            </div>
-            <div class="card-tools mx-1">
-                @if(url()->current() == route('processings.materials'))
-                <a href="{{ route('processings.materials') }}" class="btn btn-info">Связь (материалы)</a>
-                @else
-                <a href="{{ route('processings.materials') }}" class="btn btn-primary">Связь (материалы)</a>
+                <a href="{{ route('supplies.products') }}" class="btn btn-primary">Связь (продукты)</a>
                 @endif
             </div>
         </div>
@@ -51,13 +44,16 @@
                         {{__("column.id")}}
                     </th>
                     <th>
-                        {{__("column.processing")}}
+                        {{__("column.supply")}}
                     </th>
                     <th>
                         {{__("column.product_id")}}
                     </th>
                     <th>
                         {{__("column.quantity")}}
+                    </th>
+                    <th>
+                        {{__("column.price")}}
                     </th>
                     <th>
                         {{__("column.created_at")}}
@@ -68,36 +64,47 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($processing_products as $product)
+                @foreach($supply_products as $product)
                 <tr>
                     <td>
                         {{ $product->id}}
                     </td>
                     <td>
-                        <a href="{{ route('processings.show', ['processing' => $product->processing_id]) }}">
-                            {{ $product->processing->name}}
+                        @if($product->supply)
+                        <a href="{{ route('supplies.show', ['supply' => $product->supply_id]) }}">
+                            {{ $product->supply->name}}
                         </a>
+                        @else
+                        {{ __('column.no')}}
+                        @endif
                     </td>
                     <td>
+                        @if($product->products)
                         <a href="{{ route('products.show', ['product' => $product->product_id]) }}">
-                            {{ $product->product->name}}
+                            {{ $product->products->name}}
                         </a>
+                        @else
+                        {{ __('column.no')}}
+                        @endif
                     </td>
                     <td>
                         {{ $product->quantity}}
+                    </td>
+                    <td>
+                        {{ $product->price}}
                     </td>
                     <td>
                         {{ $product->created_at}}
                     </td>
                     <td>
                         {{ $product->updated_at}}
-                    </t>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
         <div class="cont m-3">
-            {{ $processing_products->links('pagination::bootstrap-5') }}
+            {{ $supply_products->links('pagination::bootstrap-5') }}
         </div>
     </div>
 </div>

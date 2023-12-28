@@ -35,7 +35,7 @@ class ProcessingController extends Controller
         $needMenuForItem = true;
         $entity = 'processings';
 
-        $processing_products = ProcessingProducts::orderBy('created_at', 'desc')->paginate(100);
+        $processing_products = ProcessingProducts::with('processing', 'product')->orderBy('created_at', 'desc')->paginate(100);
 
         return view('production.processing.products', compact("needMenuForItem", "entity", 'processing_products'));
     }
@@ -45,7 +45,7 @@ class ProcessingController extends Controller
         $needMenuForItem = true;
         $entity = 'processings';
 
-        $processing_materials = ProcessingMaterials::orderBy('created_at', 'desc')->paginate(100);
+        $processing_materials = ProcessingMaterials::with('processing', 'product')->orderBy('created_at', 'desc')->paginate(100);
 
         return view('production.processing.materials', compact("needMenuForItem", "entity", 'processing_materials'));
     }

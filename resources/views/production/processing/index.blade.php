@@ -79,39 +79,39 @@
             <tbody>
                 @foreach($processings as $processing)
                 <tr>
-                    <th>
+                    <td>
                         <a href="{{ route('processings.show', ['processing' => $processing->id]) }}">
                             {{ $processing->id}}
                         </a>
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         {{ $processing->name}}
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         {{ $processing->moment}}
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         @if($processing->tech_chart)
                         {{ $processing->tech_chart->name}}
                         @else
                         {{ __('column.no')}}
                         @endif
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         {{ $processing->quantity}}
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         {{ $processing->hours}}
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         {{ $processing->cycles}}
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         {{ $processing->defective}}
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         {{ $processing->description}}
-                    </th>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Production;
+namespace App\Http\Controllers\Purchases;
 
 use App\Http\Controllers\Controller;
 use App\Models\Supply;
+use App\Models\SupplyPositions;
 use Illuminate\Http\Request;
 
 class SupplyController extends Controller
@@ -11,40 +12,30 @@ class SupplyController extends Controller
     public function index()
     {
         $needMenuForItem = true;
-        $entity = 'supply';
+        $entity = 'supplies';
 
-        $processings = Supply::with('cont')->orderBy('moment', 'desc')->paginate(100);
+        $supplies = Supply::with('contact_ms')->orderBy('moment', 'desc')->paginate(100);
 
-        return view('production.processing.index', compact("needMenuForItem", "entity", 'processings'));
+        return view('supply.index', compact("needMenuForItem", "entity", 'supplies'));
     }
 
     public function show(Request $request, $processing)
     {
         $needMenuForItem = true;
-        $entity = 'processing';
+        $entity = 'supply';
 
-      //  $processing = Processing::with('materials', 'products')->find($processing);
+        $supply = Supply::with('contact_ms', 'products')->find($processing);
 
-        return view('production.processing.show', compact("needMenuForItem", "entity", 'processing'));
+        return view('supply.show', compact("needMenuForItem", "entity", 'supply'));
     }
 
     public function products(Request $request)
     {
         $needMenuForItem = true;
-        $entity = 'processings';
+        $entity = 'supplies';
 
-      //  $processing_products = ProcessingProducts::orderBy('created_at', 'desc')->paginate(100);
-
-        return view('production.processing.products', compact("needMenuForItem", "entity", 'processing_products'));
-    }
-
-    public function materials(Request $request)
-    {
-        $needMenuForItem = true;
-        $entity = 'processings';
-
-       // $processing_materials = ProcessingMaterials::orderBy('created_at', 'desc')->paginate(100);
-
-        return view('production.processing.materials', compact("needMenuForItem", "entity", 'processing_materials'));
+        $supply_products = SupplyPositions::with('supply', 'products')->orderBy('created_at', 'desc')->paginate(100);
+//dd($supply_products);
+        return view('supply.products', compact("needMenuForItem", "entity", 'supply_products'));
     }
 }

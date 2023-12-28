@@ -20,7 +20,7 @@ class ProcessingProducts extends Pivot
         return $this->belongsTo(Processing::class, 'processing_id');
     }
 
-    public function products()
+    public function product()
     {
         return $this->belongsTo(Product::class);
     }

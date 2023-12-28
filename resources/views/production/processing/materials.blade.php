@@ -60,6 +60,9 @@
                         {{__("column.quantity")}}
                     </th>
                     <th>
+                        {{__("column.quantity_norm")}}
+                    </th>
+                    <th>
                         {{__("column.created_at")}}
                     </th>
                     <th>
@@ -70,28 +73,39 @@
             <tbody>
                 @foreach($processing_materials as $product)
                 <tr>
-                    <th>
+                    <td>
                         {{ $product->id}}
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         <a href="{{ route('processings.show', ['processing' => $product->processing_id]) }}">
-                            {{ $product->processing_id}}
+                            {{ $product->processing->name}}
                         </a>
-                    </th>
-                    <th>
+                    </td>
+                    <td>
+                        @if($product->product)
                         <a href="{{ route('products.show', ['product' => $product->product_id]) }}">
-                            {{ $product->product_id}}
+                            {{ $product->product->name}}
                         </a>
-                    </th>
-                    <th>
+                        @else
+                        {{ __('column.no')}}
+                        @endif
+                    </td>
+                    <td>
                         {{ $product->quantity}}
-                    </th>
-                    <th>
+                    </td>
+                    <td>
+                        @if( $product->quantity_norm )
+                        {{ $product->quantity_norm }}
+                        @else
+                        {{ __('column.no')}}
+                        @endif
+                    </td>
+                    <td>
                         {{ $product->created_at}}
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         {{ $product->updated_at}}
-                    </th>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

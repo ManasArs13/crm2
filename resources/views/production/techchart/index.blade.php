@@ -62,20 +62,20 @@
             <tbody>
                 @foreach($techcharts as $techchart)
                 <tr>
-                    <th>
+                    <td>
                         <a href="{{ route('techcharts.show', ['techchart' => $techchart->id]) }}">
                             {{ $techchart->id}}
                         </a>
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         {{ $techchart->name}}
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         {{ $techchart->cost}}
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         {{ $techchart->description}}
-                    </th>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

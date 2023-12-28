@@ -68,28 +68,28 @@
             <tbody>
                 @foreach($tech_chart_products as $product)
                 <tr>
-                    <th>
+                    <td>
                         {{ $product->id}}
                     </th>
-                    <th>
+                    <td>
                         <a href="{{ route('techcharts.show', ['techchart' => $product->tech_chart_id]) }}">
                             {{ $product->tech_chart_id}}
                         </a>
-                    </th>
-                    <th>
-                        <a href="{{ route('products.show', ['product' => $product->product_id]) }}">
+                    </td>
+                    <td>
+                                <a href="{{ route('products.show', ['product' => $product->product_id]) }}">
                             {{ $product->product_id}}
                         </a>
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         {{ $product->quantity}}
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         {{ $product->created_at}}
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         {{ $product->updated_at}}
-                    </th>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
