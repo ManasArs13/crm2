@@ -59,6 +59,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('ms:calculation-of-delivery-price-norm')->everyTenMinutes();
         $schedule->command('ms:import-tech-chart')->daily();
         $schedule->command('ms:import-processing')->hourly();
+        $schedule->command('ms:import-supply')->hourly();
     }
 
     /**
