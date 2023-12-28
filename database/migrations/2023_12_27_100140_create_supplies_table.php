@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('supplies', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string("name",190)->nullable();//
-            $table->timestamps();//
+            $table->string("name",190)->nullable();
+            $table->timestamps();
             $table->foreignUuid("contact_ms_id")->nullable()->index()->constrained("contact_ms");
-            $table->dateTime("moment")->nullable();//
-            $table->string('description')->nullable();//
-            $table->decimal("sum", 10, 2)->default(0.0);//
-            $table->string("incoming_number", 190)->nullable();//
-            $table->dateTime("incoming_date")->nullable();//
+            $table->dateTime("moment")->nullable();
+            $table->string('description')->nullable();
+            $table->decimal("sum", 10, 2)->default(0.0);
+            $table->string("incoming_number", 190)->nullable();
+            $table->dateTime("incoming_date")->nullable();
         });
     }
 

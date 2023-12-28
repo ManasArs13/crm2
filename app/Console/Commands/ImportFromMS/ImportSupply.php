@@ -36,7 +36,7 @@ class ImportSupply extends Command
     public function handle(MoySkladService $service, SupplyService $supplyService): void
     {
         $url = 'https://api.moysklad.ru/api/remap/1.2/entity/supply';
-        $date = Option::query()->where('code', 'ms_date_begin_change')->first()?->value;
-        $service->createUrl($url, $supplyService, ["updated"=>'>='.$date],"productFolder");
+        //$date = Option::query()->where('code', 'ms_date_begin_change')->first()?->value;
+        $service->createUrl($url, $supplyService);
     }
 }
