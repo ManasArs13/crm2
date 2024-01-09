@@ -39,8 +39,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('inspire')->hourly();
-        $schedule->command('ms:import-amo')->mondays();
+       // $schedule->command('inspire')->hourly();
+        $schedule->command('ms:import-amo')->everyTenMinutes();
         $schedule->command('app:update-contacts-amo')->everyTenMinutes();
         $schedule->command('ms:import-product')->everyTenMinutes();
         $schedule->command('ms:import-color')->everyTenMinutes();
