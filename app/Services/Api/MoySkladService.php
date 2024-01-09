@@ -83,7 +83,7 @@ class MoySkladService
 
     public function actionGetRowsFromJson(string $url, bool $rows = true, $downloadPath = '')
     {
-        usleep(350000);
+        usleep(70000);
         $response = $this->client->request('GET', $url, [
             'headers' => [
                 'Accept-Encoding' => 'gzip',
