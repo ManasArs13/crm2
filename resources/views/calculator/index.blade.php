@@ -239,7 +239,7 @@
                 min: 0,
                 max: 300,
                 range: 'min',
-                step: 0.1,
+                step: 1,
                 animate: true,
                 slide: function(event, ui) {
                     Length = ui.value;
@@ -474,10 +474,10 @@
 
             $("#CEB__wrapTable").empty();
 
-            let optionsTableColor = `<option value="Серый" data-codeColor="#E6E6E6" data-codecolortext="#000">Серый</option>
-			<option value="Красный" data-codeColor="#B10202" data-codecolortext="#fff">Красный</option>
-			<option value="Жёлтый" data-codeColor="#FFE5A0" data-codecolortext="#000">Жёлтый</option>
-			<option value="Коричневый" data-codeColor="#753800" data-codecolortext="#fff">Коричневый</option>`;
+            let optionsTableColor = `<option value="Серый" data-codeColor="#E6E6E6" data-codecolortext="#000" style="background-color: #E6E6E6;">Серый</option>
+			<option value="Красный" data-codeColor="#B10202" data-codecolortext="#fff" style="background-color: #B10202;">Красный</option>
+			<option value="Жёлтый" data-codeColor="#FFE5A0" data-codecolortext="#000" style="background-color: #FFE5A0;">Жёлтый</option>
+			<option value="Коричневый" data-codeColor="#753800" data-codecolortext="#fff" style="background-color: #753800;">Коричневый</option>`;
 
             let tableResult =
                 `
