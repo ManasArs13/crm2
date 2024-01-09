@@ -35,7 +35,7 @@ class SupplyService implements EntityInterface
             $entity->created_at = $row["created"];
             $entity->updated_at = $row["updated"];
             $entity->sum = $row['sum'] / 100;
-            
+
             if (isset($row["incomingNumber"])) {
                 $entity->incoming_number = $row['incomingNumber'];
             }
@@ -45,6 +45,7 @@ class SupplyService implements EntityInterface
             }
 
             if (isset($row["positions"])) {
+                usleep(70000);
                 $positions = $this->service->actionGetRowsFromJson($row['positions']['meta']['href']);
 
                 foreach ($positions as $position) {
@@ -58,6 +59,7 @@ class SupplyService implements EntityInterface
                     $entity_position->quantity = $position['quantity'];
                     $entity_position->price = $position['price'] / 100;
 
+                    usleep(70000);
                     $product_bd = $this->service->actionGetRowsFromJson($position['assortment']['meta']['href'], false);
                     $entity_position->product_id = $product_bd['id'];
 
@@ -67,6 +69,7 @@ class SupplyService implements EntityInterface
             }
 
             if (isset($row["agent"])) {
+                usleep(70000);
                 $agent = $this->service->actionGetRowsFromJson($row['agent']['meta']['href'], false);
                 $entity->contact_ms_id = $agent['id'];
             }
