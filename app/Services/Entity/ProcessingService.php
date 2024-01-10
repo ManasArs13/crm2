@@ -29,7 +29,7 @@ class ProcessingService implements EntityInterface
             }
 
             if (isset($row["processingPlan"])) {
-                 $techchart = $this->service->actionGetRowsFromJson($row['processingPlan']['meta']['href'], false);
+                $techchart = $this->service->actionGetRowsFromJson($row['processingPlan']['meta']['href'], false);
                 $entity->tech_chart_id = $techchart['id'];
             }
 
