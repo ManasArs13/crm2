@@ -393,9 +393,29 @@ return [
         [
             'text'        => 'Калькулятор',
             'icon'        => 'fas fa-fw fa-calculator',
-            'url'         => 'admin/calculator',
             'label_color' => 'success',
+            'submenu' => [
+                [
+                    'text'        => 'блок',
+                    'url'         => 'admin/calculator_block',
+                //    'icon'        => 'fas fa-fw fa-chart-line',
+                    'label_color' => 'success',
+                ],
+                [
+                    'text'        => 'бетон',
+                    'url'         => 'admin/calculator_concrete',
+                  //  'icon'        => 'fas fa-fw fa-chart-line',
+                    'label_color' => 'success',
+                ],
+            ],
         ],
+
+        // [
+        //     'text'        => 'Калькулятор',
+        //     'icon'        => 'fas fa-fw fa-calculator',
+        //     'url'         => 'admin/calculator',
+        //     'label_color' => 'success',
+        // ],
 
         [
             'text'        => 'Прочее',

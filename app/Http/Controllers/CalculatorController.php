@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class CalculatorController extends Controller
 {
-    public function index()
+    public function block()
     {
         $entity = 'calculator';
         $needMenuForItem = true;
@@ -28,7 +28,7 @@ class CalculatorController extends Controller
         $block12_color = Product::query()->where('name', '=', 'Заборный блок 120*190*390 (красный)')->first()?->price;
 
         return view(
-            "calculator.index",
+            "calculator.block",
             compact(
                 "needMenuForItem",
                 "entity",
@@ -44,5 +44,10 @@ class CalculatorController extends Controller
                 "block12_color"
             )
         );
+    }
+
+    public function concrete()
+    {
+
     }
 }

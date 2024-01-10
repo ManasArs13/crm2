@@ -40,23 +40,23 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
        // $schedule->command('inspire')->hourly();
-        $schedule->command('ms:import-amo')->everyTenMinutes();
-        $schedule->command('app:update-contacts-amo')->everyTenMinutes();
-        $schedule->command('ms:import-product')->everyTenMinutes();
-        $schedule->command('ms:import-color')->everyTenMinutes();
-        $schedule->command('ms:import-contact')->everyTenMinutes();
-        $schedule->command('ms:import-delivery')->everyTenMinutes();
-        $schedule->command('ms:import-order')->everyTenMinutes();
-        $schedule->command('ms:import-productsCategory')->everyTenMinutes();
-        $schedule->command('ms:import-status')->everyTenMinutes();
-        $schedule->command('ms:import-transport')->everyTenMinutes();
-        $schedule->command('ms:import-vehicleType')->everyTenMinutes();
-        $schedule->command('ms:import-demand')->everyTenMinutes();
-        $schedule->command('ms:import-residual')->everyTenMinutes();
-        $schedule->command('app:sync-contact-ms-amo')->everyTenMinutes();
-        $schedule->command('ms:reserve-order-ms')->everyTenMinutes(); //->everyTwoHours() резерв заказов, каждые 2 часа
+        $schedule->command('ms:import-amo')->hourly();
+        $schedule->command('app:update-contacts-amo')->hourly();
+        $schedule->command('ms:import-product')->hourly();
+        $schedule->command('ms:import-color')->hourly();
+        $schedule->command('ms:import-contact')->hourly();
+        $schedule->command('ms:import-delivery')->hourly();
+        $schedule->command('ms:import-order')->hourly();
+        $schedule->command('ms:import-productsCategory')->hourly();
+        $schedule->command('ms:import-status')->hourly();
+        $schedule->command('ms:import-transport')->hourly();
+        $schedule->command('ms:import-vehicleType')->hourly();
+        $schedule->command('ms:import-demand')->hourly();
+        $schedule->command('ms:import-residual')->hourly();
+        $schedule->command('app:sync-contact-ms-amo')->hourly();
+        $schedule->command('ms:reserve-order-ms')->hourly(); //->everyTwoHours() резерв заказов, каждые 2 часа
         $schedule->command('ms:ckeck-order-ms')->daily();
-        $schedule->command('ms:calculation-of-delivery-price-norm')->everyTenMinutes();
+        $schedule->command('ms:calculation-of-delivery-price-norm')->hourly();
         $schedule->command('ms:import-tech-chart')->daily();
         $schedule->command('ms:import-processing')->hourly();
         $schedule->command('ms:import-supply')->hourly();

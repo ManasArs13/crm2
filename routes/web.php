@@ -117,7 +117,8 @@ Route::middleware('is_admin')->group(function () {
         Route::get('/supply/products', [SupplyController::class, 'products'])->name('supplies.products');
 
         // Калькулятор
-        Route::get('/calculator', [CalculatorController::class, 'index'])->name('calculator');
+        Route::get('/calculator_block', [CalculatorController::class, 'block'])->name('calculator.block');
+        Route::get('/calculator_concrete', [CalculatorController::class, 'concrete'])->name('calculator.concrete');
 
         Route::post('/orders/delivery', [OrdersController::class, 'delivery'])->name('orders.delivery');
         Route::get('/orders/create/{order}/ms', [OrdersController::class, 'createOrderMs'])->name('orders.createOrderMs');
