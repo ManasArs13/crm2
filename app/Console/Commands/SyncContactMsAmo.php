@@ -31,7 +31,7 @@ class SyncContactMsAmo extends Command
      */
     public function handle(): void
     {
-         $updatedAt = Option::query()->where('code','updated_at_sync_contact')->value('value');
+        $updatedAt = Option::query()->where('code','updated_at_sync_contact')->value('value');
         $contactMs = ContactMs::query()
             ->groupBy('phone_norm')
             ->havingRaw('COUNT(*) = 1')
@@ -43,8 +43,8 @@ class SyncContactMsAmo extends Command
             $contactAmoExist = ContactAmo::query()->where('id',$contactAmoId)->exists();
             if ($contactAmoExist){
                 $contactMsContactAmo = ContactMsContactAmo::query()->firstOrNew([
-                    'contact_ms_id'=>$contact->id,
-                    'contact_amo_id'=> $contactAmoId,
+                    'contact_ms_id'    =>  $contact->id,
+                    'contact_amo_id'   =>  $contactAmoId,
                 ]);
                     $contactMsContactAmo->contact_ms_id = $contact->id;
                     $contactMsContactAmo->contact_amo_id = $contactAmoId;
@@ -52,11 +52,11 @@ class SyncContactMsAmo extends Command
             }
         }
         Option::query()->where('code','updated_at_sync_contact')->update([
-            'value'=>Carbon::now()->addHours(2)
+            'value' => Carbon::now()->addMinutes(30)
         ]);
         Option::query()->updateOrCreate(
-            ['code'=>MoySkladService::MS_DATE_BEGIN_CHANGE],
-            ['value'=>Carbon::now()->addHours(2)]
+            ['code'     =>  MoySkladService::MS_DATE_BEGIN_CHANGE],
+            ['value'    =>  Carbon::now()->addMinutes(30)]
         );
     }
 }
