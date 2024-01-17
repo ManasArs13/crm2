@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Delivery;
 use App\Models\Product;
+use App\Models\VehicleType;
 use Illuminate\Http\Request;
 
 class CalculatorController extends Controller
@@ -11,6 +13,9 @@ class CalculatorController extends Controller
     {
         $entity = 'calculator';
         $needMenuForItem = true;
+
+        $deliveries = Delivery::orderBy('distance', 'asc')->get();
+        $vehicleTypes = VehicleType::all();
 
         $dekor_gray = Product::query()->where('name', '=', 'Декор (серый)')->first()?->price;
         $dekor_color = Product::query()->where('name', '=', 'Декор (красный)')->first()?->price;
@@ -41,13 +46,14 @@ class CalculatorController extends Controller
                 "column_gray",
                 "column_color",
                 "block12_gray",
-                "block12_color"
+                "block12_color",
+                'deliveries',
+                'vehicleTypes'
             )
         );
     }
 
     public function concrete()
     {
-
     }
 }

@@ -132,6 +132,26 @@
                 <div class="CEB__text2">Результат</div>
                 <div class="CEB__wrapTable" id="CEB__wrapTable"></div>
             </div>
+
+            <div class="CEB__row">
+                <div class="CEB__text2">Доставка</div>
+                <div class="CEB__wrapSlider">
+                <select name="адрес" style="border: 1px solid gray;padding: 4px;">
+                    @foreach ($deliveries as $delivery)
+                    <option value="{{ $delivery->id }}" style="margin: 4px;">{{ $delivery->name }}</option> 
+                    @endforeach
+                </select>
+                <select name="тип" style="border: 1px solid gray;padding: 4px;">
+                    @foreach ($vehicleTypes as $type)
+                    <option value="{{ $type->id }}" style="margin: 4px;">{{ $type->name }}</option> 
+                    @endforeach
+                </select>
+                </div>
+                <div class="CEB__wrapSlider">
+                    ????
+                </div>
+                
+            </div>
         </div>
     </div>
 </div>
