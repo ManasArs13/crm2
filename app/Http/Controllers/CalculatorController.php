@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Delivery;
 use App\Models\Product;
+use App\Models\ShippingPrice;
 use App\Models\VehicleType;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,10 @@ class CalculatorController extends Controller
         $needMenuForItem = true;
 
         $deliveries = Delivery::orderBy('distance', 'asc')->get();
-        $vehicleTypes = VehicleType::all();
+        $vehicleTypes = VehicleType::whereNot('id', '5c2ad6bd-3dcf-11ee-0a80-105c001170bb')
+                    ->whereNot('id', '8caf01fa-34f2-11ee-0a80-139c002ba64a')
+                    ->get();
+        $shippingPrices = json_encode(ShippingPrice::get());
 
         $dekor_gray = Product::query()->where('name', '=', 'Декор (серый)')->first()?->price;
         $dekor_color = Product::query()->where('name', '=', 'Декор (красный)')->first()?->price;
@@ -48,7 +52,8 @@ class CalculatorController extends Controller
                 "block12_gray",
                 "block12_color",
                 'deliveries',
-                'vehicleTypes'
+                'vehicleTypes',
+                'shippingPrices'
             )
         );
     }
