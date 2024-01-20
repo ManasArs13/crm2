@@ -155,7 +155,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="CEB__wrapSlider" id="resultAll"></div>
+                    <div class="CEB__wrapSlider" id="resultAll" style="font-weight: 700;text-align: center;"></div>
 
                 </div>
             </div>
@@ -349,8 +349,7 @@
 
             $("body").on("change", ".CMR__change_js", function() {
                 calculation();
-                calcDelivery();
-            });
+              });
 
             $("body").on("change", ".CEB__select_color_js", function() {
 
@@ -359,7 +358,6 @@
                 resultParams[`${name_tovar}`]["color"] = $(this).val();
 
                 calculation();
-                calcDelivery();
             });
 
             $("body").on("change", ".change_delivery", function() {
@@ -504,6 +502,7 @@
 
                 total_zakaz = +total_zakaz.toFixed(2);
                 makeTable();
+                calcDelivery();
 
             };
 
@@ -656,25 +655,21 @@
 
                 if (shippingPrices) {
                     console.log(shippingPrices)
-                    let shippingPrice = shippingPrices.find(item => item.distance == deliveryValue && item
-                        .vehicle_type_id == vehicleType && item.tonnage == String(weight_zakaz / 1000 + '.0'))
-
-                    if (shippingPrice) {
-                        $('#resultAll').text(shippingPrice.price);
+                    let shippingPrice = shippingPrices.filter(item => item.distance == deliveryValue && item
+                        .vehicle_type_id == vehicleType && item.tonnage == String(Math.round(weight_zakaz/1000)  + ".0"))
+                        console.log(shippingPrice)
+                    if (shippingPrice.length !== 0) {
+                        $('#resultAll').text(shippingPrice[0].price);
                     } else {
-                        shippingPrice = shippingPrices.find(item => item.distance == deliveryValue && item
-                            .vehicle_type_id == vehicleType && item.tonnage == String(1.0))
-                        if (shippingPrice) {
-                            $('#resultAll').text(shippingPrice.price * (weight_zakaz / 1000));
+                        shippingPrice = shippingPrices.filter(item => item.distance == deliveryValue && item
+                            .vehicle_type_id == vehicleType && item.tonnage == '1.0')
+                        if (shippingPrice.length !== 0) {
+                            $('#resultAll').text(shippingPrice[0].price * weight_zakaz/1000);
                         } else {
                             $('#resultAll').text('ошибка');
                         }
                     }
                 }
-
-                console.log('1.0')
-                console.log(deliveryValue)
-                console.log(vehicleType)
             }
 
         }); //end function
