@@ -728,7 +728,6 @@
 
                 }
             }
-        }
         }); //end function
     </script>
 @stop
