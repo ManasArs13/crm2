@@ -18,6 +18,7 @@ class CalculatorController extends Controller
         $deliveries = Delivery::orderBy('distance', 'asc')->get();
         $vehicleTypes = VehicleType::whereNot('id', '5c2ad6bd-3dcf-11ee-0a80-105c001170bb')
                     ->whereNot('id', '8caf01fa-34f2-11ee-0a80-139c002ba64a')
+                    ->whereNot('id', 'c518da75-a146-11ec-0a80-0da500133bca')
                     ->get();
         $shippingPrices = json_encode(ShippingPrice::get());
 
