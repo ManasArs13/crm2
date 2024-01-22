@@ -172,6 +172,7 @@
             let resultAll = 0;
             let deliveryValue = $('#delivery').val();
             let vehicleType = $('#vehicleType').val();
+            let ratio = 1;
             $('#resultAll').text(0);
 
             //function setResult;
@@ -349,7 +350,7 @@
 
             $("body").on("change", ".CMR__change_js", function() {
                 calculation();
-              });
+            });
 
             $("body").on("change", ".CEB__select_color_js", function() {
 
@@ -617,6 +618,7 @@
 
                 deliveryValue = $('#delivery').val();
                 vehicleType = $('#vehicleType').val();
+                weight_zakaz_for_delivery = weight_zakaz;
 
                 if (deliveryValue < 25) {
                     deliveryValue = 25
@@ -652,26 +654,81 @@
                     deliveryValue = 220
                 }
 
+                if (vehicleType == '93da19d9-f355-11ed-0a80-043100015554') {
 
-                if (shippingPrices) {
-                    console.log(shippingPrices)
-                    let shippingPrice = shippingPrices.filter(item => item.distance == deliveryValue && item
-                        .vehicle_type_id == vehicleType && item.tonnage == String(Math.round(weight_zakaz/1000)  + ".0"))
-                        console.log(shippingPrice)
-                    if (shippingPrice.length !== 0) {
-                        $('#resultAll').text(shippingPrice[0].price);
-                    } else {
-                        shippingPrice = shippingPrices.filter(item => item.distance == deliveryValue && item
-                            .vehicle_type_id == vehicleType && item.tonnage == '1.0')
+                    weight_zakaz_for_delivery = '20.0'
+
+                    if (weight_zakaz > 20000) {
+                        ratio = Math.ceil(weight_zakaz / 20000)
+                    }
+
+                    if (shippingPrices) {
+                        let shippingPrice = shippingPrices.filter(item => item.distance == deliveryValue && item
+                            .vehicle_type_id == vehicleType && item.tonnage == weight_zakaz_for_delivery)
                         if (shippingPrice.length !== 0) {
-                            $('#resultAll').text(shippingPrice[0].price * weight_zakaz/1000);
+                            $('#resultAll').text(shippingPrice[0].price * ratio);
                         } else {
                             $('#resultAll').text('ошибка');
                         }
                     }
+
+                } else if (vehicleType == 'a4ee16dd-8d7e-11ec-0a80-0f9b002ff027') {
+
+                    weight_zakaz_for_delivery = '15.0'
+
+                    if (weight_zakaz > 15000) {
+                        ratio = Math.ceil(weight_zakaz / 15000)
+                    }
+
+                    if (shippingPrices) {
+                        let shippingPrice = shippingPrices.filter(item => item.distance == deliveryValue && item
+                            .vehicle_type_id == vehicleType && item.tonnage == weight_zakaz_for_delivery)
+                        if (shippingPrice.length !== 0) {
+                            $('#resultAll').text(shippingPrice[0].price * ratio);
+                        } else {
+                            $('#resultAll').text('ошибка');
+                        }
+                    }
+
+
+                } else if (vehicleType == 'ab55fe6f-8d7e-11ec-0a80-05e6002ffd13') {
+                    weight_zakaz_for_delivery = '2.5'
+
+                    if (weight_zakaz > 2500) {
+                        ratio = Math.ceil(weight_zakaz / 2500)
+                    }
+
+                    if (shippingPrices) {
+                        let shippingPrice = shippingPrices.filter(item => item.distance == deliveryValue && item
+                            .vehicle_type_id == vehicleType && item.tonnage == weight_zakaz_for_delivery)
+                        if (shippingPrice.length !== 0) {
+                            $('#resultAll').text(shippingPrice[0].price * ratio);
+                        } else {
+                            $('#resultAll').text('ошибка');
+                        }
+                    }
+                } else {
+                    if (shippingPrices) {
+                        let shippingPrice = shippingPrices.filter(item => item.distance == deliveryValue && item
+                            .vehicle_type_id == vehicleType && item.tonnage == String(Math.round(weight_zakaz /
+                                1000) + ".0"))
+                        console.log(shippingPrice)
+                        if (shippingPrice.length !== 0) {
+                            $('#resultAll').text(shippingPrice[0].price);
+                        } else {
+                            shippingPrice = shippingPrices.filter(item => item.distance == deliveryValue && item
+                                .vehicle_type_id == vehicleType && item.tonnage == '1.0')
+                            if (shippingPrice.length !== 0) {
+                                $('#resultAll').text(shippingPrice[0].price * weight_zakaz / 1000);
+                            } else {
+                                $('#resultAll').text('ошибка');
+                            }
+                        }
+                    }
+
                 }
             }
-
+        }
         }); //end function
     </script>
 @stop
