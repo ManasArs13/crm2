@@ -15,7 +15,7 @@ class CalculatorController extends Controller
         $entity = 'calculator';
         $needMenuForItem = true;
 
-        $deliveries = Delivery::orderBy('distance', 'asc')->get();
+        $deliveries = Delivery::whereNot('id', '28803b00-5c8f-11ea-0a80-02ed000b1ce1')->orderBy('distance', 'asc')->get();
         $vehicleTypes = VehicleType::whereNot('id', '5c2ad6bd-3dcf-11ee-0a80-105c001170bb')
                     ->whereNot('id', '8caf01fa-34f2-11ee-0a80-139c002ba64a')
                     ->whereNot('id', 'c518da75-a146-11ec-0a80-0da500133bca')
