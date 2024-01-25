@@ -83,31 +83,36 @@ class MoySkladService
 
     public function actionGetRowsFromJson(string $url, bool $rows = true, $downloadPath = '')
     {
-        usleep(200000);
-        $response = $this->client->request('GET', $url, [
-            'headers' => [
-                'Accept-Encoding' => 'gzip',
-                'Authorization' => 'Basic ' . $this->auth
-            ],
-        ]);
+        try {
+            usleep(200000);
+            $response = $this->client->request('GET', $url, [
+                'headers' => [
+                    'Accept-Encoding' => 'gzip',
+                    'Authorization' => 'Basic ' . $this->auth
+                ],
+            ]);
 
-        $result = json_decode($response->getBody()->getContents(), true);
-        if (isset($result["errors"])) {
-            $code = "";
-            foreach ($result["errors"] as $error) {
-                $code .= $error["code"] . " " . $error["error"] . "; ";
+            $result = json_decode($response->getBody()->getContents(), true);
+            if (isset($result["errors"])) {
+                $code = "";
+                foreach ($result["errors"] as $error) {
+                    $code .= $error["code"] . " " . $error["error"] . "; ";
+                }
             }
-        }
 
-        if ($rows) {
-            return $result["rows"];
-        }
+            if ($rows) {
+                return $result["rows"];
+            }
 
-        if ($downloadPath != '') {
-            return file_put_contents($downloadPath, $response->getBody());
+            if ($downloadPath != '') {
+                return file_put_contents($downloadPath, $response->getBody());
+            }
+            //        sleep(1);
+            return $result;
+        } catch (RequestException  $e) {
+            info($e->getMessage());
+            return false;
         }
-        //        sleep(1);
-        return $result;
     }
 
     public function getFilter(array $filters)
@@ -166,32 +171,37 @@ class MoySkladService
 
     public function actionPostRowsFromJson($url, $array)
     {
-        $response = $this->client->request("POST", $url, [
-            'headers' => [
-                'content-type' => 'application/json',
-                'Accept-Encoding' => 'gzip',
-                'user-agent' => 'My User Agent',
-                'Authorization' => 'Basic ' . $this->auth
-            ],
-            'json' => $array
+        try {
+            $response = $this->client->request("POST", $url, [
+                'headers' => [
+                    'content-type' => 'application/json',
+                    'Accept-Encoding' => 'gzip',
+                    'user-agent' => 'My User Agent',
+                    'Authorization' => 'Basic ' . $this->auth
+                ],
+                'json' => $array
 
-        ]);
+            ]);
 
-        $statusCode = $response->getStatusCode();
+            $statusCode = $response->getStatusCode();
 
 
-        if ($statusCode == 200) {
+            if ($statusCode == 200) {
 
-            $content = json_decode($response->getBody()->getContents());
-            $array = ["isGood" => true, "id" => $content->id];
+                $content = json_decode($response->getBody()->getContents());
+                $array = ["isGood" => true, "id" => $content->id];
 
-            if (isset($content->name)) {
-                $array["name"] = $content->name;
+                if (isset($content->name)) {
+                    $array["name"] = $content->name;
+                }
+                return $array;
+            } else {
+                return ["isGood" => false, "errors" => $response->getContent(false)];
             }
-            return $array;
-        } else {
-            return ["isGood" => false, "errors" => $response->getContent(false)];
+            return false;
+        } catch (RequestException  $e) {
+            info($e->getMessage());
+            return false;
         }
-        return false;
     }
 }

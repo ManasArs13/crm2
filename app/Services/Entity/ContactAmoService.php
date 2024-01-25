@@ -6,7 +6,6 @@ use App\Contracts\EntityInterface;
 use App\Models\ContactAmo;
 use App\Models\ContactMs;
 use App\Models\Option;
-use App\Models\ContactAmos;
 use GuzzleHttp\Client;
 
 class ContactAmoService implements EntityInterface
@@ -82,72 +81,71 @@ class ContactAmoService implements EntityInterface
         }
     }
 
-    public function update($data){
+    public function update($data)
+    {
 
-        foreach ($data as $row)
-        {
-               if ($row->customFieldsValues !== null) {
-                   foreach ($row->customFieldsValues as $attribute){
+        foreach ($data as $row) {
+            if ($row->customFieldsValues !== null) {
+                foreach ($row->customFieldsValues as $attribute) {
 
-                       if ($attribute->fieldId == 604475)
-                       {
-                           continue 2;
-                       }
-                   }
-                   $contactMs = ContactMs::query()->where('contact_amo_id',$row->id);
-                 if ($contactMs->exists()){
-                    dump($row->id,$this->actionPutRowsFromJson($row->id,$contactMs->value('id'))) ;
-                 }
-               }
+                    if ($attribute->fieldId == 604475) {
+                        continue 2;
+                    }
+                }
+                $contactMs = ContactMs::query()->where('contact_amo_id', $row->id);
+                if ($contactMs->exists()) {
+                    dump($row->id, $this->actionPutRowsFromJson($row->id, $contactMs->value('id')));
+                }
+            }
         }
     }
 
-    protected function   actionPutRowsFromJson($id ,$msId){
+    protected function  actionPutRowsFromJson($id, $msId)
+    {
 
-   $accessToken = json_decode(file_get_contents(base_path('token_amocrm_widget.json')), true)['accessToken'];;
+        $accessToken = json_decode(file_get_contents(base_path('token_amocrm_widget.json')), true)['accessToken'];;
 
-    $customFieldUpdate = [
-    "field_id" => 604475,
-    "field_name" => "Cсылка на контрагента в моем складе",
-    "field_code" => null,
-    "field_type" => "url",
-    "values" => [
-        [
-            "value" =>"https://online.moysklad.ru/#company/edit?id=".$msId
-        ]
-    ]
-    ];
-        $customFieldUpdate2= [
-        "field_id"=> 604457,
-        "field_name"=>"Ид контрагента в  моем складе",
-        "field_code"=> null,
-        "field_type"=> "text",
-        "values"=>[
-            [
-                "value"=> $msId
+        $customFieldUpdate = [
+            "field_id" => 604475,
+            "field_name" => "Cсылка на контрагента в моем складе",
+            "field_code" => null,
+            "field_type" => "url",
+            "values" => [
+                [
+                    "value" => "https://api.moysklad.ru/#company/edit?id=" . $msId
+                ]
             ]
-        ]
-    ];
+        ];
+        $customFieldUpdate2 = [
+            "field_id" => 604457,
+            "field_name" => "Ид контрагента в  моем складе",
+            "field_code" => null,
+            "field_type" => "text",
+            "values" => [
+                [
+                    "value" => $msId
+                ]
+            ]
+        ];
 
 
-  $client = new Client([
-    'base_uri' => 'https://euroblock.amocrm.ru/api/v4/',
-    'headers' => [
-        'Authorization' => "Bearer $accessToken",
-        'Content-Type' => 'application/json',
-    ],
-]);
+        $client = new Client([
+            'base_uri' => 'https://euroblock.amocrm.ru/api/v4/',
+            'headers' => [
+                'Authorization' => "Bearer $accessToken",
+                'Content-Type' => 'application/json',
+            ],
+        ]);
 
-               try {
-               $response = $client->patch("contacts/$id", [
-                       'json' => ['custom_fields_values' => [$customFieldUpdate,$customFieldUpdate2]],
-                   ]);
-                  return $response->getStatusCode() === 200
-                             ? 'Custom field updated successfully.'
-                             : 'Error updating custom field.';
-               } catch (\Exception $e) {
-                  return 'Request error: ' . $e->getMessage();
-               }
+        try {
+            $response = $client->patch("contacts/$id", [
+                'json' => ['custom_fields_values' => [$customFieldUpdate, $customFieldUpdate2]],
+            ]);
+            return $response->getStatusCode() === 200
+                ? 'Custom field updated successfully.'
+                : 'Error updating custom field.';
+        } catch (\Exception $e) {
+            return 'Request error: ' . $e->getMessage();
+        }
     }
-
 }
