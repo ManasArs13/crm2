@@ -103,7 +103,7 @@ class ContactAmoService implements EntityInterface
     protected function  actionPutRowsFromJson($id, $msId)
     {
 
-        $accessToken = json_decode(file_get_contents(base_path('token_amocrm_widget.json')), true)['accessToken'];;
+        $accessToken = json_decode(file_get_contents(base_path('token_amocrm_widget.json')), true)['accessToken'];
 
         $customFieldUpdate = [
             "field_id" => 604475,
