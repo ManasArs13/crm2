@@ -79,9 +79,6 @@ class SyncContactMsAmo extends Command
                     $contactAmo->contact_ms_link = 'https://api.moysklad.ru/#company/edit?id=' . $contactMS->id;
                     $contactAmo->save();
 
-                    return $response->getStatusCode() === 200
-                        ? 'Custom field updated successfully.'
-                        : 'Error updating custom field.';
                 } catch (\Exception $e) {
                     return 'Request error: ' . $e->getMessage();
                 }
