@@ -47,6 +47,11 @@ class SyncContactMsAmo extends Command
                     }
                 }
             }
+
+            $contactAmo->contact_ms_id = $id;
+            $contactAmo->contact_ms_link = $link;
+            $contactAmo->save();
+
             $accessToken = json_decode(file_get_contents(base_path('token_amocrm_widget.json')), true)['accessToken'];
 
             $customFieldUpdate = [
@@ -85,6 +90,8 @@ class SyncContactMsAmo extends Command
                 $response = $client->patch("contacts/$contactAmo->id", [
                     'json' => ['custom_fields_values' => [$customFieldUpdate, $customFieldUpdate2]],
                 ]);
+
+
 
                 if ($response->getStatusCode() == 200) {
                     info('Custom field updated successfully.' . $contactAmo->id);
