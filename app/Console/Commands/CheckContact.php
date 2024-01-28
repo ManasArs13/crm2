@@ -95,7 +95,7 @@ class SyncContactMsAmo extends Command
                     info('Error updating.' . $contactAmo->id);
                 }
             } catch (RequestException  $e) {
-                if ($e->getResponse()->getStatusCode()) {
+                if ($e->getResponse()->getStatusCode() == 400) {
                     $contactAmo->delete();
                     info('deleted.' . $contactAmo->id);
                 }
