@@ -29,7 +29,7 @@ class UpdateCounterparty extends Command
     public function handle(CounterpartyService $service ,MoySkladService $moySkladService )
     {
         $date = Option::where('code', '=', 'ms_date_begin_change')->first()?->value;
-        $counterpartyUrl='https://online.moysklad.ru/api/remap/1.2/entity/counterparty?&filter='.$moySkladService->getFilter(["updated"=>'>='.$date]);
+        $counterpartyUrl='https://api.moysklad.ru/api/remap/1.2/entity/counterparty?&filter='.$moySkladService->getFilter(["updated"=>'>='.$date]);
         $counterparty = $moySkladService->actionGetRowsFromJson($counterpartyUrl);
         $service->updateCounterpartyMs($counterparty);
     }
