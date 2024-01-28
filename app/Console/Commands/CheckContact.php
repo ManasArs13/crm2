@@ -86,14 +86,16 @@ class SyncContactMsAmo extends Command
                     'json' => ['custom_fields_values' => [$customFieldUpdate, $customFieldUpdate2]],
                 ]);
 
-                $contactAmo->contact_ms_id = $id;
-                $contactAmo->contact_ms_link = $link;
-                $contactAmo->save();
-
                 if ($response->getStatusCode() == 200) {
+                    $contactAmo->contact_ms_id = $id;
+                    $contactAmo->contact_ms_link = $link;
+                    $contactAmo->save();
                     info('Custom field updated successfully.' . $contactAmo->id);
+                } else if($response->getStatusCode() == 400){
+                    $contactAmo->delete();
+                    info('deleted.' . $contactAmo->id);
                 } else {
-                    info('Error updating custom field.' . $contactAmo->id);
+                    info('Error updating.' . $contactAmo->id);
                 }
             } catch (RequestException  $e) {
                 info($e->getMessage());
