@@ -6,6 +6,7 @@ use App\Models\ContactAmo;
 use App\Models\ContactMs;
 use Illuminate\Console\Command;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 
 class SyncContactMsAmo extends Command
 {
@@ -79,8 +80,12 @@ class SyncContactMsAmo extends Command
                     $contactAmo->contact_ms_link = 'https://api.moysklad.ru/#company/edit?id=' . $contactMS->id;
                     $contactAmo->save();
 
-                } catch (\Exception $e) {
-                    return 'Request error: ' . $e->getMessage();
+                    return $response->getStatusCode() === 200
+                        ? 'Custom field updated successfully.'
+                        : 'Error updating custom field.';
+                } catch (RequestException  $e) {
+                    info($e->getMessage());
+                    return false;
                 }
             }
         }
