@@ -87,19 +87,11 @@ class SyncContactMsAmo extends Command
                 ]);
 
                 if ($response->getStatusCode() == 200) {
-                    $contactAmo->contact_ms_id = $id;
-                    $contactAmo->contact_ms_link = $link;
-                    $contactAmo->save();
                     info('Custom field updated successfully.' . $contactAmo->id);
                 } else {
-                    info('Error updating.' . $contactAmo->id);
+                    info('Error updating custom field.' . $contactAmo->id);
                 }
             } catch (RequestException  $e) {
-                if ($e->getResponse()->getStatusCode() == 400) {
-                    ContactAmo::find($contactAmo->id);
-                    $contactAmo->delete();
-                    info('deleted.' . $contactAmo->id);
-                }
                 info($e->getMessage());
             }
         }
