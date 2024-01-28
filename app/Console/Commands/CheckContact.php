@@ -34,13 +34,13 @@ class SyncContactMsAmo extends Command
         $contactAmos = ContactAmo::get();
 
         foreach($contactAmos as $contactAmo) {
-            $contactMS = ContactMs::query()->where('phone_norm', $contactAmo->phone_norm);
+
+            $contactMS = ContactMs::where('phone_norm', $contactAmo->phone_norm)->first();
 
             if ($contactMS) {
-                $contactAmo->update([
-                        'contact_ms_id' => $contactMS->id,
-                        'contact_ms_link' => 'https://api.moysklad.ru/#company/edit?id='.$contactMS->id
-                ]);
+                $contactAmo->contact_ms_id = $contactMS->id;
+                $contactAmo->contact_ms_link = 'https://api.moysklad.ru/#company/edit?id='.$contactMS->id;
+                $contactAmo->save();
             }
 
         }
