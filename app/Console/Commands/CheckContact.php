@@ -37,6 +37,14 @@ class SyncContactMsAmo extends Command
 
             if ($contactMS) {
 
+                $id = null;
+                $link = null;
+
+                if($contactMS->phone_norm !== null) {
+                    $id = $contactMS->id;
+                    $link = 'https://api.moysklad.ru/#company/edit?id='.$contactMS->id;
+                }
+
                 $accessToken = json_decode(file_get_contents(base_path('token_amocrm_widget.json')), true)['accessToken'];
 
                 $customFieldUpdate = [
@@ -46,7 +54,7 @@ class SyncContactMsAmo extends Command
                     "field_type" => "url",
                     "values" => [
                         [
-                            "value" => "https://api.moysklad.ru/#company/edit?id=" . $contactMS->id
+                            "value" => $link
                         ]
                     ]
                 ];
@@ -57,7 +65,7 @@ class SyncContactMsAmo extends Command
                     "field_type" => "text",
                     "values" => [
                         [
-                            "value" => $contactMS->id
+                            "value" => $id
                         ]
                     ]
                 ];
@@ -76,8 +84,8 @@ class SyncContactMsAmo extends Command
                         'json' => ['custom_fields_values' => [$customFieldUpdate, $customFieldUpdate2]],
                     ]);
 
-                    $contactAmo->contact_ms_id = $contactMS->id;
-                    $contactAmo->contact_ms_link = 'https://api.moysklad.ru/#company/edit?id=' . $contactMS->id;
+                    $contactAmo->contact_ms_id = $id;
+                    $contactAmo->contact_ms_link = $link;
                     $contactAmo->save();
 
                     if ($response->getStatusCode() == 200) {
