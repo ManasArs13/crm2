@@ -91,13 +91,14 @@ class SyncContactMsAmo extends Command
                     $contactAmo->contact_ms_link = $link;
                     $contactAmo->save();
                     info('Custom field updated successfully.' . $contactAmo->id);
-                } else if($response->getStatusCode() == 400){
-                    $contactAmo->delete();
-                    info('deleted.' . $contactAmo->id);
                 } else {
                     info('Error updating.' . $contactAmo->id);
                 }
             } catch (RequestException  $e) {
+                if ($response->getStatusCode() == 400) {
+                    $contactAmo->delete();
+                    info('deleted.' . $contactAmo->id);
+                }
                 info($e->getMessage());
             }
         }
