@@ -91,8 +91,6 @@ class SyncContactMsAmo extends Command
                     'json' => ['custom_fields_values' => [$customFieldUpdate, $customFieldUpdate2]],
                 ]);
 
-
-
                 if ($response->getStatusCode() == 200) {
                     info('Custom field updated successfully.' . $contactAmo->id);
                 } else {
