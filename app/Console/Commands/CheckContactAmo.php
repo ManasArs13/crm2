@@ -9,7 +9,7 @@ use Illuminate\Console\Command;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
-class CheckContacAmo extends Command
+class CheckContactAmo extends Command
 {
     /**
      * The name and signature of the console command.
