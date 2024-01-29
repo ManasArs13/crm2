@@ -155,7 +155,7 @@ class ContactAmoService implements EntityInterface
 
         try {
             $response = $client->patch("contacts/$id", [
-                'json' => ['custom_fields_values' => [$customFieldUpdate, $customFieldUpdate2]],
+                'json' => ['custom_fields_values' => [$customFieldUpdate, $customFieldUpdate2, $customFieldUpdate3]],
             ]);
             return $response->getStatusCode() === 200
                 ? 'Custom field updated successfully.'
