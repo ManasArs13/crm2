@@ -47,11 +47,11 @@ class CheckContactAmo extends Command
                         $id = $contactMS->id;
                         $link = 'https://api.moysklad.ru/#company/edit?id=' . $contactMS->id;
                         $budget = OrderMs::where('contact_ms_id', $contactMS->id)->sum('sum');
-                        info($budget);
                     }
                 }
             }
 
+            $contactAmo->budget = $budget;
             $contactAmo->contact_ms_id = $id;
             $contactAmo->contact_ms_link = $link;
             $contactAmo->save();
