@@ -116,7 +116,7 @@ class ContactAmoService implements EntityInterface
             "field_type" => "url",
             "values" => [
                 [
-                    "value" => "https://api.moysklad.ru/#company/edit?id=" . $msId
+                    "value" => "https://online.moysklad.ru/#Company/edit?id=" . $msId
                 ]
             ]
         ];

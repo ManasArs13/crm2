@@ -45,7 +45,7 @@ class CheckContactAmo extends Command
                 if ($contactMS) {
                     if ($contactMS->phone_norm !== null) {
                         $id = $contactMS->id;
-                        $link = 'https://api.moysklad.ru/#company/edit?id=' . $contactMS->id;
+                        $link = 'https://online.moysklad.ru/#Company/edit?id=' . $contactMS->id;
                         $budget = OrderMs::where('contact_ms_id', $contactMS->id)->sum('sum');
                     }
                 }
