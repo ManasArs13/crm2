@@ -6,6 +6,7 @@ use App\Contracts\EntityInterface;
 use App\Models\ContactAmo;
 use App\Models\ContactMs;
 use App\Models\Option;
+use App\Models\OrderMs;
 use GuzzleHttp\Client;
 
 class ContactAmoService implements EntityInterface
@@ -94,13 +95,16 @@ class ContactAmoService implements EntityInterface
                 }
                 $contactMs = ContactMs::query()->where('contact_amo_id', $row->id);
                 if ($contactMs->exists()) {
-                    dump($row->id, $this->actionPutRowsFromJson($row->id, $contactMs->value('id')));
+
+                    $budget = OrderMs::where('contact_ms_id')->sum('sum');
+
+                    dump($row->id, $this->actionPutRowsFromJson($row->id, $contactMs->value('id')), $budget);
                 }
             }
         }
     }
 
-    protected function  actionPutRowsFromJson($id, $msId)
+    protected function  actionPutRowsFromJson($id, $msId, $budget = 0)
     {
 
         $accessToken = json_decode(file_get_contents(base_path('token_amocrm_widget.json')), true)['accessToken'];
@@ -124,6 +128,18 @@ class ContactAmoService implements EntityInterface
             "values" => [
                 [
                     "value" => $msId
+                ]
+            ]
+        ];
+
+        $customFieldUpdate3 = [
+            "field_id" => 609001,
+            "field_name" => "Бюджет",
+            "field_code" => null,
+            "field_type" => "text",
+            "values" => [
+                [
+                    "value" => $budget
                 ]
             ]
         ];
