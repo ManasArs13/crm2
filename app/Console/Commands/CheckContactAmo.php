@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\ContactAmo;
 use App\Models\ContactMs;
+use App\Models\OrderMs;
 use Illuminate\Console\Command;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -35,6 +36,7 @@ class CheckContacAmo extends Command
 
             $id = null;
             $link = null;
+            $budget = null;
 
             if ($contactAmo->phone_norm !== null) {
 
@@ -44,6 +46,7 @@ class CheckContacAmo extends Command
                     if ($contactMS->phone_norm !== null) {
                         $id = $contactMS->id;
                         $link = 'https://api.moysklad.ru/#company/edit?id=' . $contactMS->id;
+                        $budget = OrderMs::where('contact_ms_id', $contactMS->id)->sum('sum');
                     }
                 }
             }
@@ -76,6 +79,18 @@ class CheckContacAmo extends Command
                     ]
                 ]
             ];
+
+            $customFieldUpdate3 = [
+                "field_id" => 609001,
+                "field_name" => "Бюджет",
+                "field_code" => null,
+                "field_type" => "text",
+                "values" => [
+                    [
+                        "value" => $budget
+                    ]
+                ]
+            ];
          
             $client = new Client([
                 'base_uri' => 'https://euroblock.amocrm.ru/api/v4/',
@@ -87,7 +102,7 @@ class CheckContacAmo extends Command
 
             try {
                 $response = $client->patch("contacts/$contactAmo->id", [
-                    'json' => ['custom_fields_values' => [$customFieldUpdate, $customFieldUpdate2]],
+                    'json' => ['custom_fields_values' => [$customFieldUpdate, $customFieldUpdate2, $customFieldUpdate3]],
                 ]);
 
                 if ($response->getStatusCode() == 200) {
