@@ -8,14 +8,14 @@ use Illuminate\Console\Command;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 
-class SyncContactMsAmo extends Command
+class CheckContacAmo extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'app:check-contact';
+    protected $signature = 'app:check-contact-amo';
 
     /**
      * The console command description.
