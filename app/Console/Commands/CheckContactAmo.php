@@ -76,8 +76,7 @@ class CheckContacAmo extends Command
                     ]
                 ]
             ];
-
-
+         
             $client = new Client([
                 'base_uri' => 'https://euroblock.amocrm.ru/api/v4/',
                 'headers' => [

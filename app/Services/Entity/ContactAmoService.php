@@ -96,7 +96,7 @@ class ContactAmoService implements EntityInterface
                 $contactMs = ContactMs::query()->where('contact_amo_id', $row->id);
                 if ($contactMs->exists()) {
 
-                    $budget = OrderMs::where('contact_ms_id')->sum('sum');
+                    $budget = OrderMs::where('contact_ms_id', $contactMs->value('id'))->sum('sum');
 
                     dump($row->id, $this->actionPutRowsFromJson($row->id, $contactMs->value('id')), $budget);
                 }
