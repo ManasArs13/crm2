@@ -98,7 +98,7 @@ class ContactAmoService implements EntityInterface
                 if ($contactMs->exists()) {
 
                     $budget = 0;
-                    $orders = OrderMs::where('contact_ms_id', $contactMs->id)->value('id');
+                    $orders = OrderMs::where('contact_ms_id', $contactMs->id)->get('id');
                     foreach ($orders as $order) {
                         $budget += Shipments::where('order_id', $order->id)->sum('suma');
                     }

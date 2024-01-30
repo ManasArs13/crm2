@@ -48,7 +48,7 @@ class CheckContactAmo extends Command
                         $id = $contactMS->id;
                         $link = 'https://online.moysklad.ru/#Company/edit?id=' . $contactMS->id;
                         
-                        $orders = OrderMs::where('contact_ms_id', $contactMS->id)->value('id');
+                        $orders = OrderMs::where('contact_ms_id', $contactMS->id)->get('id');
                         foreach($orders as $order) {
                             $budget += Shipments::where('order_id', $order->id)->sum('suma');
                         }
