@@ -7,6 +7,7 @@ use App\Models\ContactAmo;
 use App\Models\ContactMs;
 use App\Models\Option;
 use App\Models\OrderMs;
+use App\Models\Shipments;
 use GuzzleHttp\Client;
 
 class ContactAmoService implements EntityInterface
@@ -96,7 +97,11 @@ class ContactAmoService implements EntityInterface
                 $contactMs = ContactMs::query()->where('contact_amo_id', $row->id);
                 if ($contactMs->exists()) {
 
-                    $budget = OrderMs::where('contact_ms_id', $contactMs->value('id'))->sum('sum');
+                    $budget = 0;
+                    $orders = OrderMs::where('contact_ms_id', $contactMs->id)->value('id');
+                    foreach ($orders as $order) {
+                        $budget += Shipments::where('order_id', $order->id)->sum('suma');
+                    }
 
                     dump($row->id, $this->actionPutRowsFromJson($row->id, $contactMs->value('id')), $budget);
                 }
