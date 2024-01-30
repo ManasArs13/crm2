@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\ContactAmo;
 use App\Models\ContactMs;
 use App\Models\OrderMs;
+use App\Models\Shipments;
 use Illuminate\Console\Command;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -46,7 +47,11 @@ class CheckContactAmo extends Command
                     if ($contactMS->phone_norm !== null) {
                         $id = $contactMS->id;
                         $link = 'https://online.moysklad.ru/#Company/edit?id=' . $contactMS->id;
-                        $budget = OrderMs::where('contact_ms_id', $contactMS->id)->sum('sum');
+                        
+                        $orders = OrderMs::where('contact_ms_id', $contactMS->id)->value('id');
+                        foreach($orders as $order) {
+                            $budget += Shipments::where('order_id', $order->id)->sum('suma');
+                        }
                     }
                 }
             }
