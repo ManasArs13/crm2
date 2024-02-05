@@ -25,6 +25,8 @@ class DeliveriesController extends Controller
         $entity='deliveries';
 
         $resColumns=[];
+        $resColumnsAll = [];
+
         foreach ($columns as $column) {
             $resColumns[$column]=trans("column.".$column);
         }
@@ -33,7 +35,9 @@ class DeliveriesController extends Controller
             return ($a > $b);
         });
 
-        return view("own.index", compact('entityItems',"resColumns", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter'));
+        $resColumnsAll = $resColumns;
+
+        return view("own.index", compact('entityItems',"resColumns", "resColumnsAll", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter'));
     }
 
     /**
@@ -111,6 +115,17 @@ class DeliveriesController extends Controller
         $entityItems = Delivery::query();
         $columns = Schema::getColumnListing('deliveries');
 
+        $resColumns = [];
+        $resColumnsAll = [];
+
+        foreach ($columns as $column) {
+            $resColumnsAll[$column] = trans("column." . $column);
+        }
+
+        uasort($resColumnsAll, function ($a, $b) {
+            return ($a > $b);
+        });
+
         if (isset($request->columns)){
             $requestColumns = $request->columns;
             $requestColumns[]="id";
@@ -135,7 +150,6 @@ class DeliveriesController extends Controller
         $urlReset = 'deliveries.index';
         $entity='deliveries';
 
-        $resColumns=[];
         if(isset($request->resColumns)){
             $resColumns = $request->resColumns;
         }else{
@@ -148,6 +162,6 @@ class DeliveriesController extends Controller
             return ($a > $b);
         });
 
-        return view("own.index", compact('entityItems',"resColumns",'selectColumn', "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter','urlReset','orderBy'));
+        return view("own.index", compact('entityItems',"resColumns", "resColumnsAll",'selectColumn', "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter','urlReset','orderBy'));
     }
 }
