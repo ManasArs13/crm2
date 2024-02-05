@@ -35,6 +35,8 @@ class ShippingPricesController extends Controller
             return ($a > $b);
         });
 
+        $resColumsAll = $resColumns;
+
         return view("own.index", compact('entityItems',"resColumns", "resColumnsAll", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter'));
     }
 
