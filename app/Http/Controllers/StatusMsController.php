@@ -163,6 +163,6 @@ class StatusMsController extends Controller
             return ($a > $b);
         });
 
-        return view("own.index", compact('entityItems',"resColumns",'selectColumn', "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter','urlReset','orderBy'));
+        return view("own.index", compact('entityItems',"resColumns", "resColumnsAll",'selectColumn', "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter','urlReset','orderBy'));
     }
 }
