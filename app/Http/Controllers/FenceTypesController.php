@@ -27,7 +27,7 @@ class FenceTypesController extends Controller
         $entity='fence_types';
 
         $resColumns=[];
-        $resColumsAll = [];
+        $resColumnsAll = [];
 
         foreach ($columns as $column) {
             $resColumns[$column]=trans("column.".$column);
