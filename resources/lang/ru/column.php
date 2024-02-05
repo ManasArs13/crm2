@@ -109,6 +109,7 @@
    'incoming_number' => 'Входящий номер',
    'incoming_date' => 'Входящий номер от',
    'supply' => 'Приёмка',
-   'to_sale'  => 'К продаже'
+   'to_sale'  => 'К продаже',
+   'is_archived' => 'В архиве'
    
       ];
