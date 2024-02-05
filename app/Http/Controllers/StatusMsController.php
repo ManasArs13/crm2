@@ -25,6 +25,8 @@ class StatusMsController extends Controller
         $entity='status_ms';
 
         $resColumns=[];
+        $resColumnsAll = [];
+
         foreach ($columns as $column) {
             $resColumns[$column]=trans("column.".$column);
         }
@@ -33,7 +35,9 @@ class StatusMsController extends Controller
             return ($a > $b);
         });
 
-        return view("own.index", compact('entityItems',"resColumns", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter'));
+        $resColumnsAll = $resColumns;
+
+        return view("own.index", compact('entityItems',"resColumns", "resColumnsAll", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter'));
     }
 
     /**
@@ -111,6 +115,17 @@ class StatusMsController extends Controller
         $entityItems = StatusMs::query();
         $columns = Schema::getColumnListing('status_ms');
 
+        $resColumns = [];
+        $resColumnsAll = [];
+
+        foreach ($columns as $column) {
+            $resColumnsAll[$column] = trans("column." . $column);
+        }
+
+        uasort($resColumnsAll, function ($a, $b) {
+            return ($a > $b);
+        }); 
+
         if (isset($request->columns)){
             $requestColumns = $request->columns;
             $requestColumns[]="id";
@@ -126,6 +141,7 @@ class StatusMsController extends Controller
         } else{
             $entityItems =   $entityItems->paginate(50);
         }
+
         $needMenuForItem=true;
         $urlEdit="status_ms.edit";
         $urlShow="status_ms.show";
@@ -135,7 +151,6 @@ class StatusMsController extends Controller
         $urlReset = 'status_ms.index';
         $entity='status_ms';
 
-        $resColumns=[];
         if(isset($request->resColumns)){
             $resColumns = $request->resColumns;
         }else{
