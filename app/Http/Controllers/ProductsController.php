@@ -15,43 +15,47 @@ class ProductsController extends Controller
      */
     public function index(Request $request)
     {
-        $entity='products';
-            $entityItems = Product::query()->where('type',Product::PRODUCTS)->orderByDesc('sort')->paginate(50);
-        if ($request->type == 'materials'){
-            $entity='materials';
-            $entityItems = Product::query()->where('type',Product::MATERIAL)->orderByDesc('sort')->paginate(50);
+        $entity = 'products';
+        $entityItems = Product::query()->where('type', Product::PRODUCTS)->orderByDesc('sort')->paginate(50);
+        if ($request->type == 'materials') {
+            $entity = 'materials';
+            $entityItems = Product::query()->where('type', Product::MATERIAL)->orderByDesc('sort')->paginate(50);
         }
         $columns = Schema::getColumnListing('products');
-        $needMenuForItem=true;
-        $urlEdit="products.edit";
-        $urlShow="products.show";
-        $urlDelete="products.destroy";
-        $urlCreate="products.create";
-        $urlFilter ='products.filter';
-        $columns[]='remainder';
-        $resColumns=[];
+        $needMenuForItem = true;
+        $urlEdit = "products.edit";
+        $urlShow = "products.show";
+        $urlDelete = "products.destroy";
+        $urlCreate = "products.create";
+        $urlFilter = 'products.filter';
+        $columns[] = 'remainder';
+
+        $resColumns = [];
+        $resColumnsAll = [];
         foreach ($columns as $column) {
-            $resColumns[$column]=trans("column.".$column);
+            $resColumns[$column] = trans("column." . $column);
         }
 
         uasort($resColumns, function ($a, $b) {
             return ($a > $b);
         });
 
-        return view("own.index", compact('entityItems',"resColumns", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter'));
+        $resColumnsAll = $resColumns;
+
+        return view("own.index", compact('entityItems', "resColumns", "resColumnsAll", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity", 'urlFilter'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-       public function create()
+    public function create()
     {
         $entityItem = new Product();
         $columns = Schema::getColumnListing('products'); // users table
 
 
-        $entity='products';
-        $action="products.store";
+        $entity = 'products';
+        $action = "products.store";
 
         return view('own.create', compact('entityItem', 'columns', 'action', 'entity'));
     }
@@ -59,7 +63,7 @@ class ProductsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-     public function store(Request $request)
+    public function store(Request $request)
     {
         Product::query()->create($request->post());
         return redirect()->route("products.index");
@@ -70,7 +74,7 @@ class ProductsController extends Controller
      */
     public function show(string $id)
     {
-        $entityItem=Product::findOrFail($id);
+        $entityItem = Product::findOrFail($id);
         $columns = Schema::getColumnListing('products'); // users table
         return view("own.show", compact('entityItem', 'columns'));
     }
@@ -80,27 +84,27 @@ class ProductsController extends Controller
      */
     public function edit(string $id)
     {
-        $entityItem=Product::find($id);
+        $entityItem = Product::find($id);
         $columns = Schema::getColumnListing('products'); // users table
-        $entity='products';
-        if ($entityItem->type == Product::MATERIAL){
-            $entity='materials';
+        $entity = 'products';
+        if ($entityItem->type == Product::MATERIAL) {
+            $entity = 'materials';
         }
 
-        $action="products.update";
+        $action = "products.update";
 
-        return view("own.edit", compact('entityItem','columns', 'action', 'entity'));
+        return view("own.edit", compact('entityItem', 'columns', 'action', 'entity'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-   public function update(Request $request, string $id)
+    public function update(Request $request, string $id)
     {
-        $entityItem=Product::find($id);
+        $entityItem = Product::find($id);
         $entityItem->fill($request->post())->save();
-        $action ='/admin/products?type=products';
-        if ($entityItem->type == Product::MATERIAL){
+        $action = '/admin/products?type=products';
+        if ($entityItem->type == Product::MATERIAL) {
             $action = '/admin/products?type=materials';
         }
         return redirect()->to($action);
@@ -111,55 +115,69 @@ class ProductsController extends Controller
      */
     public function destroy(string $id)
     {
-        $entityItem=Product::query()->find($id);
+        $entityItem = Product::query()->find($id);
         $entityItem->delete();
-        $action ='/admin/products?type=products';
-        if ($entityItem->type == Product::MATERIAL){
+        $action = '/admin/products?type=products';
+        if ($entityItem->type == Product::MATERIAL) {
             $action = '/admin/products?type=materials';
         }
         return redirect()->to($action);
     }
     public function filter(FilterRequest $request)
     {
-        $entity='products';
+        $entity = 'products';
         $orderBy  = $request->orderBy;
         $selectColumn = $request->getColumn();
         $entityItems = Product::query();
-        if ($request->type == 'products'){
-            $entityItems = Product::query()->where('type',Product::PRODUCTS);
-        }elseif ($request->type == 'materials'){
+
+        if ($request->type == 'products') {
+            $entityItems = Product::query()->where('type', Product::PRODUCTS);
+        } else if ($request->type == 'materials') {
             $entity = 'materials';
-            $entityItems = Product::query()->where('type',Product::MATERIAL);
+            $entityItems = Product::query()->where('type', Product::MATERIAL);
         }
+
         $columns = Schema::getColumnListing('products');
 
-        if (isset($request->columns)){
+        $resColumns = [];
+        $resColumnsAll = [];
+
+        foreach ($columns as $column) {
+            $resColumnsAll[$column] = trans("column." . $column);
+        }
+
+        uasort($resColumnsAll, function ($a, $b) {
+            return ($a > $b);
+        });
+
+
+        if (isset($request->columns)) {
             $requestColumns = $request->columns;
-            $requestColumns[]="id";
-            $columns =$requestColumns;
+            $requestColumns[] = "id";
+            $columns = $requestColumns;
             $entityItems = Product::query()->select($requestColumns);
         }
+
         if (isset($request->orderBy)  && $request->orderBy == 'asc') {
             $entityItems = $entityItems->orderBy($selectColumn)->orderByDesc('sort')->paginate(50);
             $orderBy = 'desc';
-        }elseif (isset($request->orderBy)  && $request->orderBy == 'desc') {
+        } elseif (isset($request->orderBy)  && $request->orderBy == 'desc') {
             $entityItems = $entityItems->orderByDesc($selectColumn)->orderByDesc('sort')->paginate(50);
             $orderBy = 'asc';
-        } else{
+        } else {
             $entityItems =   $entityItems->orderByDesc('sort')->paginate(50);
         }
-        $needMenuForItem=true;
-        $urlEdit="products.edit";
-        $urlShow="products.show";
-        $urlDelete="products.destroy";
-        $urlCreate="products.create";
-        $urlFilter ='products.filter';
+        $needMenuForItem = true;
+        $urlEdit = "products.edit";
+        $urlShow = "products.show";
+        $urlDelete = "products.destroy";
+        $urlCreate = "products.create";
+        $urlFilter = 'products.filter';
         $urlReset = 'products.index';
 
-        $resColumns=[];
-        if(isset($request->resColumns)){
+        if (isset($request->resColumns)) {
             $resColumns = $request->resColumns;
-        }else{
+        } else {
             foreach ($columns as $column) {
                 $resColumns[$column] = trans("column." . $column);
             }
@@ -169,6 +187,6 @@ class ProductsController extends Controller
             return ($a > $b);
         });
 
-        return view("own.index", compact('entityItems',"resColumns", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter','urlReset','orderBy','selectColumn'));
+        return view("own.index", compact('entityItems', "resColumns", "resColumnsAll", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity", 'urlFilter', 'urlReset', 'orderBy', 'selectColumn'));
     }
 }

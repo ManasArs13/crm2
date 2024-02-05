@@ -108,6 +108,7 @@
    'techchart_id' => 'Карта',
    'incoming_number' => 'Входящий номер',
    'incoming_date' => 'Входящий номер от',
-   'supply' => 'Приёмка'
+   'supply' => 'Приёмка',
+   'to_sale'  => 'К продаже'
    
       ];
