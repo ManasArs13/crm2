@@ -27,6 +27,8 @@ class FenceTypesController extends Controller
         $entity='fence_types';
 
         $resColumns=[];
+        $resColumsAll = [];
+
         foreach ($columns as $column) {
             $resColumns[$column]=trans("column.".$column);
         }
@@ -35,7 +37,9 @@ class FenceTypesController extends Controller
             return ($a > $b);
         });
 
-        return view("own.index", compact('entityItems',"resColumns", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter'));
+        $resColumsAll = $resColumns;
+
+        return view("own.index", compact('entityItems',"resColumns", 'resColumnsAll', "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter'));
     }
 
     /**
@@ -113,6 +117,17 @@ class FenceTypesController extends Controller
         $entityItems = FenceType::query();
         $columns = Schema::getColumnListing('fence_types');
 
+        $resColumns = [];
+        $resColumnsAll = [];
+
+        foreach ($columns as $column) {
+            $resColumnsAll[$column] = trans("column." . $column);
+        }
+
+        uasort($resColumnsAll, function ($a, $b) {
+            return ($a > $b);
+        });
+
         if (isset($request->columns)){
             $requestColumns = $request->columns;
             $requestColumns[]="id";
@@ -137,7 +152,6 @@ class FenceTypesController extends Controller
         $urlReset = 'fence_types.index';
         $entity='fence_types';
 
-        $resColumns=[];
         if(isset($request->resColumns)){
             $resColumns = $request->resColumns;
         }else{
@@ -150,6 +164,6 @@ class FenceTypesController extends Controller
             return ($a > $b);
         });
 
-        return view("own.index", compact('entityItems',"resColumns",'selectColumn', "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter','urlReset','orderBy'));
+        return view("own.index", compact('entityItems',"resColumns", "resColumsAll", 'selectColumn', "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter','urlReset','orderBy'));
     }
 }
