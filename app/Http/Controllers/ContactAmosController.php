@@ -37,7 +37,7 @@ class ContactAmosController extends Controller
 
         $resColumnsAll = $resColumns;
 
-        return view("own.index", compact('entityItems',"resColumns", "resColumns", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter'));
+        return view("own.index", compact('entityItems',"resColumns", "resColumnsAll", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter'));
     }
 
     /**
