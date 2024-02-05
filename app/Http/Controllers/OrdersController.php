@@ -35,10 +35,12 @@ class OrdersController extends Controller
         $urlShow = "orders.show";
         $urlDelete = "orders.destroy";
         $urlCreate = "orders.create";
-        $urlFilter ='orders.filter';
+        $urlFilter = 'orders.filter';
         $entity = 'orders';
 
         $resColumns = [];
+        $resColumnsAll = [];
+
         foreach ($columns as $column) {
             $resColumns[$column] = trans("column." . $column);
         }
@@ -47,7 +49,9 @@ class OrdersController extends Controller
             return ($a > $b);
         });
 
-        return view("own.index", compact('entityItems', "resColumns", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter'));
+        $resColumsAll = $resColumns;
+
+        return view("own.index", compact('entityItems', "resColumns", "resColumnsAll", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity", 'urlFilter'));
     }
 
     /**
@@ -75,7 +79,8 @@ class OrdersController extends Controller
 
         foreach ($productsBD as $product) {
             $products[$product->category_id][$product->color_id] =
-                ["id" => $product->id,
+                [
+                    "id" => $product->id,
                     "price" => $product->price,
                     "weight_kg" => $product->weight_kg,
                     "count_pallets" => $product->count_pallets,
@@ -170,13 +175,13 @@ class OrdersController extends Controller
 
     public function delivery(Request $request)
     {
-        $distance = Delivery::find( $request->delivery_id )->distance;
+        $distance = Delivery::find($request->delivery_id)->distance;
         $weight = $request->weight_kg;
         $prices = DB::table('vehicle_types')->pluck('id');
 
         $deliveryPrices = [];
 
-        if ($distance!=0) {
+        if ($distance != 0) {
             //Можно выбрать самый оптимальный тоннаж , удовлетв условию, то есть пробежаться по всем и получить одно число.
             $distances = DB::table('shipping_prices')
                 ->select(\DB::raw('MIN(distance) AS distance, vehicle_type_id'))
@@ -203,11 +208,13 @@ class OrdersController extends Controller
                         ->where('tonnage', '=', $minTonnage)
                         ->get();
 
-                    $deliveryPrices[$distance->vehicle_type_id] = round($price->value("price") * $price->value("tonnage")/100)*100;
+                    $deliveryPrices[$distance->vehicle_type_id] = round($price->value("price") * $price->value("tonnage") / 100) * 100;
                 } else {
-                    if ($distance->vehicle_type_id == "a4ee16dd-8d7e-11ec-0a80-0f9b002ff027"
+                    if (
+                        $distance->vehicle_type_id == "a4ee16dd-8d7e-11ec-0a80-0f9b002ff027"
                         ||
-                        $distance->vehicle_type_id == "93da19d9-f355-11ed-0a80-043100015554") {
+                        $distance->vehicle_type_id == "93da19d9-f355-11ed-0a80-043100015554"
+                    ) {
 
                         $min = DB::table('shipping_prices')
                             ->select(\DB::raw('MAX(tonnage) AS max_tonnage'))
@@ -225,7 +232,7 @@ class OrdersController extends Controller
                             ->where('tonnage', '=', $maxTonnage)
                             ->get();
 
-                        $deliveryPrices[$distance->vehicle_type_id] = round($price->value("price") * round($weight)/100)*100;
+                        $deliveryPrices[$distance->vehicle_type_id] = round($price->value("price") * round($weight) / 100) * 100;
                     } else {
                         $deliveryPrices[$distance->vehicle_type_id] = null;
                     }
@@ -236,7 +243,7 @@ class OrdersController extends Controller
         foreach ($prices as $price) {
             if (!isset($deliveryPrices[$price])) {
                 $deliveryPrices[$price] = 0;
-            }elseif($deliveryPrices[$price]==null){
+            } elseif ($deliveryPrices[$price] == null) {
                 $deliveryPrices[$price] = 0;
             }
         }
@@ -284,10 +291,22 @@ class OrdersController extends Controller
         $selectColumn = $request->getColumn();
         $entityItems = Order::query();
         $columns = Schema::getColumnListing('orders');
-        if (isset($request->columns)){
+
+        $resColumns = [];
+        $resColumnsAll = [];
+
+        foreach ($columns as $column) {
+            $resColumnsAll[$column] = trans("column." . $column);
+        }
+
+        uasort($resColumnsAll, function ($a, $b) {
+            return ($a > $b);
+        });
+
+        if (isset($request->columns)) {
             $requestColumns = $request->columns;
-            $requestColumns[]="id";
-            $columns =$requestColumns;
+            $requestColumns[] = "id";
+            $columns = $requestColumns;
             $entityItems = Order::query()->select($requestColumns);
         }
 
@@ -304,30 +323,28 @@ class OrdersController extends Controller
                     }
                 }
             }
-        }catch (\Throwable $e){
-
+        } catch (\Throwable $e) {
         }
-        if ($columnIsForeignKey && $orderBy == 'asc'){
+        if ($columnIsForeignKey && $orderBy == 'asc') {
             $entityItems = $entityItems
                 ->join($foreignKeyData->getForeignTableName(), 'orders.' . $request->getColumn(), '=', $foreignKeyData->getForeignTableName() . '.id')
-                ->orderBy($foreignKeyData->getForeignTableName() . '.' ."name")
+                ->orderBy($foreignKeyData->getForeignTableName() . '.' . "name")
                 ->paginate(50);
-            $orderBy ='desc';
-        }elseif ($columnIsForeignKey && $orderBy == 'desc'){
+            $orderBy = 'desc';
+        } elseif ($columnIsForeignKey && $orderBy == 'desc') {
             $entityItems = $entityItems
                 ->join($foreignKeyData->getForeignTableName(), 'orders.' . $request->getColumn(), '=', $foreignKeyData->getForeignTableName() . '.id')
-                ->orderByDesc($foreignKeyData->getForeignTableName() . '.' ."name")
+                ->orderByDesc($foreignKeyData->getForeignTableName() . '.' . "name")
                 ->paginate(50);
             $orderBy = 'asc';
-        }elseif(isset($request->orderBy) && $orderBy == 'asc'){
+        } elseif (isset($request->orderBy) && $orderBy == 'asc') {
             $entityItems =    $entityItems->orderBy($request->getColumn())->paginate(50);
-            $orderBy ='desc';
-        }elseif(isset($request->orderBy) && $orderBy == 'desc'){
+            $orderBy = 'desc';
+        } elseif (isset($request->orderBy) && $orderBy == 'desc') {
             $entityItems =    $entityItems->orderByDesc($request->getColumn())->paginate(50);
             $orderBy = 'asc';
-        }else{
+        } else {
             $entityItems =   $entityItems->paginate(50);
-
         }
 
         $needMenuForItem = true;
@@ -335,21 +352,21 @@ class OrdersController extends Controller
         $urlShow = "orders.show";
         $urlDelete = "orders.destroy";
         $urlCreate = "orders.create";
-        $urlFilter ='orders.filter';
+        $urlFilter = 'orders.filter';
         $urlReset = 'orders.index';
         $entity = 'orders';
 
-        $resColumns = [];
-     if(isset($request->resColumns)){
-         $resColumns = $request->resColumns;
-     }else{
-         foreach ($columns as $column) {
-             $resColumns[$column] = trans("column." . $column);
-         }
-     }
+
+        if (isset($request->resColumns)) {
+            $resColumns = $request->resColumns;
+        } else {
+            foreach ($columns as $column) {
+                $resColumns[$column] = trans("column." . $column);
+            }
+        }
         uasort($resColumns, function ($a, $b) {
             return ($a > $b);
         });
-        return view("own.index", compact('entityItems','selectColumn',"resColumns", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter','urlReset','orderBy'));
+        return view("own.index", compact('entityItems', 'selectColumn', "resColumns", "resColumnsAll", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity", 'urlFilter', 'urlReset', 'orderBy'));
     }
 }
