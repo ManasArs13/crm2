@@ -25,6 +25,8 @@ class OrderMsController extends Controller
         $entity='order_ms';
 
         $resColumns=[];
+        $resColumnsAll = [];
+
         foreach ($columns as $column) {
             $resColumns[$column]=trans("column.".$column);
         }
@@ -33,7 +35,9 @@ class OrderMsController extends Controller
             return ($a > $b);
         });
 
-        return view("own.index", compact('entityItems',"resColumns", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter'));
+        $resColumnsAll = $resColumns;
+
+        return view("own.index", compact('entityItems',"resColumns", "resColumnsAll", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter'));
     }
 
     /**
@@ -110,6 +114,18 @@ class OrderMsController extends Controller
         $selectColumn = $request->getColumn();
         $entityItems = OrderMs::query();
         $columns = Schema::getColumnListing('order_ms');
+
+        $resColumns = [];
+        $resColumnsAll = [];
+
+        foreach ($columns as $column) {
+            $resColumnsAll[$column] = trans("column." . $column);
+        }
+
+        uasort($resColumnsAll, function ($a, $b) {
+            return ($a > $b);
+        });
+
         if (isset($request->orderBy)  && $request->orderBy == 'asc') {
             $entityItems = $entityItems->orderBy($request->getColumn())->paginate(50);
             $orderBy = 'desc';
@@ -128,15 +144,18 @@ class OrderMsController extends Controller
         $urlReset = 'order_ms.index';
         $entity='order_ms';
 
-        $resColumns=[];
-        foreach ($columns as $column) {
-            $resColumns[$column]=trans("column.".$column);
+        if(isset($request->resColumns)){
+            $resColumns = $request->resColumns;
+        }else{
+            foreach ($columns as $column) {
+                $resColumns[$column] = trans("column." . $column);
+            }
         }
 
         uasort($resColumns, function ($a, $b) {
             return ($a > $b);
         });
 
-        return view("own.index", compact('entityItems','selectColumn',"resColumns", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter','urlReset','orderBy'));
+        return view("own.index", compact('entityItems','selectColumn',"resColumns", "resColumnsAll", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter','urlReset','orderBy'));
     }
 }
