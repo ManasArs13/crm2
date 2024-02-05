@@ -25,6 +25,8 @@ class ShippingPricesController extends Controller
         $entity='shipping_prices';
 
         $resColumns=[];
+        $resColumnsAll = [];
+
         foreach ($columns as $column) {
             $resColumns[$column]=trans("column.".$column);
         }
@@ -33,7 +35,7 @@ class ShippingPricesController extends Controller
             return ($a > $b);
         });
 
-        return view("own.index", compact('entityItems',"resColumns", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter'));
+        return view("own.index", compact('entityItems',"resColumns", "resColumsAll", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter'));
     }
 
     /**
@@ -112,6 +114,17 @@ class ShippingPricesController extends Controller
         $selectColumn = $request->getColumn();
         $columns = Schema::getColumnListing('shipping_prices');
 
+        $resColumns = [];
+        $resColumnsAll = [];
+
+        foreach ($columns as $column) {
+            $resColumnsAll[$column] = trans("column." . $column);
+        }
+
+        uasort($resColumnsAll, function ($a, $b) {
+            return ($a > $b);
+        });
+
         if (isset($request->columns)){
             $requestColumns = $request->columns;
             $requestColumns[]="id";
@@ -127,6 +140,7 @@ class ShippingPricesController extends Controller
         } else{
             $entityItems =   $entityItems->paginate(50);
         }
+
         $needMenuForItem=true;
         $urlEdit="shipping_prices.edit";
         $urlShow="shipping_prices.show";
@@ -136,7 +150,6 @@ class ShippingPricesController extends Controller
         $urlReset = 'shipping_prices.index';
         $entity='shipping_prices';
 
-        $resColumns=[];
         if(isset($request->resColumns)){
             $resColumns = $request->resColumns;
         }else{
@@ -149,6 +162,6 @@ class ShippingPricesController extends Controller
             return ($a > $b);
         });
 
-        return view("own.index", compact('entityItems',"resColumns", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter','urlReset','orderBy','selectColumn'));
+        return view("own.index", compact('entityItems',"resColumns", "resColumnsAll", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter','urlReset','orderBy','selectColumn'));
     }
 }
