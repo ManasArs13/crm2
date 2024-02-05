@@ -110,6 +110,7 @@
    'incoming_date' => 'Входящий номер от',
    'supply' => 'Приёмка',
    'to_sale'  => 'К продаже',
-   'is_archived' => 'В архиве'
+   'is_archived' => 'В архиве',
+   'budget' => 'бюджет'
    
       ];
