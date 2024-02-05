@@ -126,15 +126,23 @@ class OrderMsController extends Controller
             return ($a > $b);
         });
 
+        if (isset($request->columns)) {
+            $requestColumns = $request->columns;
+            $requestColumns[] = "id";
+            $columns = $requestColumns;
+            $entityItems = OrderMs::query()->select($requestColumns);
+        }
+
         if (isset($request->orderBy)  && $request->orderBy == 'asc') {
             $entityItems = $entityItems->orderBy($request->getColumn())->paginate(50);
             $orderBy = 'desc';
-        }elseif (isset($request->orderBy)  && $request->orderBy == 'desc') {
+        }else if (isset($request->orderBy)  && $request->orderBy == 'desc') {
             $entityItems = $entityItems->orderByDesc($request->getColumn())->paginate(50);
             $orderBy = 'asc';
-        } else{
-            $entityItems = $entityItems->where($request->getColumn(),'LIKE','%'.$request->getData().'%')->paginate(50);
+        } else {
+            $entityItems = $entityItems->orderByDesc('sort')->paginate(50);
         }
+
         $needMenuForItem=true;
         $urlEdit="order_ms.edit";
         $urlShow="order_ms.show";
