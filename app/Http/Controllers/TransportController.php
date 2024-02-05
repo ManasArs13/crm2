@@ -25,6 +25,8 @@ class TransportController extends Controller
         $entity='transports';
 
         $resColumns=[];
+        $resColumnsAll =[];
+
         foreach ($columns as $column) {
             $resColumns[$column]=trans("column.".$column);
         }
@@ -33,7 +35,9 @@ class TransportController extends Controller
             return ($a > $b);
         });
 
-        return view("own.index", compact('entityItems',"resColumns", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter'));
+        $resColumnsAll = $resColumns;
+
+        return view("own.index", compact('entityItems',"resColumns", "resColumnsAll", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter'));
     }
 
     /**
@@ -111,6 +115,17 @@ class TransportController extends Controller
         $entityItems = Transport::query();
         $columns = Schema::getColumnListing('transports');
 
+        $resColumns = [];
+        $resColumnsAll = [];
+
+        foreach ($columns as $column) {
+            $resColumnsAll[$column] = trans("column." . $column);
+        }
+
+        uasort($resColumnsAll, function ($a, $b) {
+            return ($a > $b);
+        });
+
         if (isset($request->columns)){
             $requestColumns = $request->columns;
             $requestColumns[]="id";
@@ -135,7 +150,7 @@ class TransportController extends Controller
         $urlReset = 'transports.index';
         $entity='transports';
 
-        $resColumns=[];
+ 
         if(isset($request->resColumns)){
             $resColumns = $request->resColumns;
         }else{
@@ -148,6 +163,6 @@ class TransportController extends Controller
             return ($a > $b);
         });
 
-        return view("own.index", compact('entityItems',"resColumns",'selectColumn', "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter','urlReset','orderBy'));
+        return view("own.index", compact('entityItems',"resColumns", "resColumnsAll", 'selectColumn', "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter','urlReset','orderBy'));
     }
 }
