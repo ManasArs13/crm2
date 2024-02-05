@@ -35,6 +35,8 @@ class ProductsCategoryController extends Controller
         $urlFilter ='products_categories.filter';
 
         $resColumns=[];
+        $resColumnsAll = [];
+
         foreach ($columns as $column) {
             $resColumns[$column]=trans("column.".$column);
         }
@@ -43,7 +45,9 @@ class ProductsCategoryController extends Controller
             return ($a > $b);
         });
 
-        return view("own.index", compact('entityItems',"resColumns", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter'));
+        $resColumnsAll = $resColumns;
+
+        return view("own.index", compact('entityItems',"resColumns", "resColumnsAll", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter'));
     }
 
     /**
@@ -133,13 +137,26 @@ class ProductsCategoryController extends Controller
         $orderBy  = $request->orderBy;
         $selectColumn = $request->getColumn();
         $entityItems = ProductsCategory::query();
+
         if ($request->type == 'products'){
             $entityItems = ProductsCategory::query()->where('type',ProductsCategory::PRODUCTS);
         }elseif ($request->type == 'materials'){
             $entity = 'products_categories_materials';
             $entityItems = ProductsCategory::query()->where('type',ProductsCategory::MATERIAL);
         }
+
         $columns = Schema::getColumnListing('products_categories');
+
+        $resColumns = [];
+        $resColumnsAll = [];
+
+        foreach ($columns as $column) {
+            $resColumnsAll[$column] = trans("column." . $column);
+        }
+
+        uasort($resColumnsAll, function ($a, $b) {
+            return ($a > $b);
+        }); 
 
         if (isset($request->columns)){
             $requestColumns = $request->columns;
@@ -165,7 +182,6 @@ class ProductsCategoryController extends Controller
         $urlReset = 'products_categories.index';
         $entity='products_categories';
 
-        $resColumns=[];
         if(isset($request->resColumns)){
             $resColumns = $request->resColumns;
         }else{
@@ -178,6 +194,6 @@ class ProductsCategoryController extends Controller
             return ($a > $b);
         });
 
-        return view("own.index", compact('entityItems',"resColumns",'selectColumn', "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter','urlReset','orderBy'));
+        return view("own.index", compact('entityItems',"resColumns", "resColumnsAll", 'selectColumn', "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter','urlReset','orderBy'));
     }
 }
