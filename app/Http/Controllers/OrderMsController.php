@@ -140,7 +140,7 @@ class OrderMsController extends Controller
             $entityItems = $entityItems->orderByDesc($request->getColumn())->paginate(50);
             $orderBy = 'asc';
         } else {
-            $entityItems = $entityItems->orderByDesc('sort')->paginate(50);
+            $entityItems = $entityItems->paginate(50);
         }
 
         $needMenuForItem=true;
