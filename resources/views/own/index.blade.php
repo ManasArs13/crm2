@@ -67,7 +67,7 @@
                                                             <span class="input-group-text" style="border-top-right-radius: 0;border-bottom-right-radius: 0;">от</span>
                                                             <input name="filters[{{ $filter['name']}}][min]" type="{{ $filter['type'] }}" min="{{ $filter['min'] }}"
                                                                 max="{{ $filter['max'] }}" value="{{ $filter['min'] }}"
-                                                                aria-label="First name" class="form-control">
+                                                                class="form-control">
                                                         </div>
                                                     </div>
                                                     <div class="col">
@@ -75,7 +75,7 @@
                                                             <span class="input-group-text" style="border-top-right-radius: 0;border-bottom-right-radius: 0;">до</span>
                                                             <input name="filters[{{ $filter['name']}}][max]" type="{{ $filter['type'] }}" min="{{ $filter['min'] }}"
                                                                 max="{{ $filter['max'] }}" value="{{ $filter['max'] }}"
-                                                                aria-label="First name" class="form-control">
+                                                                class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>
