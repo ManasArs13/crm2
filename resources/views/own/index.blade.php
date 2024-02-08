@@ -65,16 +65,14 @@
                                                     <div class="col">
                                                         <div class="input-group">
                                                             <span class="input-group-text" style="border-top-right-radius: 0;border-bottom-right-radius: 0;">от</span>
-                                                            <input name="filters[{{ $filter['name']}}][min]" type="{{ $filter['type'] }}" min="{{ $filter['min'] }}"
-                                                                max="{{ $filter['max'] }}" value="{{ $filter['min'] }}"
+                                                            <input name="filters[{{ $filter['name']}}][min]" type="{{ $filter['type'] }}" value="{{ $filter['min'] }}"
                                                                 class="form-control">
                                                         </div>
                                                     </div>
                                                     <div class="col">
                                                         <div class="input-group">
                                                             <span class="input-group-text" style="border-top-right-radius: 0;border-bottom-right-radius: 0;">до</span>
-                                                            <input name="filters[{{ $filter['name']}}][max]" type="{{ $filter['type'] }}" min="{{ $filter['min'] }}"
-                                                                max="{{ $filter['max'] }}" value="{{ $filter['max'] }}"
+                                                            <input name="filters[{{ $filter['name']}}][max]" type="{{ $filter['type'] }}" value="{{ $filter['max'] }}"
                                                                 class="form-control">
                                                         </div>
                                                     </div>
