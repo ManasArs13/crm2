@@ -20,27 +20,76 @@
                         @csrf
                         <div class="d-flex justify-content-between gap-1" style="margin-top: 8px">
                             <div class="dropdown">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Столбцы
+                                    колонки
                                 </button>
                                 <div class="dropdown-menu dropend" aria-labelledby="dropdownMenuButton">
                                     <div class="container-fluid">
-                                        <div class="row row-cols-2">
-                                            @foreach ($resColumnsAll as $key => $column)
-                                            <div class="col" style="width: 35rem">
+                                        <div class="row row-cols-3">
+                                            <div class="col" style="width: 60rem">
                                                 <label class="dropdown-item ">
-                                                    <input name="columns[]" type="checkbox" value="{{ $key }}">
-                                                    {{ $column }}
+                                                    <input type="checkbox" id="change_all">
+                                                    Выбрать все
                                                 </label>
                                             </div>
+                                            @foreach ($resColumnsAll as $key => $column)
+                                                <div class="col" style="width: 60rem">
+                                                    <label class="dropdown-item ">
+                                                        <input name="columns[]" class="columns_all" type="checkbox"
+                                                            value="{{ $key }}">
+                                                        {{ $column }}
+                                                    </label>
+                                                </div>
                                             @endforeach
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <input id="submit" class="bg-gray border-0 rounded" type="submit" name="submit"
-                                value="Фильтр">
+
+                            <div class="dropdown mx-1">
+                                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    фильтр
+                                </button>
+                                <div class="dropdown-menu dropend" style="width: 60rem"
+                                    aria-labelledby="dropdownMenuButton1">
+                                    <div class="container-fluid">                               
+                                            @foreach ($filters as $filter)
+                                                <div class="row row-cols-3">
+                                                    <div class="col">
+                                                        <label class="dropdown-item ">
+                                                            {{ $filter['name_rus'] }}
+                                                        </label>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text" style="border-top-right-radius: 0;border-bottom-right-radius: 0;">от</span>
+                                                            <input name="filters[{{ $filter['name']}}][min]" type="{{ $filter['type'] }}" min="{{ $filter['min'] }}"
+                                                                max="{{ $filter['max'] }}" value="{{ $filter['min'] }}"
+                                                                aria-label="First name" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="input-group">
+                                                            <span class="input-group-text" style="border-top-right-radius: 0;border-bottom-right-radius: 0;">до</span>
+                                                            <input name="filters[{{ $filter['name']}}][max]" type="{{ $filter['type'] }}" min="{{ $filter['min'] }}"
+                                                                max="{{ $filter['max'] }}" value="{{ $filter['max'] }}"
+                                                                aria-label="First name" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="">
+                                <button class="btn btn-success w-100" type="submit">
+                                    поиск
+                                </button>
+                            </div>
+
                         </div>
                     </form>
                     @if (isset($urlCreate) && $urlCreate != '')
@@ -114,13 +163,15 @@
                                                         @break
 
                                                         @case('[C] Отменен')
-                                                            <div id="status" style="border:solid red;background-color: #f3a3a3">
+                                                            <div id="status"
+                                                                style="border:solid red;background-color: #f3a3a3">
                                                                 <span>{{ $entityItem->$column->name }}</span>
                                                             </div>
                                                         @break
 
                                                         @case('Думают')
-                                                            <div id="status" style="border:solid blue;background-color: #6f6ffd">
+                                                            <div id="status"
+                                                                style="border:solid blue;background-color: #6f6ffd">
                                                                 <span>{{ $entityItem->$column->name }}</span>
                                                             </div>
                                                         @break
@@ -230,6 +281,24 @@
                 e.stopPropagation()
             })
         })
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+            var checkboxAll = document.querySelector("#change_all");
+            checkboxAll.addEventListener('change', function() {
+                let inputs = document.querySelectorAll(".columns_all")
+
+                if (this.checked) {
+                    inputs.forEach(element => {
+                        element.checked = true
+                    });
+                } else {
+                    inputs.forEach(element => {
+                        element.checked = false
+                    });
+                }
+            });
+
+        });
     </script>
 @stop
 

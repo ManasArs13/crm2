@@ -25,11 +25,18 @@ class FilterRequest extends FormRequest
         return [
             'column'=>['string'],
             'columns'=>['array'],
+            'filters'=>['array'],
+            'filter' => ['string']
         ];
     }
 
     public function getColumn()
     {
         return $this->column;
+    }
+
+    public function getFilter()
+    {
+        return $this->filter;
     }
 }
