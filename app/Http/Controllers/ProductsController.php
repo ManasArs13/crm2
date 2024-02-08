@@ -51,7 +51,7 @@ class ProductsController extends Controller
 
         $filters = [
             ['type' => 'date',  'name' =>  'created_at', 'name_rus' => 'Дата создания',  'min' => substr($minCreated, 0, 10), 'max' => substr($maxCreated, 0, 10)],
-            ['type' => 'date',  'name' =>  'updated_at', 'name_rus' => 'Дата обнавления', 'min' => substr($minUpdated, 0, 10), 'max' => substr($maxUpdated, 0, 10)],
+            ['type' => 'date',  'name' =>  'updated_at', 'name_rus' => 'Дата обновления', 'min' => substr($minUpdated, 0, 10), 'max' => substr($maxUpdated, 0, 10)],
             ['type' => 'number', 'name' =>  'weight_kg',  'name_rus'=> 'Вес', 'min' => $minWeight,  'max' => $maxWeigth]
         ];
 
@@ -230,7 +230,7 @@ class ProductsController extends Controller
 
         $filters = [
             ['type' => 'date',  'name' =>  'created_at', 'name_rus' => 'Дата создания',  'min' => substr($minCreated, 0, 10), 'max' => substr($maxCreated, 0, 10)],
-            ['type' => 'date',  'name' =>  'updated_at', 'name_rus' => 'Дата обнавления', 'min' => substr($minUpdated, 0, 10), 'max' => substr($maxUpdated, 0, 10)],
+            ['type' => 'date',  'name' =>  'updated_at', 'name_rus' => 'Дата обновления', 'min' => substr($minUpdated, 0, 10), 'max' => substr($maxUpdated, 0, 10)],
             ['type' => 'number', 'name' =>  'weight_kg',  'name_rus'=> 'Вес', 'min' => $minWeight,  'max' => $maxWeigth]
         ];
 
