@@ -20,8 +20,9 @@
                         @csrf
                         <div class="d-flex justify-content-between gap-1" style="margin-top: 8px">
                             <div class="dropdown">
-                                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button class="btn btn-outline-primary dropdown-toggle" type="button"
+                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
                                     колонки
                                 </button>
                                 <div class="dropdown-menu dropend" aria-labelledby="dropdownMenuButton">
@@ -48,14 +49,16 @@
                             </div>
 
                             <div class="dropdown mx-1">
-                                <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-auto-close="false"
+                                    id="dropdownMenuButton" data-toggle="dropdown"
+                                    aria-expanded="false">
                                     фильтр
                                 </button>
-                                <div class="dropdown-menu dropend" style="width: 60rem"
+                                <div class="dropdown-menu dropend" onclick="event.stopPropagation()" style="width: 60rem" 
                                     aria-labelledby="dropdownMenuButton1">
-                                    <div class="container-fluid">                               
-                                            @foreach ($filters as $filter)
+                                    <div class="container-fluid">
+                                        @foreach ($filters as $filter)
+                                            @if ($filter['type'] == 'date' || $filter['type'] == 'number')
                                                 <div class="row row-cols-3">
                                                     <div class="col">
                                                         <label class="dropdown-item ">
@@ -64,23 +67,46 @@
                                                     </div>
                                                     <div class="col">
                                                         <div class="input-group">
-                                                            <span class="input-group-text" style="border-top-right-radius: 0;border-bottom-right-radius: 0;">от</span>
-                                                            <input name="filters[{{ $filter['name']}}][min]" type="{{ $filter['type'] }}" value="{{ $filter['min'] }}"
+                                                            <span class="input-group-text"
+                                                                style="border-top-right-radius: 0;border-bottom-right-radius: 0;">от</span>
+                                                            <input name="filters[{{ $filter['name'] }}][min]"
+                                                                type="{{ $filter['type'] }}" value="{{ $filter['min'] }}"
                                                                 class="form-control">
                                                         </div>
                                                     </div>
                                                     <div class="col">
                                                         <div class="input-group">
-                                                            <span class="input-group-text" style="border-top-right-radius: 0;border-bottom-right-radius: 0;">до</span>
-                                                            <input name="filters[{{ $filter['name']}}][max]" type="{{ $filter['type'] }}" value="{{ $filter['max'] }}"
+                                                            <span class="input-group-text"
+                                                                style="border-top-right-radius: 0;border-bottom-right-radius: 0;">до</span>
+                                                            <input name="filters[{{ $filter['name'] }}][max]"
+                                                                type="{{ $filter['type'] }}" value="{{ $filter['max'] }}"
                                                                 class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>
-                                            @endforeach
+                                            @elseif ($filter['type'] == 'select')
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <label class="dropdown-item ">
+                                                            {{ $filter['name_rus'] }}
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-8">
+                                                        <select class="form-control" , name="filters[{{ $filter['name'] }}]" data-offset="false">
+                                                            <option selected>Выберите...</option>
+                                                            @foreach ($filter['values'] as $value)
+                                                                <option value="{{ $value['category_id'] }} ">
+                                                                    {{ $value['name'] }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
+                            
 
                             <div class="">
                                 <button class="btn btn-success w-100" type="submit">

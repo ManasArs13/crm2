@@ -4,23 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\FilterRequest;
 use App\Models\Product;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 
 
 class ProductsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
-        $entity = 'products';
-        $entityItems = Product::query()->where('type', Product::PRODUCTS)->orderByDesc('sort')->paginate(50);
-        if ($request->type == 'materials') {
+        if ($request->type == 'products') {
+            $entity = 'products';
+            $entityItems = Product::query()->where('type', Product::PRODUCTS)->orderByDesc('sort')->paginate(50);
+        } else if ($request->type == 'materials') {
             $entity = 'materials';
             $entityItems = Product::query()->where('type', Product::MATERIAL)->orderByDesc('sort')->paginate(50);
-        }
+        } else {
+            $entity = 'products';
+            $entityItems = Product::query()->orderByDesc('sort')->paginate(50);;
+        }      
+
         $columns = Schema::getColumnListing('products');
         $needMenuForItem = true;
         $urlEdit = "products.edit";
@@ -48,31 +51,35 @@ class ProductsController extends Controller
         $maxUpdated = Product::query()->where('type', $request->type == 'materials' ? Product::MATERIAL : Product::PRODUCTS)->max('updated_at');
         $minWeight = Product::query()->where('type',  $request->type == 'materials' ? Product::MATERIAL : Product::PRODUCTS)->min('weight_kg');
         $maxWeigth = Product::query()->where('type',  $request->type == 'materials' ? Product::MATERIAL : Product::PRODUCTS)->max('weight_kg');
+        $categories = Product::query()
+            ->where('products.type',  $request->type == 'materials' ? Product::MATERIAL : Product::PRODUCTS)
+            ->groupBy('category_id')
+            ->select('category_id', 'products_categories.name', 'products.type')
+            ->join('products_categories', 'products.category_id', '=', 'products_categories.id')
+            ->get();
 
         $filters = [
             ['type' => 'date',  'name' =>  'created_at', 'name_rus' => 'Дата создания',  'min' => substr($minCreated, 0, 10), 'max' => substr($maxCreated, 0, 10)],
             ['type' => 'date',  'name' =>  'updated_at', 'name_rus' => 'Дата обновления', 'min' => substr($minUpdated, 0, 10), 'max' => substr($maxUpdated, 0, 10)],
-            ['type' => 'number', 'name' =>  'weight_kg',  'name_rus'=> 'Вес', 'min' => $minWeight,  'max' => $maxWeigth]
+            ['type' => 'number', 'name' =>  'weight_kg',  'name_rus' => 'Вес', 'min' => $minWeight,  'max' => $maxWeigth],
+            ['type' => 'select', 'name' => 'category_id', 'name_rus' => 'Категория', 'values' => $categories]
         ];
 
         return view("own.index", compact(
-                                        'entityItems',
-                                        "resColumns",
-                                        "resColumnsAll",
-                                        "needMenuForItem",
-                                        "urlShow",
-                                        "urlDelete",
-                                        "urlEdit",
-                                        "urlCreate",
-                                        "entity",
-                                        'urlFilter',
-                                        'filters'
-                                    ));
+            'entityItems',
+            "resColumns",
+            "resColumnsAll",
+            "needMenuForItem",
+            "urlShow",
+            "urlDelete",
+            "urlEdit",
+            "urlCreate",
+            "entity",
+            'urlFilter',
+            'filters'
+        ));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $entityItem = new Product();
@@ -85,18 +92,12 @@ class ProductsController extends Controller
         return view('own.create', compact('entityItem', 'columns', 'action', 'entity'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         Product::query()->create($request->post());
         return redirect()->route("products.index");
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $entityItem = Product::findOrFail($id);
@@ -104,9 +105,6 @@ class ProductsController extends Controller
         return view("own.show", compact('entityItem', 'columns'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $entityItem = Product::find($id);
@@ -121,9 +119,6 @@ class ProductsController extends Controller
         return view("own.edit", compact('entityItem', 'columns', 'action', 'entity'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         $entityItem = Product::find($id);
@@ -135,9 +130,6 @@ class ProductsController extends Controller
         return redirect()->to($action);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $entityItem = Product::query()->find($id);
@@ -148,20 +140,25 @@ class ProductsController extends Controller
         }
         return redirect()->to($action);
     }
+
     public function filter(FilterRequest $request)
     {
-        $entity = 'products';
+        $entity = $request->type == 'materials' ? 'materials' : 'products';
         $orderBy  = $request->orderBy;
         $selectColumn = $request->getColumn();
         $selectFilter = $request->getFilter();
-        $entityItems = Product::query();
 
-        if ($request->type == 'products') {
-            $entityItems = Product::query()->where('type', Product::PRODUCTS);
-        } else if ($request->type == 'materials') {
-            $entity = 'materials';
-            $entityItems = Product::query()->where('type', Product::MATERIAL);
-        }
+        //dump($request->filters);
+        // if ($request->type == 'products') {
+        //     $entity = 'products';
+        //     $entityItems = Product::query()->where('type', Product::PRODUCTS);
+        // } else if ($request->type == 'materials') {
+        //     $entity = 'materials';
+        //     $entityItems = Product::query()->where('type', Product::MATERIAL);
+        // } else {
+        //     $entity = 'products';
+        //     $entityItems = Product::query();
+        // }
 
         $columns = Schema::getColumnListing('products');
 
@@ -176,29 +173,49 @@ class ProductsController extends Controller
             return ($a > $b);
         });
 
-
-        if(isset($request->filters)) {
+        if (isset($request->filters)) {
             foreach ($request->filters as $key => $value) {
-                Product::query()->whereBetween($key, [$value['min'], [$value['max']]]);
+                if ($key == 'category_id') {
+                    if ($value !== 'Выберите...') {
+                  //    dump($value);
+                     $entityItems = Product::query()
+                        ->where('type', $request->type == 'materials' ? Product::MATERIAL : Product::PRODUCTS)
+                        ->where($key, $value);
+                    }
+                } else if ($key == 'created_at' || $key == 'updated_at') {
+                   $entityItems = Product::query()
+                        ->where('type', $request->type == 'materials' ? Product::MATERIAL : Product::PRODUCTS)
+                        ->where($key, '>=', $value['min'] .' 00:00:00')
+                        ->where($key, '<=', $value['max'] .' 23:59:59');
+                      //  dump($value);
+                } else if($key == 'weight_kg') {
+                    $entityItems = Product::query()
+                        ->where('type', $request->type == 'materials' ? Product::MATERIAL : Product::PRODUCTS)
+                        ->where($key, '>=', $value['min'])
+                        ->where($key, '<=', $value['max']);
+                } else {
+                    $entityItems = Product::query()
+                        ->where('type', $request->type == 'materials' ? Product::MATERIAL : Product::PRODUCTS);
+                }
             }
         }
-        
 
+    //    dd($entityItems->get());
         if (isset($request->columns)) {
             $requestColumns = $request->columns;
             $requestColumns[] = "id";
             $columns = $requestColumns;
-            $entityItems = Product::query()->select($requestColumns);
+            $entityItems = $entityItems->select($requestColumns);
         }
 
         if (isset($request->orderBy)  && $request->orderBy == 'asc') {
             $entityItems = $entityItems->orderBy($selectColumn)->orderByDesc('sort')->paginate(50);
             $orderBy = 'desc';
-        } elseif (isset($request->orderBy)  && $request->orderBy == 'desc') {
+        } else if (isset($request->orderBy)  && $request->orderBy == 'desc') {
             $entityItems = $entityItems->orderByDesc($selectColumn)->orderByDesc('sort')->paginate(50);
             $orderBy = 'asc';
         } else {
-            $entityItems =   $entityItems->orderByDesc('sort')->paginate(50);
+            $entityItems =  $entityItems->orderByDesc('sort')->paginate(50);
         }
 
         $needMenuForItem = true;
@@ -227,13 +244,20 @@ class ProductsController extends Controller
         $maxUpdated = Product::query()->where('type', $request->type == 'materials' ? Product::MATERIAL : Product::PRODUCTS)->max('updated_at');
         $minWeight = Product::query()->where('type',  $request->type == 'materials' ? Product::MATERIAL : Product::PRODUCTS)->min('weight_kg');
         $maxWeigth = Product::query()->where('type',  $request->type == 'materials' ? Product::MATERIAL : Product::PRODUCTS)->max('weight_kg');
+        $categories = Product::query()
+            ->where('products.type',  $request->type == 'materials' ? Product::MATERIAL : Product::PRODUCTS)
+            ->groupBy('category_id')
+            ->select('category_id', 'products_categories.name', 'products.type')
+            ->join('products_categories', 'products.category_id', '=', 'products_categories.id')
+            ->get();
 
         $filters = [
             ['type' => 'date',  'name' =>  'created_at', 'name_rus' => 'Дата создания',  'min' => substr($minCreated, 0, 10), 'max' => substr($maxCreated, 0, 10)],
             ['type' => 'date',  'name' =>  'updated_at', 'name_rus' => 'Дата обновления', 'min' => substr($minUpdated, 0, 10), 'max' => substr($maxUpdated, 0, 10)],
-            ['type' => 'number', 'name' =>  'weight_kg',  'name_rus'=> 'Вес', 'min' => $minWeight,  'max' => $maxWeigth]
+            ['type' => 'number', 'name' =>  'weight_kg',  'name_rus' => 'Вес', 'min' => $minWeight,  'max' => $maxWeigth],
+            ['type' => 'select', 'name' => 'category_id', 'name_rus' => 'Категория', 'values' => $categories]
         ];
-
+        //dd($filters);
         return view("own.index", compact('entityItems', 'filters', "resColumns", "resColumnsAll", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity", 'urlFilter', 'urlReset', 'orderBy', 'selectColumn'));
     }
 }
