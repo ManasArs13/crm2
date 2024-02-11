@@ -17,7 +17,7 @@
             <div class="card">
                 <div class="card-header d-flex align-items-center justify-content-between ">
                     <form method="get" action="{{ route($urlFilter) }}">
-                        @csrf
+                        {{-- @csrf --}}
                         <div class="d-flex justify-content-between gap-1" style="margin-top: 8px">
                             <div class="dropdown">
                                 <button class="btn btn-outline-primary dropdown-toggle" type="button"
@@ -38,8 +38,9 @@
                                                 <div class="col" style="width: 60rem">
                                                     <label class="dropdown-item ">
                                                         <input name="columns[]" class="columns_all" type="checkbox"
-                                                            value="{{ $key }}">
-                                                        {{ $column }}
+                                                            value="{{ $key }}"
+                                                            @if ($column['checked'] == true) checked @endif>
+                                                        {{ $column['name_rus'] }}
                                                     </label>
                                                 </div>
                                             @endforeach
@@ -49,12 +50,12 @@
                             </div>
 
                             <div class="dropdown mx-1">
-                                <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-auto-close="false"
-                                    id="dropdownMenuButton" data-toggle="dropdown"
+                                <button class="btn btn-outline-primary dropdown-toggle" type="button"
+                                    data-bs-auto-close="false" id="dropdownMenuButton" data-toggle="dropdown"
                                     aria-expanded="false">
                                     фильтр
                                 </button>
-                                <div class="dropdown-menu dropend" onclick="event.stopPropagation()" style="width: 60rem" 
+                                <div class="dropdown-menu dropend" onclick="event.stopPropagation()" style="width: 60rem"
                                     aria-labelledby="dropdownMenuButton1">
                                     <div class="container-fluid">
                                         @foreach ($filters as $filter)
@@ -70,7 +71,7 @@
                                                             <span class="input-group-text"
                                                                 style="border-top-right-radius: 0;border-bottom-right-radius: 0;">от</span>
                                                             <input name="filters[{{ $filter['name'] }}][min]"
-                                                                type="{{ $filter['type'] }}" value="{{ $filter['min'] }}"
+                                                                type="{{ $filter['type'] }}" min="{{ $filter['min'] }}" value="{{ $filter['min'] }}"
                                                                 class="form-control">
                                                         </div>
                                                     </div>
@@ -79,7 +80,7 @@
                                                             <span class="input-group-text"
                                                                 style="border-top-right-radius: 0;border-bottom-right-radius: 0;">до</span>
                                                             <input name="filters[{{ $filter['name'] }}][max]"
-                                                                type="{{ $filter['type'] }}" value="{{ $filter['max'] }}"
+                                                                type="{{ $filter['type'] }}" value="{{ $filter['max'] }}" max="{{ $filter['max'] }}"
                                                                 class="form-control">
                                                         </div>
                                                     </div>
@@ -92,10 +93,19 @@
                                                         </label>
                                                     </div>
                                                     <div class="col-8">
-                                                        <select class="form-control" , name="filters[{{ $filter['name'] }}]" data-offset="false">
-                                                            <option selected>Выберите...</option>
+                                                        <select class="form-control" ,
+                                                            name="filters[{{ $filter['name'] }}]" data-offset="false">
+                                                            <option 
+                                                            @if($filter['checked_value'] == 'all')
+                                                            selected
+                                                            @endif
+                                                            value="all">Все</option>
                                                             @foreach ($filter['values'] as $value)
-                                                                <option value="{{ $value['category_id'] }} ">
+                                                                <option 
+                                                                @if($value['category_id'] == $filter['checked_value'])
+                                                                selected
+                                                                @endif
+                                                                value="{{ $value['category_id'] }} ">
                                                                     {{ $value['name'] }}</option>
                                                             @endforeach
                                                         </select>
@@ -106,7 +116,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
 
                             <div class="">
                                 <button class="btn btn-success w-100" type="submit">

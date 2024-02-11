@@ -29,14 +29,4 @@ class FilterRequest extends FormRequest
             'filter' => ['string']
         ];
     }
-
-    public function getColumn()
-    {
-        return $this->column;
-    }
-
-    public function getFilter()
-    {
-        return $this->filter;
-    }
 }
