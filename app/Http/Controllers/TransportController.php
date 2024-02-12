@@ -40,7 +40,7 @@ class TransportController extends Controller
             return ($a > $b);
         });
 
-        $fiters = [];
+        $filters = [];
 
         return view("own.index", compact(
             'entityItems',
@@ -181,7 +181,7 @@ class TransportController extends Controller
         $urlReset = 'transports.index';
         $entity = 'transports';
 
-        $fiters = [];
+        $filters = [];
 
         return view("own.index", compact(
             'entityItems',
