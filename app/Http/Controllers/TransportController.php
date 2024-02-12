@@ -14,30 +14,47 @@ class TransportController extends Controller
      */
     public function index()
     {
-        $entityItems=Transport::query()->paginate(50);
+        $entityItems = Transport::query()->paginate(50);
         $columns = Schema::getColumnListing('transports'); // users table
-        $needMenuForItem=true;
-        $urlEdit="transports.edit";
-        $urlShow="transports.show";
-        $urlDelete="transports.destroy";
-        $urlCreate="transports.create";
-        $urlFilter ='transports.filter';
-        $entity='transports';
+        $needMenuForItem = true;
+        $urlEdit = "transports.edit";
+        $urlShow = "transports.show";
+        $urlDelete = "transports.destroy";
+        $urlCreate = "transports.create";
+        $urlFilter = 'transports.filter';
+        $entity = 'transports';
 
-        $resColumns=[];
-        $resColumnsAll =[];
+        $resColumns = [];
+        $resColumnsAll = [];
 
         foreach ($columns as $column) {
-            $resColumns[$column]=trans("column.".$column);
+            $resColumns[$column] = trans("column." . $column);
+            $resColumnsAll[$column] = ['name_rus' => trans("column." . $column), 'checked' => false];
         }
 
         uasort($resColumns, function ($a, $b) {
             return ($a > $b);
         });
 
-        $resColumnsAll = $resColumns;
+        uasort($resColumnsAll, function ($a, $b) {
+            return ($a > $b);
+        });
 
-        return view("own.index", compact('entityItems',"resColumns", "resColumnsAll", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter'));
+        $fiters = [];
+
+        return view("own.index", compact(
+            'entityItems',
+            'filters',
+            "resColumns",
+            "resColumnsAll",
+            "needMenuForItem",
+            "urlShow",
+            "urlDelete",
+            "urlEdit",
+            "urlCreate",
+            "entity",
+            'urlFilter'
+        ));
     }
 
     /**
@@ -49,8 +66,8 @@ class TransportController extends Controller
         $columns = Schema::getColumnListing('transports'); // users table
 
 
-        $entity='transports';
-        $action="transports.store";
+        $entity = 'transports';
+        $action = "transports.store";
 
         return view('own.create', compact('entityItem', 'columns', 'action', 'entity'));
     }
@@ -69,7 +86,7 @@ class TransportController extends Controller
      */
     public function show(string $id)
     {
-        $entityItem=Transport::findOrFail($id);
+        $entityItem = Transport::findOrFail($id);
         $columns = Schema::getColumnListing('transports'); // users table
         return view("own.show", compact('entityItem', 'columns'));
     }
@@ -79,12 +96,12 @@ class TransportController extends Controller
      */
     public function edit(string $id)
     {
-        $entityItem=Transport::find($id);
+        $entityItem = Transport::find($id);
         $columns = Schema::getColumnListing('transports'); // users table
-        $entity='transports';
-        $action="transports.update";
+        $entity = 'transports';
+        $action = "transports.update";
 
-        return view("own.edit", compact('entityItem','columns', 'action', 'entity'));
+        return view("own.edit", compact('entityItem', 'columns', 'action', 'entity'));
     }
 
     /**
@@ -92,7 +109,7 @@ class TransportController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $entityItem=Transport::find($id);
+        $entityItem = Transport::find($id);
         $entityItem->fill($request->post())->save();
 
         return redirect()->route('transports.index');
@@ -103,7 +120,7 @@ class TransportController extends Controller
      */
     public function destroy(string $id)
     {
-        $entityItem=Transport::find($id);
+        $entityItem = Transport::find($id);
         $entityItem->delete();
 
         return redirect()->route('transports.index');
@@ -118,51 +135,69 @@ class TransportController extends Controller
         $resColumns = [];
         $resColumnsAll = [];
 
+        /* Колонки для меню */
         foreach ($columns as $column) {
-            $resColumnsAll[$column] = trans("column." . $column);
+            $resColumnsAll[$column] = [
+                'name_rus' => trans("column." . $column),
+                'checked' => in_array($column, $request->columns ? $request->columns : []) ? true : false
+            ];
         }
 
         uasort($resColumnsAll, function ($a, $b) {
             return ($a > $b);
         });
 
-        if (isset($request->columns)){
+        if (isset($request->columns)) {
             $requestColumns = $request->columns;
-            $requestColumns[]="id";
-            $columns =$requestColumns;
+            $requestColumns[] = "id";
+            $columns = $requestColumns;
             $entityItems = Transport::query()->select($requestColumns);
         }
-        if (isset($request->orderBy)  && $request->orderBy == 'asc') {
-            $entityItems = $entityItems->orderBy($request->getColumn())->paginate(50);
-            $orderBy = 'desc';
-        }elseif (isset($request->orderBy)  && $request->orderBy == 'desc') {
-            $entityItems = $entityItems->orderByDesc($request->getColumn())->paginate(50);
-            $orderBy = 'asc';
-        } else{
-            $entityItems =   $entityItems->paginate(50);
-        }
-        $needMenuForItem=true;
-        $urlEdit="transports.edit";
-        $urlShow="transports.show";
-        $urlDelete="transports.destroy";
-        $urlCreate="transports.create";
-        $urlFilter ='transports.filter';
-        $urlReset = 'transports.index';
-        $entity='transports';
 
- 
-        if(isset($request->resColumns)){
-            $resColumns = $request->resColumns;
-        }else{
-            foreach ($columns as $column) {
-                $resColumns[$column] = trans("column." . $column);
-            }
+        foreach ($columns as $column) {
+            $resColumns[$column] = trans("column." . $column);
         }
 
         uasort($resColumns, function ($a, $b) {
             return ($a > $b);
         });
 
-        return view("own.index", compact('entityItems',"resColumns", "resColumnsAll", 'selectColumn', "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter','urlReset','orderBy'));
+
+        if (isset($request->orderBy)  && $request->orderBy == 'asc') {
+            $entityItems = $entityItems->orderBy($request->getColumn())->paginate(50);
+            $orderBy = 'desc';
+        } elseif (isset($request->orderBy)  && $request->orderBy == 'desc') {
+            $entityItems = $entityItems->orderByDesc($request->getColumn())->paginate(50);
+            $orderBy = 'asc';
+        } else {
+            $entityItems =   $entityItems->paginate(50);
+        }
+        $needMenuForItem = true;
+        $urlEdit = "transports.edit";
+        $urlShow = "transports.show";
+        $urlDelete = "transports.destroy";
+        $urlCreate = "transports.create";
+        $urlFilter = 'transports.filter';
+        $urlReset = 'transports.index';
+        $entity = 'transports';
+
+        $fiters = [];
+
+        return view("own.index", compact(
+            'entityItems',
+            'filters',
+            "resColumns",
+            "resColumnsAll",
+            'selectColumn',
+            "needMenuForItem",
+            "urlShow",
+            "urlDelete",
+            "urlEdit",
+            "urlCreate",
+            "entity",
+            'urlFilter',
+            'urlReset',
+            'orderBy'
+        ));
     }
 }
