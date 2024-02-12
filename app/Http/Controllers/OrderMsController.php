@@ -14,30 +14,47 @@ class OrderMsController extends Controller
      */
     public function index()
     {
-        $entityItems=OrderMs::query()->paginate(50);
+        $entityItems = OrderMs::query()->paginate(50);
         $columns = Schema::getColumnListing('order_ms'); // users table
-        $needMenuForItem=true;
-        $urlEdit="order_ms.edit";
-        $urlShow="order_ms.show";
-        $urlDelete="order_ms.destroy";
-        $urlCreate="order_ms.create";
-        $urlFilter ='order_ms.filter';
-        $entity='order_ms';
+        $needMenuForItem = true;
+        $urlEdit = "order_ms.edit";
+        $urlShow = "order_ms.show";
+        $urlDelete = "order_ms.destroy";
+        $urlCreate = "order_ms.create";
+        $urlFilter = 'order_ms.filter';
+        $entity = 'order_ms';
 
-        $resColumns=[];
+        $resColumns = [];
         $resColumnsAll = [];
 
         foreach ($columns as $column) {
-            $resColumns[$column]=trans("column.".$column);
+            $resColumns[$column] = trans("column." . $column);
+            $resColumnsAll[$column] = ['name_rus' => trans("column." . $column), 'checked' => false];
         }
 
         uasort($resColumns, function ($a, $b) {
             return ($a > $b);
         });
 
-        $resColumnsAll = $resColumns;
+        uasort($resColumnsAll, function ($a, $b) {
+            return ($a > $b);
+        });
 
-        return view("own.index", compact('entityItems',"resColumns", "resColumnsAll", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter'));
+        $filters = [];
+
+        return view("own.index", compact(
+            'entityItems',
+            "resColumns",
+            "resColumnsAll",
+            "needMenuForItem",
+            "urlShow",
+            "urlDelete",
+            "urlEdit",
+            "urlCreate",
+            "entity",
+            'urlFilter',
+            'filters'
+        ));
     }
 
     /**
@@ -49,8 +66,8 @@ class OrderMsController extends Controller
         $columns = Schema::getColumnListing('order_ms'); // users table
 
 
-        $entity='order_ms';
-        $action="order_ms.store";
+        $entity = 'order_ms';
+        $action = "order_ms.store";
 
         return view('own.create', compact('entityItem', 'columns', 'action', 'entity'));
     }
@@ -69,7 +86,7 @@ class OrderMsController extends Controller
      */
     public function show(string $id)
     {
-        $entityItem=OrderMs::findOrFail($id);
+        $entityItem = OrderMs::findOrFail($id);
         $columns = Schema::getColumnListing('order_ms'); // users table
         return view("own.show", compact('entityItem', 'columns'));
     }
@@ -79,12 +96,12 @@ class OrderMsController extends Controller
      */
     public function edit(string $id)
     {
-        $entityItem=OrderMs::find($id);
+        $entityItem = OrderMs::find($id);
         $columns = Schema::getColumnListing('order_ms'); // users table
-        $entity='order_ms';
-        $action="order_ms.update";
+        $entity = 'order_ms';
+        $action = "order_ms.update";
 
-        return view("own.edit", compact('entityItem','columns', 'action', 'entity'));
+        return view("own.edit", compact('entityItem', 'columns', 'action', 'entity'));
     }
 
     /**
@@ -92,7 +109,7 @@ class OrderMsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $entityItem=OrderMs::find($id);
+        $entityItem = OrderMs::find($id);
         $entityItem->fill($request->post())->save();
 
         return redirect()->route('order_ms.index');
@@ -103,7 +120,7 @@ class OrderMsController extends Controller
      */
     public function destroy(string $id)
     {
-        $entityItem=OrderMs::find($id);
+        $entityItem = OrderMs::find($id);
         $entityItem->delete();
 
         return redirect()->route('order_ms.index');
@@ -111,18 +128,38 @@ class OrderMsController extends Controller
     public function filter(FilterRequest $request)
     {
         $orderBy  = $request->orderBy;
-        $selectColumn = $request->getColumn();
+      //  $selectColumn = $request->getColumn();
         $entityItems = OrderMs::query();
         $columns = Schema::getColumnListing('order_ms');
 
         $resColumns = [];
         $resColumnsAll = [];
 
+        /* Колонки для меню */
         foreach ($columns as $column) {
-            $resColumnsAll[$column] = trans("column." . $column);
+            $resColumnsAll[$column] = [
+                'name_rus' => trans("column." . $column),
+                'checked' => in_array($column, $request->columns ? $request->columns : []) ? true : false
+            ];
         }
 
         uasort($resColumnsAll, function ($a, $b) {
+            return ($a > $b);
+        });
+
+        /* Колонки для отображения */
+        if (isset($request->columns)) {
+            $requestColumns = $request->columns;
+            $requestColumns[] = "id";
+            $columns = $requestColumns;
+            $entityItems = $entityItems->select($requestColumns);
+        }
+
+        foreach ($columns as $column) {
+            $resColumns[$column] = trans("column." . $column);
+        }
+
+        uasort($resColumns, function ($a, $b) {
             return ($a > $b);
         });
 
@@ -136,34 +173,39 @@ class OrderMsController extends Controller
         if (isset($request->orderBy)  && $request->orderBy == 'asc') {
             $entityItems = $entityItems->orderBy($request->getColumn())->paginate(50);
             $orderBy = 'desc';
-        }else if (isset($request->orderBy)  && $request->orderBy == 'desc') {
+        } else if (isset($request->orderBy)  && $request->orderBy == 'desc') {
             $entityItems = $entityItems->orderByDesc($request->getColumn())->paginate(50);
             $orderBy = 'asc';
         } else {
             $entityItems = $entityItems->paginate(50);
         }
 
-        $needMenuForItem=true;
-        $urlEdit="order_ms.edit";
-        $urlShow="order_ms.show";
-        $urlDelete="order_ms.destroy";
-        $urlCreate="order_ms.create";
-        $urlFilter ='order_ms.filter';
+        $needMenuForItem = true;
+        $urlEdit = "order_ms.edit";
+        $urlShow = "order_ms.show";
+        $urlDelete = "order_ms.destroy";
+        $urlCreate = "order_ms.create";
+        $urlFilter = 'order_ms.filter';
         $urlReset = 'order_ms.index';
-        $entity='order_ms';
+        $entity = 'order_ms';
 
-        if(isset($request->resColumns)){
-            $resColumns = $request->resColumns;
-        }else{
-            foreach ($columns as $column) {
-                $resColumns[$column] = trans("column." . $column);
-            }
-        }
+        $filters = [];
 
-        uasort($resColumns, function ($a, $b) {
-            return ($a > $b);
-        });
-
-        return view("own.index", compact('entityItems','selectColumn',"resColumns", "resColumnsAll", "needMenuForItem", "urlShow", "urlDelete", "urlEdit", "urlCreate", "entity",'urlFilter','urlReset','orderBy'));
+        return view("own.index", compact(
+            'entityItems',
+         //   'selectColumn',
+            "resColumns",
+            "resColumnsAll",
+            "needMenuForItem",
+            "urlShow",
+            "urlDelete",
+            "urlEdit",
+            "urlCreate",
+            "entity",
+            'urlFilter',
+            'urlReset',
+            'orderBy',
+            'filters'
+        ));
     }
 }
