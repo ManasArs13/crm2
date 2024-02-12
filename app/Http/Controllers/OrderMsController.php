@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FilterRequest;
+use App\Models\Order;
 use App\Models\OrderMs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
@@ -40,7 +41,27 @@ class OrderMsController extends Controller
             return ($a > $b);
         });
 
-        $filters = [];
+        $minCreated = OrderMs::query()->min('created_at');
+        $maxCreated = OrderMs::query()->max('created_at');
+        $minUpdated = OrderMs::query()->min('updated_at');
+        $maxUpdated = OrderMs::query()->max('updated_at');
+
+        $filters = [
+            [
+                'type' => 'date',
+                'name' =>  'created_at',
+                'name_rus' => 'Дата создания',
+                'min' => substr($minCreated, 0, 10),
+                'max' => substr($maxCreated, 0, 10)
+            ],
+            [
+                'type' => 'date',
+                'name' =>  'updated_at',
+                'name_rus' => 'Дата обновления',
+                'min' => substr($minUpdated, 0, 10),
+                'max' => substr($maxUpdated, 0, 10)
+            ],
+        ];
 
         return view("own.index", compact(
             'entityItems',
@@ -127,11 +148,18 @@ class OrderMsController extends Controller
     }
     public function filter(FilterRequest $request)
     {
+        $needMenuForItem = true;
+        $urlEdit = "order_ms.edit";
+        $urlShow = "order_ms.show";
+        $urlDelete = "order_ms.destroy";
+        $urlCreate = "order_ms.create";
+        $urlFilter = 'order_ms.filter';
+        $urlReset = 'order_ms.index';
+        $entity = 'order_ms';
+
         $orderBy  = $request->orderBy;
-      //  $selectColumn = $request->getColumn();
         $entityItems = OrderMs::query();
         $columns = Schema::getColumnListing('order_ms');
-
         $resColumns = [];
         $resColumnsAll = [];
 
@@ -152,7 +180,7 @@ class OrderMsController extends Controller
             $requestColumns = $request->columns;
             $requestColumns[] = "id";
             $columns = $requestColumns;
-            $entityItems = $entityItems->select($requestColumns);
+            $entityItems = OrderMs::query()->select($requestColumns);
         }
 
         foreach ($columns as $column) {
@@ -163,13 +191,18 @@ class OrderMsController extends Controller
             return ($a > $b);
         });
 
-        if (isset($request->columns)) {
-            $requestColumns = $request->columns;
-            $requestColumns[] = "id";
-            $columns = $requestColumns;
-            $entityItems = OrderMs::query()->select($requestColumns);
+        if (isset($request->filters)) {
+            foreach ($request->filters as $key => $value) {
+                if ($key == 'created_at' || $key == 'updated_at') {
+                    $entityItems = OrderMs::query()
+                        ->where($key, '>=', $value['min'] . ' 00:00:00')
+                        ->where($key, '<=', $value['max'] . ' 23:59:59');
+                }
+            }
         }
 
+
+        /* Сортировка */
         if (isset($request->orderBy)  && $request->orderBy == 'asc') {
             $entityItems = $entityItems->orderBy($request->getColumn())->paginate(50);
             $orderBy = 'desc';
@@ -180,20 +213,33 @@ class OrderMsController extends Controller
             $entityItems = $entityItems->paginate(50);
         }
 
-        $needMenuForItem = true;
-        $urlEdit = "order_ms.edit";
-        $urlShow = "order_ms.show";
-        $urlDelete = "order_ms.destroy";
-        $urlCreate = "order_ms.create";
-        $urlFilter = 'order_ms.filter';
-        $urlReset = 'order_ms.index';
-        $entity = 'order_ms';
 
-        $filters = [];
+
+        $minCreated = OrderMs::query()->min('created_at');
+        $maxCreated = OrderMs::query()->max('created_at');
+        $minUpdated = OrderMs::query()->min('updated_at');
+        $maxUpdated = OrderMs::query()->max('updated_at');
+
+        $filters = [
+            [
+                'type' => 'date',
+                'name' =>  'created_at',
+                'name_rus' => 'Дата создания',
+                'min' => substr($minCreated, 0, 10),
+                'max' => substr($maxCreated, 0, 10)
+            ],
+            [
+                'type' => 'date',
+                'name' =>  'updated_at',
+                'name_rus' => 'Дата обновления',
+                'min' => substr($minUpdated, 0, 10),
+                'max' => substr($maxUpdated, 0, 10)
+            ],
+        ];
 
         return view("own.index", compact(
             'entityItems',
-         //   'selectColumn',
+            //   'selectColumn',
             "resColumns",
             "resColumnsAll",
             "needMenuForItem",
