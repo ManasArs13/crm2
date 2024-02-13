@@ -62,7 +62,9 @@ class ProductsController extends Controller
             ->select('category_id', 'products_categories.name', 'products.type')
             ->join('products_categories', 'products.category_id', '=', 'products_categories.id')
             ->get();
-
+        $minPrices = Product::query()->where('type', $request->type == 'materials' ? Product::MATERIAL : Product::PRODUCTS)->min('price');
+        $maxPrices = Product::query()->where('type', $request->type == 'materials' ? Product::MATERIAL : Product::PRODUCTS)->max('price');
+        
         $filters = [
             [
                 'type' => 'date',
@@ -91,7 +93,14 @@ class ProductsController extends Controller
                 'name_rus' => 'Категория',
                 'values' => $categories,
                 'checked_value' => 'all',
-            ]
+            ],
+            [
+                'type' => 'number',
+                'name' =>  'price',
+                'name_rus' => 'Цена',
+                'min' => $minPrices,
+                'max' => $maxPrices
+            ],
         ];
 
         return view("own.index", compact(
@@ -232,27 +241,27 @@ class ProductsController extends Controller
                 if ($key == 'category_id') {
                     if ($value !== 'all') {
                         //    dump($value);
-                        $entityItems = Product::query()
+                        $entityItems
                             ->where('type', $request->type == 'materials' ? Product::MATERIAL : Product::PRODUCTS)
                             ->where($key, $value);
                     } else {
-                        $entityItems = Product::query()
+                        $entityItems
                             ->where('type', $request->type == 'materials' ? Product::MATERIAL : Product::PRODUCTS);
                     }
                     $categoryFilterValue = $value;
                 } else if ($key == 'created_at' || $key == 'updated_at') {
-                    $entityItems = Product::query()
+                    $entityItems
                         ->where('type', $request->type == 'materials' ? Product::MATERIAL : Product::PRODUCTS)
                         ->where($key, '>=', $value['min'] . ' 00:00:00')
                         ->where($key, '<=', $value['max'] . ' 23:59:59');
                     //  dump($value);
-                } else if ($key == 'weight_kg') {
-                    $entityItems = Product::query()
+                } else if ($key == 'weight_kg' || $key == 'price') {
+                    $entityItems
                         ->where('type', $request->type == 'materials' ? Product::MATERIAL : Product::PRODUCTS)
                         ->where($key, '>=', $value['min'])
                         ->where($key, '<=', $value['max']);
                 } else {
-                    $entityItems = Product::query()
+                    $entityItems
                         ->where('type', $request->type == 'materials' ? Product::MATERIAL : Product::PRODUCTS);
                 }
             }
@@ -284,6 +293,8 @@ class ProductsController extends Controller
             ->select('category_id', 'products_categories.name', 'products.type')
             ->join('products_categories', 'products.category_id', '=', 'products_categories.id')
             ->get();
+        $minPrices = Product::query()->where('type', $request->type == 'materials' ? Product::MATERIAL : Product::PRODUCTS)->min('price');
+        $maxPrices = Product::query()->where('type', $request->type == 'materials' ? Product::MATERIAL : Product::PRODUCTS)->max('price');
 
         $filters = [
             [
@@ -313,7 +324,14 @@ class ProductsController extends Controller
                 'name_rus' => 'Категория',
                 'values' => $categories,
                 'checked_value' => $categoryFilterValue,
-            ]
+            ],
+            [
+                'type' => 'number',
+                'name' =>  'price',
+                'name_rus' => 'Цена',
+                'min' => $minPrices,
+                'max' => $maxPrices
+            ],
         ];
 
         return view("own.index", compact(
